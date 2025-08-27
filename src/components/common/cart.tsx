@@ -9,18 +9,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { useQuery } from "@tanstack/react-query";
-import { getCart } from "@/actions/get-cart";
+
 import CartItem from "./cart-item";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 import { formatCentsToBRL } from "@/helpers/money";
+import { useCart } from "@/hooks/queries/use-cart";
 
 const Cart = () => {
-  const { data: cart } = useQuery({
-    queryKey: ["cart"],
-    queryFn: () => getCart(),
-  });
+  const { data: cart } = useCart();
   return (
     <Sheet>
       <SheetTrigger asChild>
