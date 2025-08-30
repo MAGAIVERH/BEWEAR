@@ -24,11 +24,11 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { shippingAddressTable } from "@/db/schema";
 import { useCreateShippingAddress } from "@/hooks/mutations/use-create-shipping-address";
-import { useUpdateCartShippingAddress } from "@/hooks/mutations/use-update-cart-shipping-address";
+// import { useUpdateCartShippingAddress } from "@/hooks/mutations/use-update-cart-shipping-address";
 import { useCart } from "@/hooks/queries/use-cart";
-import { useUserAddresses } from "@/hooks/queries/use-user-addresses";
 
-import { formatAddress } from "../../helpers/address";
+// import { formatAddress } from "../../helpers/address";
+import { useUserAddresses } from "@/hooks/queries/use-user-addresses";
 
 const formSchema = z.object({
   email: z.email("E-mail inválido"),
