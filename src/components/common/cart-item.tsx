@@ -6,9 +6,9 @@ import { formatCentsToBRL } from "@/helpers/money";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 
-import useRemoveProductFromCart from "@/hooks/mutations/use-remove-product-from-cart";
 import { useDecreaseCartProduct } from "@/hooks/mutations/use-decrease-cart-product";
 import { useIncreaseCartProduct } from "@/hooks/mutations/use-increase-cart-product";
+import { useRemoveProductFromCart } from "@/hooks/mutations/use-remove-product-from-cart";
 
 interface CartItemProps {
   id: string;
