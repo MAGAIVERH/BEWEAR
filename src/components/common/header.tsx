@@ -1,8 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "../ui/button";
+import Link from "next/link";
 import { LogInIcon, LogOutIcon, MenuIcon } from "lucide-react";
+
+import { authClient } from "@/lib/auth-client";
+
+import { Button } from "../ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   Sheet,
   SheetContent,
@@ -10,9 +15,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { authClient } from "@/lib/auth-client";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import Link from "next/link";
+
 import Cart from "./cart";
 
 const Header = () => {

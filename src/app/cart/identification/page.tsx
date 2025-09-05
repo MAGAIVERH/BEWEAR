@@ -8,8 +8,8 @@ import { db } from "@/db";
 import { shippingAddressTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
-import Addresses from "./components/addresses";
 import CartSummary from "../components/cart-summary";
+import Addresses from "./components/addresses";
 
 const IdentificationPage = async () => {
   const session = await auth.api.getSession({

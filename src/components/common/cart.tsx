@@ -1,7 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { ShoppingBasketIcon } from "lucide-react";
+
+import { formatCentsToBRL } from "@/helpers/money";
+import { useCart } from "@/hooks/queries/use-cart";
+
 import { Button } from "../ui/button";
+import { ScrollArea } from "../ui/scroll-area";
+import { Separator } from "../ui/separator";
 import {
   Sheet,
   SheetContent,
@@ -11,11 +18,6 @@ import {
 } from "../ui/sheet";
 
 import CartItem from "./cart-item";
-import { ScrollArea } from "../ui/scroll-area";
-import { Separator } from "../ui/separator";
-import { formatCentsToBRL } from "@/helpers/money";
-import { useCart } from "@/hooks/queries/use-cart";
-import Link from "next/link";
 
 const Cart = () => {
   const { data: cart } = useCart();

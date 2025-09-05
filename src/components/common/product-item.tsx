@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import { productTable, productVariantTable } from "@/db/schema";
 import { formatCentsToBRL } from "@/helpers/money";
 import { cn } from "@/lib/utils";

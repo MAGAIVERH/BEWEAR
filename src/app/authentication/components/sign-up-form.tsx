@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { Router } from "next/router";
+
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";

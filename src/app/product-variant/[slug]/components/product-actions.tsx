@@ -1,9 +1,10 @@
 "use client";
 
-import { MinusIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
+import { MinusIcon, PlusIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+
 import AddToCartButton from "./add-to-cart-botton";
 
 interface ProductActionsProps {

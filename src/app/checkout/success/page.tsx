@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import Header from "@/components/common/header";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,7 +12,6 @@ import {
   DialogFooter,
   DialogTitle,
 } from "@/components/ui/dialog";
-import Header from "@/components/common/header";
 
 const CheckoutSuccessPage = () => {
   return (
