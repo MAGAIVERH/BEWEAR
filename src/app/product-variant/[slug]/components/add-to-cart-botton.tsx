@@ -1,9 +1,10 @@
 "use client";
 
-import { addProductToCart } from "@/actions/add-cart-product";
-import { Button } from "@/components/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
+
+import { addProductToCart } from "@/actions/add-cart-product";
+import { Button } from "@/components/ui/button";
 
 interface AddToCartButtonProps {
   productVariantId: string;
@@ -34,8 +35,8 @@ const AddToCartButton = ({
       disabled={isPending}
       onClick={() => mutate()}
     >
-      {isPending && <Loader2 className="mr-1 animate-spin" />}
-      Adicionar a sacola
+      {isPending && <Loader2 className="animate-spin" />}
+      Adicionar à sacola
     </Button>
   );
 };

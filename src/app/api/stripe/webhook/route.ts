@@ -15,7 +15,6 @@ export const POST = async (request: Request) => {
   }
   const text = await request.text();
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
   const event = stripe.webhooks.constructEvent(
     text,
     signature,

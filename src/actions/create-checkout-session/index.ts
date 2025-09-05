@@ -5,7 +5,12 @@ import { headers } from "next/headers";
 import Stripe from "stripe";
 
 import { db } from "@/db";
-import { orderItemTable, orderTable } from "@/db/schema";
+import {
+  cartItemTable,
+  cartTable,
+  orderItemTable,
+  orderTable,
+} from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 import {
