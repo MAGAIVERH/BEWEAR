@@ -7,8 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/db";
 import { auth } from "@/lib/auth";
 
-import { formatAddress } from "../helpers/address";
 import CartSummary from "../components/cart-summary";
+import { formatAddress } from "../helpers/address";
 import FinishOrderButton from "./components/finish-order-button";
 
 const ConfirmationPage = async () => {
@@ -44,9 +44,9 @@ const ConfirmationPage = async () => {
     redirect("/cart/identification");
   }
   return (
-    <div>
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <div className="space-y-4 px-5">
+      <div className="flex-1 space-y-4 px-5">
         <Card>
           <CardHeader>
             <CardTitle>Identificação</CardTitle>
@@ -73,7 +73,7 @@ const ConfirmationPage = async () => {
           }))}
         />
       </div>
-      <div className="mt-12">
+      <div className="mt-auto">
         <Footer />
       </div>
     </div>
