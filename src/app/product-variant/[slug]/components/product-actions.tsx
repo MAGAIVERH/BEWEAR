@@ -29,7 +29,7 @@ const ProductActions = ({ productVariantId, sizes }: ProductActionsProps) => {
 
   return (
     <>
-      <div className="space-y-4 px-5">
+      <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-medium">Select size</h3>
           {!selectedSize && (
@@ -56,7 +56,7 @@ const ProductActions = ({ productVariantId, sizes }: ProductActionsProps) => {
         </div>
       </div>
 
-      <div className="space-y-4 px-5">
+      <div className="space-y-4">
         <h3 className="text-sm font-medium">Quantity</h3>
         <div className="flex w-[100px] items-center justify-between rounded-lg border">
           <Button size="icon" variant="ghost" onClick={handleDecrement}>
@@ -69,7 +69,7 @@ const ProductActions = ({ productVariantId, sizes }: ProductActionsProps) => {
         </div>
       </div>
 
-      <div className="flex flex-col space-y-4 px-5">
+      <div className="flex flex-col space-y-4">
         <AddToCartButton
           productVariantId={productVariantId}
           quantity={quantity}

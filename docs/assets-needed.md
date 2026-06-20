@@ -53,6 +53,12 @@ caminho/URL). **Sem texto embutido** nas fotos/vídeos — a tipografia é nossa
 
 ---
 
+## 2.5. Galeria da PDP (detalhe/lifestyle por categoria) ✅ aplicado (stock)
+
+> **Aplicado:** `public/gallery/{categoria}-1.jpg` e `-2.jpg` (Unsplash, 1200×1200) para sneakers, t-shirts,
+> pants, shorts, jackets-hoodies, accessories. Usadas como imagens adicionais na galeria da PDP
+> (`getGalleryImages`). Ideal: substituir por **múltiplos ângulos reais do próprio produto** quando houver.
+
 ## 3. Fotos de produto (catálogo) ⏳
 
 **Onde:** variantes (`product_variant.imageUrl`) — hoje vêm de um CDN via seed
