@@ -174,12 +174,14 @@
   }
 }
 
+/* Track renders 4 identical copies; shifting by 25% advances exactly one copy,
+   so the loop is seamless and always fills wide viewports. */
 @keyframes marquee {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
 }
 
