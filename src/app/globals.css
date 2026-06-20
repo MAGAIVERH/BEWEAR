@@ -143,9 +143,9 @@
 /* Reusable design-system primitives (Nike-grade editorial type scale).
    Use these classes instead of repeating utility chains. */
 @layer components {
-  /* Responsive page container */
+  /* Responsive page container (single source of horizontal alignment) */
   .container-bw {
-    @apply mx-auto w-full max-w-7xl px-5 md:px-8 lg:px-12;
+    @apply mx-auto w-full max-w-[1600px] px-5 md:px-8 lg:px-12;
   }
   /* Small uppercase label above a heading */
   .text-eyebrow {
@@ -182,6 +182,16 @@
   }
   to {
     transform: translateX(-25%);
+  }
+}
+
+/* Hero play/pause progress ring (circle uses pathLength=100) */
+@keyframes hero-progress {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
   }
 }
 

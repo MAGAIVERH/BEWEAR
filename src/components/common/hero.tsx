@@ -1,111 +1,221 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PauseIcon,
+  PlayIcon,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-// Curated free stock (Mixkit/Unsplash licenses, commercial use) in /public.
-// Swap for real brand footage later — keep the same file names.
-const HERO_VIDEO = "/hero.mp4";
-const HERO_POSTER = "/hero-poster.jpg";
+type Slide = {
+  type: "video" | "image";
+  src: string;
+  poster?: string;
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  ctaLabel: string;
+  ctaHref: string;
+};
+
+const SLIDES: Slide[] = [
+  {
+    type: "video",
+    src: "/hero.mp4",
+    poster: "/hero-poster.jpg",
+    eyebrow: "New collection",
+    title: "Built to move.",
+    subtitle: "Premium streetwear, sneakers and accessories.",
+    ctaLabel: "Shop now",
+    ctaHref: "#best-sellers",
+  },
+  {
+    type: "image",
+    src: "/home/hero-2.jpg",
+    eyebrow: "Training",
+    title: "No off-season.",
+    ctaLabel: "Shop training",
+    ctaHref: "/category/t-shirts",
+  },
+  {
+    type: "image",
+    src: "/home/hero-3.jpg",
+    eyebrow: "Sneakers",
+    title: "Own the street.",
+    ctaLabel: "Shop sneakers",
+    ctaHref: "/category/sneakers",
+  },
+];
+
+const SLIDE_DURATION = 6000;
+
+const CONTROL_CLASS =
+  "flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-white backdrop-blur-sm transition hover:bg-white hover:text-black";
 
 const Hero = () => {
   const prefersReducedMotion = useReducedMotion();
+  const [index, setIndex] = useState(0);
+  const [playing, setPlaying] = useState(true);
+  const count = SLIDES.length;
 
-  const container: Variants = {
-    hidden: {},
-    show: {
-      transition: { staggerChildren: 0.12, delayChildren: 0.1 },
-    },
-  };
+  const goNext = useCallback(() => setIndex((i) => (i + 1) % count), [count]);
+  const goPrev = useCallback(
+    () => setIndex((i) => (i - 1 + count) % count),
+    [count],
+  );
 
-  const item: Variants = prefersReducedMotion
-    ? { hidden: { opacity: 1 }, show: { opacity: 1 } }
-    : {
-        hidden: { opacity: 0, y: 24 },
-        show: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-        },
-      };
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setPlaying(false);
+    }
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
+    if (!playing || prefersReducedMotion) return;
+    const timer = setTimeout(goNext, SLIDE_DURATION);
+    return () => clearTimeout(timer);
+  }, [playing, prefersReducedMotion, index, goNext]);
+
+  const active = SLIDES[index];
 
   return (
     <section className="relative w-full overflow-hidden">
-      {/* Mobile crops the sides (keeps full height → no cut heads/feet);
-          desktop matches the 16:9 video exactly, so nothing is cropped. */}
       <div className="relative aspect-[4/5] min-h-[460px] w-full sm:aspect-[3/2] md:aspect-video">
-        {prefersReducedMotion ? (
-          <Image
-            src={HERO_POSTER}
-            alt="Model wearing the new BEWEAR collection"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-        ) : (
-          <video
-            className="absolute inset-0 h-full w-full object-cover"
-            poster={HERO_POSTER}
-            autoPlay
-            muted
-            loop
-            playsInline
+        {SLIDES.map((slide, i) => (
+          <div
+            key={slide.src}
+            className={cn(
+              "absolute inset-0 transition-opacity duration-700",
+              i === index ? "opacity-100" : "pointer-events-none opacity-0",
+            )}
           >
-            <source src={HERO_VIDEO} type="video/mp4" />
-          </video>
-        )}
-        {/* Contrast overlay so text stays readable on any photo */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
+            {slide.type === "video" && !prefersReducedMotion ? (
+              <video
+                className="absolute inset-0 h-full w-full object-cover"
+                poster={slide.poster}
+                autoPlay
+                muted
+                loop
+                playsInline
+              >
+                <source src={slide.src} type="video/mp4" />
+              </video>
+            ) : (
+              <Image
+                src={slide.type === "video" ? (slide.poster as string) : slide.src}
+                alt={slide.title}
+                fill
+                priority={i === 0}
+                sizes="100vw"
+                className="object-cover"
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
+          </div>
+        ))}
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="container-bw absolute inset-0 flex flex-col justify-end pb-12 md:pb-20"
-        >
-          <motion.p
-            variants={item}
-            className="text-xs font-semibold tracking-[0.18em] text-white/80 uppercase"
-          >
-            New collection
-          </motion.p>
-
-          <motion.h1
-            variants={item}
-            className="text-display mt-3 max-w-3xl text-white"
-          >
-            Built to move.
-          </motion.h1>
-
-          <motion.p
-            variants={item}
-            className="mt-4 max-w-md text-base text-white/80 md:text-lg"
-          >
-            Premium streetwear, sneakers and accessories — engineered for
-            everyday motion.
-          </motion.p>
-
-          <motion.div
-            variants={item}
-            className="mt-8 flex flex-col gap-3 sm:flex-row"
-          >
+        {/* Active slide content */}
+        <div className="container-bw absolute inset-0 flex flex-col justify-end pb-16 md:pb-24">
+          <p className="text-xs font-semibold tracking-[0.18em] text-white/80 uppercase">
+            {active.eyebrow}
+          </p>
+          <h1 className="text-display mt-3 max-w-3xl text-white">
+            {active.title}
+          </h1>
+          {active.subtitle && (
+            <p className="mt-4 max-w-md text-base text-white/80 md:text-lg">
+              {active.subtitle}
+            </p>
+          )}
+          <div className="mt-8">
             <Button asChild size="lg" className="rounded-full">
-              <Link href="#best-sellers">Shop now</Link>
+              <Link href={active.ctaHref}>{active.ctaLabel}</Link>
             </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="hover:text-foreground rounded-full border-white/40 bg-transparent text-white hover:bg-white"
-            >
-              <Link href="#new-arrivals">Explore</Link>
-            </Button>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
+
+        {/* Dots */}
+        <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2">
+          {SLIDES.map((slide, i) => (
+            <button
+              key={slide.src}
+              type="button"
+              aria-label={`Go to slide ${i + 1}`}
+              aria-current={i === index}
+              onClick={() => setIndex(i)}
+              className={cn(
+                "h-1.5 rounded-full transition-all",
+                i === index ? "w-6 bg-white" : "w-1.5 bg-white/50",
+              )}
+            />
+          ))}
+        </div>
+
+        {/* Controls */}
+        <div className="absolute right-6 bottom-6 flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setPlaying((p) => !p)}
+            aria-label={playing ? "Pause" : "Play"}
+            className="relative flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition hover:bg-black/60"
+          >
+            <svg className="absolute inset-0 -rotate-90" viewBox="0 0 40 40">
+              <circle
+                cx="20"
+                cy="20"
+                r="18"
+                fill="none"
+                stroke="currentColor"
+                strokeOpacity="0.3"
+                strokeWidth="2"
+              />
+              <circle
+                key={index}
+                cx="20"
+                cy="20"
+                r="18"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                pathLength={100}
+                strokeDasharray={100}
+                style={{
+                  animation: `hero-progress ${SLIDE_DURATION}ms linear forwards`,
+                  animationPlayState:
+                    playing && !prefersReducedMotion ? "running" : "paused",
+                }}
+              />
+            </svg>
+            {playing ? (
+              <PauseIcon className="relative h-4 w-4" />
+            ) : (
+              <PlayIcon className="relative h-4 w-4" />
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={goPrev}
+            aria-label="Previous slide"
+            className={CONTROL_CLASS}
+          >
+            <ChevronLeftIcon className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            onClick={goNext}
+            aria-label="Next slide"
+            className={CONTROL_CLASS}
+          >
+            <ChevronRightIcon className="h-4 w-4" />
+          </button>
+        </div>
       </div>
     </section>
   );

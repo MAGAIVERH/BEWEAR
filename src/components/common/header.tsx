@@ -50,9 +50,9 @@ const Header = () => {
         scrolled ? "py-2" : "py-4",
       )}
     >
-      <div className="flex items-center justify-between gap-4 px-5 md:px-8 lg:px-12">
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 md:px-8 lg:px-12">
         {/* Left: mobile menu + logo */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-self-start">
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
@@ -156,7 +156,7 @@ const Header = () => {
         </nav>
 
         {/* Right: search + account + cart */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-self-end">
           <SearchBar className="hidden w-48 md:block lg:w-64" />
           {session?.user ? (
             <div className="hidden items-center gap-1 md:flex">
