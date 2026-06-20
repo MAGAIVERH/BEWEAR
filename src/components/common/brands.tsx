@@ -17,7 +17,7 @@ const Brands = ({ title }: BrandsProps) => {
 
   return (
     <div className="space-y-6">
-      <h3 className="px-5 text-sm font-semibold">{title}</h3>
+      <h3 className="section-title px-5">{title}</h3>
       <div className="flex w-full gap-4 overflow-x-auto px-5 [&::-webkit-scrollbar]:hidden">
         {brands.map((brand) => (
           <div
