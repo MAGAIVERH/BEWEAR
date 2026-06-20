@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { orderTable } from "@/db/schema";
-import { formatCentsToBRL } from "@/helpers/money";
+import { formatCentsToUSD } from "@/helpers/money";
 
 interface OrdersProps {
   orders: Array<{
@@ -41,17 +41,17 @@ const Orders = ({ orders }: OrdersProps) => {
               <AccordionItem value="item-1">
                 <AccordionTrigger>
                   <div className="flex flex-col gap-1">
-                    {order.status === "paid" && <Badge>Pago</Badge>}
+                    {order.status === "paid" && <Badge>Paid</Badge>}
                     {order.status === "pending" && (
-                      <Badge variant="outline">Pagamento pendente</Badge>
+                      <Badge variant="outline">Payment pending</Badge>
                     )}
                     {order.status === "canceled" && (
-                      <Badge variant="destructive">Cancelado</Badge>
+                      <Badge variant="destructive">Canceled</Badge>
                     )}
                     <p>
-                      Pedido feito em{" "}
-                      {new Date(order.createdAt).toLocaleDateString("pt-BR")} às{" "}
-                      {new Date(order.createdAt).toLocaleTimeString("pt-BR", {
+                      Order placed on{" "}
+                      {new Date(order.createdAt).toLocaleDateString("en-US")} at{" "}
+                      {new Date(order.createdAt).toLocaleTimeString("en-US", {
                         hour: "2-digit",
                         minute: "2-digit",
                       })}
@@ -83,7 +83,7 @@ const Orders = ({ orders }: OrdersProps) => {
                       </div>
                       <div className="flex flex-col items-end justify-center gap-2">
                         <p className="text-sm font-bold">
-                          {formatCentsToBRL(
+                          {formatCentsToUSD(
                             product.priceInCents * product.quantity,
                           )}
                         </p>
@@ -97,19 +97,19 @@ const Orders = ({ orders }: OrdersProps) => {
                     <div className="flex justify-between">
                       <p className="text-sm">Subtotal</p>
                       <p className="text-muted-foreground text-sm font-medium">
-                        {formatCentsToBRL(order.totalPriceInCents)}
+                        {formatCentsToUSD(order.totalPriceInCents)}
                       </p>
                     </div>
                     <div className="flex justify-between">
-                      <p className="text-sm">Frete</p>
+                      <p className="text-sm">Shipping</p>
                       <p className="text-muted-foreground text-sm font-medium">
-                        GRÁTIS
+                        FREE
                       </p>
                     </div>
                     <div className="flex justify-between">
                       <p className="text-sm">Total</p>
                       <p className="text-sm font-semibold">
-                        {formatCentsToBRL(order.totalPriceInCents)}
+                        {formatCentsToUSD(order.totalPriceInCents)}
                       </p>
                     </div>
                   </div>

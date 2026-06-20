@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { productTable, productVariantTable } from "@/db/schema";
-import { formatCentsToBRL } from "@/helpers/money";
+import { formatCentsToUSD } from "@/helpers/money";
 import { cn } from "@/lib/utils";
 
 interface ProductItemProps {
@@ -40,7 +40,7 @@ const ProductItem = ({ product, textContainerClassName }: ProductItemProps) => {
         </p>
 
         <div className="truncate text-sm font-semibold">
-          {formatCentsToBRL(firstVariant.priceInCents)}
+          {formatCentsToUSD(firstVariant.priceInCents)}
         </div>
       </div>
     </Link>

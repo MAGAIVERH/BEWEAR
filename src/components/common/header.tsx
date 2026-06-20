@@ -1,13 +1,13 @@
 "use client";
 
+import { LogInIcon, LogOutIcon, MenuIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { LogInIcon, LogOutIcon, MenuIcon } from "lucide-react";
 
 import { authClient } from "@/lib/auth-client";
 
-import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
 import {
   Sheet,
   SheetContent,
@@ -15,7 +15,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-
 import Cart from "./cart";
 
 const Header = () => {
@@ -70,7 +69,7 @@ const Header = () => {
                 </>
               ) : (
                 <div className="flex items-center justify-between">
-                  <h2 className="font-semibold">Olá. Faça seu login!</h2>
+                  <h2 className="font-semibold">Hi! Sign in to your account.</h2>
                   <Button size="icon" asChild variant="outline">
                     <Link href="/authentication">
                       <LogInIcon />

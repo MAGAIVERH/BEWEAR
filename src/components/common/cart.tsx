@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { ShoppingBasketIcon } from "lucide-react";
+import Link from "next/link";
 
-import { formatCentsToBRL } from "@/helpers/money";
+import { formatCentsToUSD } from "@/helpers/money";
 import { useCart } from "@/hooks/queries/use-cart";
 
 import { Button } from "../ui/button";
@@ -16,7 +16,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-
 import CartItem from "./cart-item";
 
 const Cart = () => {
@@ -30,7 +29,7 @@ const Cart = () => {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Carrinho</SheetTitle>
+          <SheetTitle>Cart</SheetTitle>
         </SheetHeader>
 
         <div className="flex h-full flex-col px-5 pb-5">
@@ -61,24 +60,24 @@ const Cart = () => {
 
               <div className="flex items-center justify-between text-xs font-medium">
                 <p>Subtotal</p>
-                <p>{formatCentsToBRL(cart?.totalPriceInCents ?? 0)}</p>
+                <p>{formatCentsToUSD(cart?.totalPriceInCents ?? 0)}</p>
               </div>
 
               <Separator />
 
               <div className="flex items-center justify-between text-xs font-medium">
-                <p>Entrega</p> <p>Gratis</p>
+                <p>Shipping</p> <p>Free</p>
               </div>
 
               <Separator />
 
               <div className="flex items-center justify-between text-xs font-medium">
                 <p>Total</p>
-                <p>{formatCentsToBRL(cart?.totalPriceInCents ?? 0)}</p>
+                <p>{formatCentsToUSD(cart?.totalPriceInCents ?? 0)}</p>
               </div>
 
               <Button className="mt-5 rounded-full" asChild>
-                <Link href="/cart/identification">Finalizar compra</Link>
+                <Link href="/cart/identification">Checkout</Link>
               </Button>
             </div>
           )}

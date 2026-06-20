@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { MinusIcon, PlusIcon } from "lucide-react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
@@ -26,7 +26,7 @@ const ProductActions = ({ productVariantId }: ProductActionsProps) => {
     <>
       <div className="px-5">
         <div className="space-y-4">
-          <h3 className="font-medium">Quantidade</h3>
+          <h3 className="font-medium">Quantity</h3>
           <div className="flex w-[100px] items-center justify-between rounded-lg border">
             <Button size="icon" variant="ghost" onClick={handleDecrement}>
               <MinusIcon />
@@ -44,7 +44,7 @@ const ProductActions = ({ productVariantId }: ProductActionsProps) => {
           quantity={quantity}
         />
         <Button className="rounded-full" size="lg">
-          Comprar agora
+          Buy now
         </Button>
       </div>
     </>

@@ -1,5 +1,11 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,15 +25,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import z from "zod";
 
 const formSchema = z.object({
-  email: z.email("E-mail inválido!"),
-  password: z.string("Senha inválida!").min(8, "Senha inválida!"),
+  email: z.email("Invalid email."),
+  password: z.string("Invalid password.").min(8, "Invalid password."),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -52,19 +53,16 @@ const SignInForm = () => {
         },
         onError: (ctx) => {
           if (ctx.error.code === "USER_NOT_FOUND") {
-            toast.error("Usuário não encontrado");
+            toast.error("User not found.");
             return form.setError("email", {
-              message: "Usuário não encontrado.",
+              message: "User not found.",
             });
           }
 
           if (ctx.error.code === "INVALID_EMAIL_OR_PASSWORD") {
-            toast.error("E-mail ou senha inválidos");
-            form.setError("email", {
-              message: "E-mail ou senha inválidos",
-            });
+            toast.error("Invalid email or password.");
             return form.setError("email", {
-              message: "E-mail ou senha inválido",
+              message: "Invalid email or password.",
             });
           }
         },
@@ -82,8 +80,8 @@ const SignInForm = () => {
     <>
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Entrar</CardTitle>
-          <CardDescription>Faça login para continuar.</CardDescription>
+          <CardTitle>Sign in</CardTitle>
+          <CardDescription>Sign in to continue.</CardDescription>
         </CardHeader>
 
         <Form {...form}>
@@ -96,7 +94,7 @@ const SignInForm = () => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite seu email" {...field} />
+                      <Input placeholder="Enter your email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -108,9 +106,13 @@ const SignInForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Senha</FormLabel>
+                    <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite sua senha" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="Enter your password"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -119,7 +121,7 @@ const SignInForm = () => {
             </CardContent>
             <CardFooter className="fle flex-col gap-2">
               <Button type="submit" className="w-full">
-                Entrar
+                Sign in
               </Button>
 
               <Button
@@ -146,7 +148,7 @@ const SignInForm = () => {
                     fill="#EA4335"
                   />
                 </svg>
-                Entrar com Google
+                Sign in with Google
               </Button>
             </CardFooter>
           </form>

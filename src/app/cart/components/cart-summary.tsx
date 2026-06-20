@@ -3,7 +3,7 @@ import React from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { formatCentsToBRL } from "@/helpers/money";
+import { formatCentsToUSD } from "@/helpers/money";
 
 interface CartSummaryProps {
   subtotalInCents: number;
@@ -26,23 +26,23 @@ const CartSummary = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Resumo</CardTitle>
+        <CardTitle>Summary</CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
         <div className="flex justify-between">
           <p className="text-sm">Subtotal</p>
           <p className="text-muted-foreground text-sm font-medium">
-            {formatCentsToBRL(subtotalInCents)}
+            {formatCentsToUSD(subtotalInCents)}
           </p>
         </div>
         <div className="flex justify-between">
-          <p className="text-sm">Frete</p>
-          <p className="text-muted-foreground text-sm font-medium">GRÁTIS</p>
+          <p className="text-sm">Shipping</p>
+          <p className="text-muted-foreground text-sm font-medium">FREE</p>
         </div>
         <div className="flex justify-between">
           <p className="text-sm">Total</p>
           <p className="text-muted-foreground text-sm font-medium">
-            {formatCentsToBRL(totalInCents)}
+            {formatCentsToUSD(totalInCents)}
           </p>
         </div>
 
@@ -69,7 +69,7 @@ const CartSummary = ({
             </div>
             <div className="flex flex-col items-end justify-center gap-2">
               <p className="text-sm font-bold">
-                {formatCentsToBRL(product.priceInCents)}
+                {formatCentsToUSD(product.priceInCents)}
               </p>
             </div>
           </div>

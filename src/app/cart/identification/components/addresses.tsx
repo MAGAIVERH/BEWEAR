@@ -22,24 +22,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { shippingAddressTable } from "@/db/schema";
+import { US_STATES } from "@/helpers/us-states";
 import { useCreateShippingAddress } from "@/hooks/mutations/use-create-shipping-address";
 import { useUpdateCartShippingAddress } from "@/hooks/mutations/use-update-cart-shipping-address";
 import { useUserAddresses } from "@/hooks/queries/use-user-addresses";
+import { cn } from "@/lib/utils";
 
 import { formatAddress } from "../../helpers/address";
 
 const formSchema = z.object({
-  email: z.email("E-mail inválido"),
-  fullName: z.string().min(1, "Nome completo é obrigatório"),
-  cpf: z.string().min(14, "CPF inválido"),
-  phone: z.string().min(15, "Celular inválido"),
-  zipCode: z.string().min(9, "CEP inválido"),
-  address: z.string().min(1, "Endereço é obrigatório"),
-  number: z.string().min(1, "Número é obrigatório"),
+  email: z.email("Invalid email."),
+  fullName: z.string().min(1, "Full name is required."),
+  phone: z.string().min(14, "Invalid phone number."),
+  zipCode: z.string().min(5, "Invalid ZIP code."),
+  street: z.string().min(1, "Address is required."),
   complement: z.string().optional(),
-  neighborhood: z.string().min(1, "Bairro é obrigatório"),
-  city: z.string().min(1, "Cidade é obrigatória"),
-  state: z.string().min(1, "Estado é obrigatório"),
+  city: z.string().min(1, "City is required."),
+  state: z.string().min(2, "State is required."),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -68,13 +67,10 @@ const Addresses = ({
     defaultValues: {
       email: "",
       fullName: "",
-      cpf: "",
       phone: "",
       zipCode: "",
-      address: "",
-      number: "",
+      street: "",
       complement: "",
-      neighborhood: "",
       city: "",
       state: "",
     },
@@ -84,16 +80,16 @@ const Addresses = ({
     try {
       const newAddress =
         await createShippingAddressMutation.mutateAsync(values);
-      toast.success("Endereço criado com sucesso!");
+      toast.success("Address created successfully!");
       form.reset();
       setSelectedAddress(newAddress.id);
 
       await updateCartShippingAddressMutation.mutateAsync({
         shippingAddressId: newAddress.id,
       });
-      toast.success("Endereço vinculado ao carrinho!");
+      toast.success("Address linked to your cart!");
     } catch (error) {
-      toast.error("Erro ao criar endereço. Tente novamente.");
+      toast.error("Failed to create address. Please try again.");
       console.error(error);
     }
   };
@@ -105,10 +101,10 @@ const Addresses = ({
       await updateCartShippingAddressMutation.mutateAsync({
         shippingAddressId: selectedAddress,
       });
-      toast.success("Endereço selecionado para entrega!");
+      toast.success("Address selected for delivery!");
       router.push("/cart/confirmation");
     } catch (error) {
-      toast.error("Erro ao selecionar endereço. Tente novamente.");
+      toast.error("Failed to select address. Please try again.");
       console.error(error);
     }
   };
@@ -116,12 +112,12 @@ const Addresses = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Identificação</CardTitle>
+        <CardTitle>Identification</CardTitle>
       </CardHeader>
       <CardContent>
         {isLoading ? (
           <div className="py-4 text-center">
-            <p>Carregando endereços...</p>
+            <p>Loading addresses...</p>
           </div>
         ) : (
           <RadioGroup
@@ -131,7 +127,7 @@ const Addresses = ({
             {addresses?.length === 0 && (
               <div className="py-4 text-center">
                 <p className="text-muted-foreground">
-                  Você ainda não possui endereços cadastrados.
+                  You don&apos;t have any saved addresses yet.
                 </p>
               </div>
             )}
@@ -157,7 +153,7 @@ const Addresses = ({
               <CardContent>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="add_new" id="add_new" />
-                  <Label htmlFor="add_new">Adicionar novo endereço</Label>
+                  <Label htmlFor="add_new">Add new address</Label>
                 </div>
               </CardContent>
             </Card>
@@ -172,8 +168,8 @@ const Addresses = ({
               disabled={updateCartShippingAddressMutation.isPending}
             >
               {updateCartShippingAddressMutation.isPending
-                ? "Processando..."
-                : "Ir para pagamento"}
+                ? "Processing..."
+                : "Continue to payment"}
             </Button>
           </div>
         )}
@@ -187,48 +183,29 @@ const Addresses = ({
               <div className="grid gap-4 md:grid-cols-2">
                 <FormField
                   control={form.control}
+                  name="fullName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full name</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your full name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
                   name="email"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite seu email" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="fullName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Nome completo</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Digite seu nome completo"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="cpf"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>CPF</FormLabel>
-                      <FormControl>
-                        <PatternFormat
-                          format="###.###.###-##"
-                          placeholder="000.000.000-00"
-                          customInput={Input}
-                          {...field}
-                        />
+                        <Input placeholder="Enter your email" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -240,11 +217,11 @@ const Addresses = ({
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Celular</FormLabel>
+                      <FormLabel>Phone</FormLabel>
                       <FormControl>
                         <PatternFormat
-                          format="(##) #####-####"
-                          placeholder="(11) 99999-9999"
+                          format="(###) ###-####"
+                          placeholder="(555) 123-4567"
                           customInput={Input}
                           {...field}
                         />
@@ -259,11 +236,11 @@ const Addresses = ({
                   name="zipCode"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>CEP</FormLabel>
+                      <FormLabel>ZIP code</FormLabel>
                       <FormControl>
                         <PatternFormat
-                          format="#####-###"
-                          placeholder="00000-000"
+                          format="#####"
+                          placeholder="10001"
                           customInput={Input}
                           {...field}
                         />
@@ -275,26 +252,12 @@ const Addresses = ({
 
                 <FormField
                   control={form.control}
-                  name="address"
+                  name="street"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Endereço</FormLabel>
+                    <FormItem className="md:col-span-2">
+                      <FormLabel>Street address</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite seu endereço" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="number"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Número</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Digite o número" {...field} />
+                        <Input placeholder="1842 Pearl St" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -305,27 +268,10 @@ const Addresses = ({
                   control={form.control}
                   name="complement"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Complemento</FormLabel>
+                    <FormItem className="md:col-span-2">
+                      <FormLabel>Apt, suite, etc. (optional)</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Apto, bloco, etc. (opcional)"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="neighborhood"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Bairro</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Digite o bairro" {...field} />
+                        <Input placeholder="Apt 4B" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -337,9 +283,9 @@ const Addresses = ({
                   name="city"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Cidade</FormLabel>
+                      <FormLabel>City</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite a cidade" {...field} />
+                        <Input placeholder="Enter your city" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -351,9 +297,24 @@ const Addresses = ({
                   name="state"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Estado</FormLabel>
+                      <FormLabel>State</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite o estado" {...field} />
+                        <select
+                          className={cn(
+                            "border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-9 w-full rounded-md border px-3 py-1 text-sm shadow-xs focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+                            !field.value && "text-muted-foreground",
+                          )}
+                          {...field}
+                        >
+                          <option value="" disabled>
+                            Select a state
+                          </option>
+                          {US_STATES.map((state) => (
+                            <option key={state.code} value={state.code}>
+                              {state.name}
+                            </option>
+                          ))}
+                        </select>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -371,8 +332,8 @@ const Addresses = ({
               >
                 {createShippingAddressMutation.isPending ||
                 updateCartShippingAddressMutation.isPending
-                  ? "Salvando..."
-                  : "Salvar endereço"}
+                  ? "Saving..."
+                  : "Save address"}
               </Button>
             </form>
           </Form>

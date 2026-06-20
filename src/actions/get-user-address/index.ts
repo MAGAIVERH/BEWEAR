@@ -13,7 +13,7 @@ export async function getUserAddresses() {
   });
 
   if (!session?.user?.id) {
-    throw new Error("Usuário não autenticado");
+    throw new Error("Unauthenticated user");
   }
 
   try {
@@ -25,7 +25,7 @@ export async function getUserAddresses() {
 
     return addresses;
   } catch (error) {
-    console.error("Erro ao buscar endereços:", error);
-    throw new Error("Erro ao buscar endereços");
+    console.error("Failed to fetch addresses:", error);
+    throw new Error("Failed to fetch addresses");
   }
 }

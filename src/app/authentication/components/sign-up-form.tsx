@@ -1,5 +1,11 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,26 +25,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import z from "zod";
 
 const formSchema = z
   .object({
-    name: z.string().trim().min(1, "Nome é obrigatório"),
-    email: z.email("E-mail inválido!"),
-    password: z.string("Senha inválida!").min(8, "Senha inválida!"),
-    passwordConfirmation: z.string("Senha inválida!").min(8, "Senha inválida!"),
+    name: z.string().trim().min(1, "Name is required."),
+    email: z.email("Invalid email."),
+    password: z.string("Invalid password.").min(8, "Invalid password."),
+    passwordConfirmation: z
+      .string("Invalid password.")
+      .min(8, "Invalid password."),
   })
   .refine(
     (data) => {
       return data.password === data.passwordConfirmation;
     },
     {
-      error: "As senhas não coincidem.",
+      error: "Passwords don't match.",
       path: ["passwordConfirmation"],
     },
   );
@@ -69,9 +71,9 @@ const SignInUpForm = () => {
         },
         onError: (error) => {
           if (error.error.code === "USER_ALREADY_EXISTS") {
-            toast.error("E-mail já cadastrado");
+            toast.error("Email already registered.");
             return form.setError("email", {
-              message: "E-mail já cadastrado!",
+              message: "Email already registered.",
             });
           }
           toast.error(error.error.message);
@@ -84,8 +86,8 @@ const SignInUpForm = () => {
     <>
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Criar conta</CardTitle>
-          <CardDescription>Crie uma conta para continuar.</CardDescription>
+          <CardTitle>Sign up</CardTitle>
+          <CardDescription>Create an account to continue.</CardDescription>
         </CardHeader>
 
         <Form {...form}>
@@ -96,9 +98,9 @@ const SignInUpForm = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nome</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite seu nome" {...field} />
+                      <Input placeholder="Enter your name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -110,9 +112,9 @@ const SignInUpForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>email</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite seu email" {...field} />
+                      <Input placeholder="Enter your email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -124,9 +126,13 @@ const SignInUpForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Senha</FormLabel>
+                    <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite sua senha" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="Enter your password"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -138,10 +144,11 @@ const SignInUpForm = () => {
                 name="passwordConfirmation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Confirmar senha</FormLabel>
+                    <FormLabel>Confirm password</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Digite a sua senha novamente"
+                        type="password"
+                        placeholder="Enter your password again"
                         {...field}
                       />
                     </FormControl>
@@ -152,7 +159,7 @@ const SignInUpForm = () => {
             </CardContent>
             <CardFooter>
               <Button type="submit" className="w-full">
-                Criar conta
+                Sign up
               </Button>
             </CardFooter>
           </form>
