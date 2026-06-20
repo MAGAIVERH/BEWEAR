@@ -32,8 +32,8 @@ const TRENDING_SLUGS = [
 ];
 
 const BRAND_LINKS = [
-  { label: "Find a Store", href: "#" },
-  { label: "Help", href: "#" },
+  { label: "Find a Store", href: "/help#contact" },
+  { label: "Help", href: "/help" },
   { label: "Join Us", href: "/authentication" },
   { label: "Sign In", href: "/authentication" },
 ];

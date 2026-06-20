@@ -10,22 +10,22 @@ const SHOP_LINKS = [
 ];
 
 const HELP_LINKS = [
-  { label: "Shipping", href: "#" },
-  { label: "Returns", href: "#" },
-  { label: "FAQ", href: "#" },
-  { label: "Contact", href: "#" },
+  { label: "Shipping", href: "/help#shipping" },
+  { label: "Returns", href: "/help#returns" },
+  { label: "FAQ", href: "/help#faq" },
+  { label: "Contact", href: "/help#contact" },
 ];
 
 const COMPANY_LINKS = [
-  { label: "About", href: "#" },
-  { label: "Careers", href: "#" },
-  { label: "Sustainability", href: "#" },
+  { label: "About", href: "/about" },
+  { label: "Careers", href: "/about#careers" },
+  { label: "Sustainability", href: "/about#sustainability" },
 ];
 
 const SOCIAL_LINKS = [
-  { label: "Instagram", href: "#", Icon: InstagramIcon },
-  { label: "Twitter", href: "#", Icon: TwitterIcon },
-  { label: "YouTube", href: "#", Icon: YoutubeIcon },
+  { label: "Instagram", href: "https://www.instagram.com", Icon: InstagramIcon },
+  { label: "Twitter", href: "https://x.com", Icon: TwitterIcon },
+  { label: "YouTube", href: "https://www.youtube.com", Icon: YoutubeIcon },
 ];
 
 const Footer = () => {
@@ -52,14 +52,16 @@ const Footer = () => {
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t pt-6 sm:flex-row">
           <div className="flex items-center gap-3">
             {SOCIAL_LINKS.map(({ label, href, Icon }) => (
-              <Link
+              <a
                 key={label}
                 href={href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={label}
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Icon className="h-5 w-5" />
-              </Link>
+              </a>
             ))}
           </div>
 
