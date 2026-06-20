@@ -15,6 +15,13 @@
       "when": 1781968670274,
       "tag": "0001_add_size_to_cart_and_order_items",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1781994829302,
+      "tag": "0002_add_wishlist_item",
+      "breakpoints": true
     }
   ]
 }

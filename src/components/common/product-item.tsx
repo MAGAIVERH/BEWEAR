@@ -5,6 +5,8 @@ import { productTable, productVariantTable } from "@/db/schema";
 import { formatCentsToUSD } from "@/helpers/money";
 import { cn } from "@/lib/utils";
 
+import WishlistButton from "./wishlist-button";
+
 interface ProductItemProps {
   product: typeof productTable.$inferSelect & {
     variants: (typeof productVariantTable.$inferSelect)[];
@@ -40,6 +42,10 @@ const ProductItem = ({ product, className, floating }: ProductItemProps) => {
               ? "object-contain brightness-[1.06] contrast-[1.22]"
               : "object-cover",
           )}
+        />
+        <WishlistButton
+          productVariantId={firstVariant.id}
+          className="absolute top-3 right-3 z-10"
         />
       </div>
 
