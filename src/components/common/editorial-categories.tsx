@@ -8,11 +8,8 @@ type EditorialCategoriesProps = {
   categories: (typeof categoryTable.$inferSelect)[];
 };
 
-// Placeholder editorial photography (Unsplash) — swap for real imagery later.
-const FEATURE_IMAGES = [
-  "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1400&q=80",
-  "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=1400&q=80",
-];
+// Curated free stock (Unsplash license) in /public — swap for real imagery later.
+const FEATURE_IMAGES = ["/category-1.jpg", "/category-2.jpg"];
 
 const EditorialCategories = ({ categories }: EditorialCategoriesProps) => {
   const featured = categories.slice(0, 2);
