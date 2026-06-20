@@ -2,7 +2,7 @@ import { desc } from "drizzle-orm";
 import Image from "next/image";
 
 import Brands from "@/components/common/brands";
-import CategorySelector from "@/components/common/category-selector";
+import EditorialCategories from "@/components/common/editorial-categories";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import Hero from "@/components/common/hero";
@@ -43,8 +43,8 @@ const Home = async () => {
           </Reveal>
         </section>
 
-        <Reveal className="px-5">
-          <CategorySelector categories={categories} />
+        <Reveal>
+          <EditorialCategories categories={categories} />
         </Reveal>
 
         <div className="px-5">

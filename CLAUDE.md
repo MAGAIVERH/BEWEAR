@@ -31,6 +31,10 @@ Better Auth · Stripe · Sonner · **pnpm**.
 - **README vivo:** manter o `README.md` atualizado a cada feature/fase (estado real, stack, como rodar,
   prints/links) e produzir a **versão final** quando o projeto ficar pronto. Nunca deixar o README no
   conteúdo padrão do `create-next-app`.
+- **Assets reais SEMPRE solicitados antes de commitar:** toda tela que usa foto/vídeo/banner exige pedir o
+  arquivo ao usuário com especificação clara (formato, proporção, resolução, quantidade, assunto) e
+  registrar em `docs/assets-needed.md`. Placeholder (Unsplash) só como ponte temporária e sempre sinalizado.
+  Ver a seção "Assets / mídia" em `.cursor/rules/bewear.mdc`.
 
 ## Estrutura
 `src/app` (rotas) · `src/actions` (server actions) · `src/components/ui` (shadcn) ·

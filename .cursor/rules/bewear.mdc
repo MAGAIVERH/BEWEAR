@@ -69,6 +69,13 @@ A identidade visual vive em **tokens** em `src/app/globals.css`. Estética **lig
    **vivo**, mantido continuamente **até o projeto ficar pronto**, quando produzo a **versão final**
    (nível portfólio sênior: problema, solução, arquitetura, screenshots/GIFs, demo ao vivo). Nunca deixar
    o README desatualizado nem com o conteúdo padrão do `create-next-app`.
+9. **SEMPRE solicitar os assets reais ANTES de commitar.** Para chegar ao nível Nike, fotografia e vídeo
+   reais são parte do produto — não um detalhe. Sempre que uma tela depender de mídia (foto, vídeo, banner,
+   logo, ícone), **peça ao usuário o arquivo com especificações claras** (ver seção "Assets / mídia") e
+   **registre o pedido em `docs/assets-needed.md`** ANTES de fechar a tarefa/commit. Placeholders (Unsplash)
+   são permitidos só como ponte temporária e **devem ser sempre sinalizados e listados como pendência** —
+   nunca tratados como finais. Não considere uma tela "pronta" sem confirmar com o usuário se a mídia será
+   fornecida ou se o placeholder fica por ora.
 
 ---
 
@@ -158,6 +165,30 @@ BEWEAR/
 - **Mobile-first**, mas **todo layout precisa de versão desktop** rica (grids, navbar com menus, hover).
 - Breakpoints Tailwind padrão. Grids de produto: `grid-cols-2 md:grid-cols-3 lg:grid-cols-4`.
 - Header vira navbar completa no desktop (links de categoria, busca, conta, carrinho).
+
+---
+
+## Assets / mídia (fotos, vídeos) — OBRIGATÓRIO solicitar
+
+O acabamento "Nike" depende de fotografia/vídeo de alta qualidade. **Sempre peça os arquivos ao usuário
+ANTES de commitar** a tela que os usa, com uma especificação clara. Use este formato ao solicitar:
+
+> **Onde será usado:** (ex.: hero da home)
+> **Tipo:** foto | vídeo | logo (SVG) | banner
+> **Formato:** `.jpg`/`.webp` (foto) · `.mp4`/`.webm` (vídeo) · `.svg` (logo)
+> **Orientação / proporção:** ex.: paisagem 16:9 · retrato 4:5 · quadrado 1:1
+> **Resolução mínima:** ex.: 2400px no lado maior (hero); 1400px (cards)
+> **Quantidade:** ex.: 1 hero + 2 cards de categoria
+> **Conteúdo/assunto:** ex.: modelo de corpo inteiro com look streetwear, fundo limpo, espaço para texto à esquerda
+> **Observações:** peso (otimizar < 500KB quando possível), sem texto embutido (a tipografia é nossa)
+
+Regras:
+1. Registrar todo pedido pendente em `docs/assets-needed.md` (status: pendente / recebido / aplicado).
+2. Placeholder (Unsplash) só como ponte temporária, **sempre sinalizado** no código (comentário) e listado
+   como pendência — nunca como versão final.
+3. Para vídeo no hero (estilo Nike): pedir `.mp4` + `.webm`, ~1080p, < 5–8MB, mudo/autoplay/loop, com
+   `poster` (imagem de fallback). Sempre respeitar `prefers-reduced-motion` (não autoplay se reduzido).
+4. Centralizar caminhos de mídia em constantes nomeadas (ex.: `HERO_IMAGE`, `FEATURE_IMAGES`) para troca fácil.
 
 ---
 
