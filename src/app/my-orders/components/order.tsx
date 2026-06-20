@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import {
   Accordion,
@@ -117,6 +118,14 @@ const Orders = ({ orders }: OrdersProps) => {
                         {formatCentsToUSD(order.totalPriceInCents)}
                       </p>
                     </div>
+                  </div>
+                  <div className="mt-4">
+                    <Link
+                      href={`/my-orders/${order.id}`}
+                      className="text-sm font-medium underline-offset-4 hover:underline"
+                    >
+                      View order details
+                    </Link>
                   </div>
                 </AccordionContent>
               </AccordionItem>
