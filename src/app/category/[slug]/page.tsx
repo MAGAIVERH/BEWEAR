@@ -1,18 +1,32 @@
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
+import ProductFilters from "@/components/common/product-filters";
 import ProductItem from "@/components/common/product-item";
 import { db } from "@/db";
 import { categoryTable, productTable } from "@/db/schema";
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{
+    color?: string;
+    sort?: string;
+    minPrice?: string;
+    maxPrice?: string;
+  }>;
 }
 
-const CategoryPage = async ({ params }: CategoryPageProps) => {
+const getFirstVariantPrice = (product: {
+  variants: { priceInCents: number }[];
+}) => product.variants[0]?.priceInCents ?? 0;
+
+const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
   const { slug } = await params;
+  const { color, sort, minPrice, maxPrice } = await searchParams;
+
   const category = await db.query.categoryTable.findFirst({
     where: eq(categoryTable.slug, slug),
   });
@@ -20,12 +34,50 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
     return notFound();
   }
 
-  const products = await db.query.productTable.findMany({
+  const allProducts = await db.query.productTable.findMany({
     where: eq(productTable.categoryId, category.id),
     with: {
       variants: true,
     },
   });
+
+  const availableColors = Array.from(
+    new Set(allProducts.flatMap((product) => product.variants.map((v) => v.color))),
+  ).sort();
+
+  // Filters
+  const min = minPrice ? Number(minPrice) * 100 : undefined;
+  const max = maxPrice ? Number(maxPrice) * 100 : undefined;
+
+  let products = allProducts.filter((product) => {
+    if (color && !product.variants.some((v) => v.color === color)) {
+      return false;
+    }
+    const price = getFirstVariantPrice(product);
+    if (min !== undefined && !Number.isNaN(min) && price < min) {
+      return false;
+    }
+    if (max !== undefined && !Number.isNaN(max) && price > max) {
+      return false;
+    }
+    return true;
+  });
+
+  // Sorting
+  if (sort === "price-asc") {
+    products = [...products].sort(
+      (a, b) => getFirstVariantPrice(a) - getFirstVariantPrice(b),
+    );
+  } else if (sort === "price-desc") {
+    products = [...products].sort(
+      (a, b) => getFirstVariantPrice(b) - getFirstVariantPrice(a),
+    );
+  } else if (sort === "newest") {
+    products = [...products].sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+  }
 
   return (
     <>
@@ -40,11 +92,17 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
           </p>
         </div>
 
+        <div className="mt-6">
+          <Suspense fallback={<div className="h-16 border-y" />}>
+            <ProductFilters availableColors={availableColors} />
+          </Suspense>
+        </div>
+
         {products.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-2 py-24 text-center">
-            <p className="text-lg font-semibold">No products yet</p>
+            <p className="text-lg font-semibold">No products found</p>
             <p className="text-muted-foreground text-sm">
-              Check back soon for new drops.
+              Try adjusting your filters.
             </p>
           </div>
         ) : (
