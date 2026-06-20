@@ -10,7 +10,11 @@ caminho/URL). **Sem texto embutido** nas fotos/vídeos — a tipografia é nossa
 
 ---
 
-## 1. HERO da home — VÍDEO (decisão: vídeo, estilo Nike) ⏳
+## 1. HERO da home — VÍDEO (decisão: vídeo, estilo Nike) ✅ aplicado (stock)
+
+> **Aplicado:** `public/hero.mp4` (Mixkit, 720p, ~4 MB, licença grátis/uso comercial) +
+> `public/hero-poster.jpg` (Unsplash, 2400×1350). Trocar por **footage de marca real** quando houver.
+> WebM continua opcional (browser usa o MP4). Specs originais abaixo para referência.
 
 **Onde:** `src/components/common/hero.tsx`
 
@@ -34,7 +38,9 @@ caminho/URL). **Sem texto embutido** nas fotos/vídeos — a tipografia é nossa
 
 ---
 
-## 2. Blocos editoriais de categoria ⏳
+## 2. Blocos editoriais de categoria ✅ aplicado (stock)
+
+> **Aplicado:** `public/category-1.jpg` e `public/category-2.jpg` (Unsplash, 1600×2000). Trocar por arte real depois.
 
 **Onde:** `src/components/common/editorial-categories.tsx` (constante `FEATURE_IMAGES`)
 - **Arquivos:** `public/category-1.webp`, `public/category-2.webp`
