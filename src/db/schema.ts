@@ -315,3 +315,36 @@ export const wishlistItemRelations = relations(wishlistItemTable, ({ one }) => (
     references: [productVariantTable.id],
   }),
 }));
+
+export const reviewTable = pgTable(
+  "review",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => userTable.id, { onDelete: "cascade" }),
+    productId: uuid("product_id")
+      .notNull()
+      .references(() => productTable.id, { onDelete: "cascade" }),
+    rating: integer("rating").notNull(),
+    comment: text("comment"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("review_user_product_unique").on(
+      table.userId,
+      table.productId,
+    ),
+  ],
+);
+
+export const reviewRelations = relations(reviewTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [reviewTable.userId],
+    references: [userTable.id],
+  }),
+  product: one(productTable, {
+    fields: [reviewTable.productId],
+    references: [productTable.id],
+  }),
+}));
