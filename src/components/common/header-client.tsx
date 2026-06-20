@@ -143,12 +143,20 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
                     Wishlist
                   </Link>
                   {session?.user && (
-                    <Link
-                      href="/my-orders"
-                      className="hover:bg-accent rounded-lg px-2 py-2 text-sm font-medium"
-                    >
-                      My orders
-                    </Link>
+                    <>
+                      <Link
+                        href="/account"
+                        className="hover:bg-accent rounded-lg px-2 py-2 text-sm font-medium"
+                      >
+                        Account
+                      </Link>
+                      <Link
+                        href="/my-orders"
+                        className="hover:bg-accent rounded-lg px-2 py-2 text-sm font-medium"
+                      >
+                        My orders
+                      </Link>
+                    </>
                   )}
                 </nav>
               </div>
@@ -201,7 +209,7 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
           </Button>
           {session?.user ? (
             <div className="hidden items-center gap-1 md:flex">
-              <Link href="/my-orders" aria-label="My orders">
+              <Link href="/account" aria-label="Account">
                 <Avatar className="h-8 w-8">
                   <AvatarImage
                     src={session?.user?.image as string | undefined}
