@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+import CheckoutSteps from "@/components/common/checkout-steps";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -46,33 +47,38 @@ const ConfirmationPage = async () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <div className="flex-1 space-y-4 px-5">
-        <Card>
-          <CardHeader>
-            <CardTitle>Shipping address</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <Card>
-              <CardContent>
+      <div className="container-bw flex-1 py-8 md:py-12">
+        <CheckoutSteps current="payment" />
+
+        <div className="mt-8 grid items-start gap-8 lg:grid-cols-[1fr_380px]">
+          <Card>
+            <CardHeader>
+              <CardTitle>Shipping address</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="bg-muted/40 rounded-xl border p-4">
                 <p className="text-sm">{formatAddress(cart.shippingAddress)}</p>
-              </CardContent>
-            </Card>
-            <FinishOrderButton />
-          </CardContent>
-        </Card>
-        <CartSummary
-          subtotalInCents={cartTotalInCents}
-          totalInCents={cartTotalInCents}
-          products={cart.items.map((item) => ({
-            id: item.productVariant.id,
-            name: item.productVariant.product.name,
-            variantName: item.productVariant.name,
-            size: item.size,
-            quantity: item.quantity,
-            priceInCents: item.productVariant.priceInCents,
-            imageUrl: item.productVariant.imageUrl,
-          }))}
-        />
+              </div>
+              <FinishOrderButton />
+            </CardContent>
+          </Card>
+
+          <div className="lg:sticky lg:top-24">
+            <CartSummary
+              subtotalInCents={cartTotalInCents}
+              totalInCents={cartTotalInCents}
+              products={cart.items.map((item) => ({
+                id: item.productVariant.id,
+                name: item.productVariant.product.name,
+                variantName: item.productVariant.name,
+                size: item.size,
+                quantity: item.quantity,
+                priceInCents: item.productVariant.priceInCents,
+                imageUrl: item.productVariant.imageUrl,
+              }))}
+            />
+          </div>
+        </div>
       </div>
       <div className="mt-auto">
         <Footer />

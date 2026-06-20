@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+import CheckoutSteps from "@/components/common/checkout-steps";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import { db } from "@/db";
@@ -46,24 +47,30 @@ const IdentificationPage = async () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <div className="flex-1 space-y-4 px-5">
-        <Addresses
-          shippingAddresses={shippingAddresses}
-          defaultShippingAddressId={cart.shippingAddress?.id || null}
-        />
-        <CartSummary
-          subtotalInCents={cartTotalInCents}
-          totalInCents={cartTotalInCents}
-          products={cart.items.map((item) => ({
-            id: item.productVariant.id,
-            name: item.productVariant.product.name,
-            variantName: item.productVariant.name,
-            size: item.size,
-            quantity: item.quantity,
-            priceInCents: item.productVariant.priceInCents,
-            imageUrl: item.productVariant.imageUrl,
-          }))}
-        />
+      <div className="container-bw flex-1 py-8 md:py-12">
+        <CheckoutSteps current="address" />
+
+        <div className="mt-8 grid items-start gap-8 lg:grid-cols-[1fr_380px]">
+          <Addresses
+            shippingAddresses={shippingAddresses}
+            defaultShippingAddressId={cart.shippingAddress?.id || null}
+          />
+          <div className="lg:sticky lg:top-24">
+            <CartSummary
+              subtotalInCents={cartTotalInCents}
+              totalInCents={cartTotalInCents}
+              products={cart.items.map((item) => ({
+                id: item.productVariant.id,
+                name: item.productVariant.product.name,
+                variantName: item.productVariant.name,
+                size: item.size,
+                quantity: item.quantity,
+                priceInCents: item.productVariant.priceInCents,
+                imageUrl: item.productVariant.imageUrl,
+              }))}
+            />
+          </div>
+        </div>
       </div>
       <div className="mt-auto">
         <Footer />
