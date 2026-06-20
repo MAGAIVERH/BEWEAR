@@ -307,7 +307,10 @@ BEWEAR/
 ## Decisões tomadas & pendências
 
 ### ✅ Decisões confirmadas (2026-06-19)
-- **Paleta:** **preto/branco + 1 acento** (migrar tokens em `globals.css`; preto nos CTAs).
+- **Paleta:** **preto/branco + 1 acento** (migrado em `globals.css`; `--primary` = preto nos CTAs;
+  acento de marca no token **`--brand`** = laranja `oklch(0.67 0.2 41)`, usado com parcimônia).
+  Utilitários do design system: `container-bw`, `text-eyebrow`/`text-eyebrow-brand`, `text-display`,
+  `section-title`, `section-subtitle`.
 - **Animação:** adicionar **`framer-motion` + `lenis` + `embla-carousel-react`**
   (reveal on scroll, smooth scroll, carrosséis) — sempre com `prefers-reduced-motion`.
 - **Imagens:** usar **placeholders de alta qualidade (Unsplash)** até haver material real.
