@@ -31,9 +31,7 @@ const CartItem = ({
   quantity,
 }: CartItemProps) => {
   const removeProductFromCartMutation = useRemoveProductFromCart(id);
-
   const decreaseCartProductQuantityMutation = useDecreaseCartProduct(id);
-
   const increaseCartProductQuantityMutation = useIncreaseCartProduct(
     productVariantId,
     size ?? "",
@@ -65,48 +63,69 @@ const CartItem = ({
       },
     });
   };
+
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
+    <div className="flex gap-4">
+      <div className="bg-muted relative h-20 w-20 shrink-0 overflow-hidden rounded-xl">
         <Image
           src={productVariantImageUrl}
           alt={productVariantName}
-          width={78}
-          height={78}
-          className="rounded-lg"
+          fill
+          sizes="80px"
+          className="object-cover"
         />
-        <div className="flex flex-col gap-1">
-          <p className="text-sm font-semibold">{productName}</p>
-          <p className="text-muted-foreground text-xs font-medium">
-            {productVariantName}
-            {size ? ` · Size ${size}` : ""}
-          </p>
-          <div className="flex w-[100px] items-center justify-between rounded-lg border p-1">
+      </div>
+
+      <div className="flex flex-1 flex-col">
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold">{productName}</p>
+            <p className="text-muted-foreground text-xs">
+              {productVariantName}
+              {size ? ` · Size ${size}` : ""}
+            </p>
+          </div>
+          <button
+            type="button"
+            aria-label="Remove item"
+            onClick={handleDeleteClick}
+            disabled={removeProductFromCartMutation.isPending}
+            className="text-muted-foreground hover:text-foreground shrink-0 transition-colors disabled:opacity-50"
+          >
+            <TrashIcon className="h-4 w-4" />
+          </button>
+        </div>
+
+        <div className="mt-auto flex items-center justify-between pt-2">
+          <div className="flex items-center gap-1 rounded-full border">
             <Button
-              className="h-4 w-4"
+              size="icon"
               variant="ghost"
+              className="h-7 w-7 rounded-full"
+              aria-label="Decrease quantity"
+              disabled={decreaseCartProductQuantityMutation.isPending}
               onClick={handleDecreaseQuantityClick}
             >
-              <MinusIcon />
+              <MinusIcon className="h-3.5 w-3.5" />
             </Button>
-            <p className="text-xs font-medium">{quantity}</p>
+            <span className="w-5 text-center text-xs font-medium">
+              {quantity}
+            </span>
             <Button
-              className="h-4 w-4"
+              size="icon"
               variant="ghost"
+              className="h-7 w-7 rounded-full"
+              aria-label="Increase quantity"
+              disabled={increaseCartProductQuantityMutation.isPending}
               onClick={handleIncreaseQuantityClick}
             >
-              <PlusIcon />
+              <PlusIcon className="h-3.5 w-3.5" />
             </Button>
           </div>
+          <p className="text-sm font-semibold">
+            {formatCentsToUSD(productVariantPriceInCents)}
+          </p>
         </div>
-      </div>
-      <div className="flex flex-col items-end justify-center gap-2">
-        <Button variant="outline" size="icon" onClick={handleDeleteClick}>
-          <TrashIcon />
-        </Button>
-        <p className="text-sm font-bold">
-          {formatCentsToUSD(productVariantPriceInCents)}
-        </p>
       </div>
     </div>
   );
