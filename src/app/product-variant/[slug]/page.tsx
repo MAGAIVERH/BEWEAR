@@ -1,9 +1,16 @@
 import { eq } from "drizzle-orm";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import ProductList from "@/components/common/product-list";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { db } from "@/db";
 import { productTable, productVariantTable } from "@/db/schema";
 import { formatCentsToUSD } from "@/helpers/money";
@@ -16,6 +23,31 @@ import VariantSelector from "./components/variant-selector";
 
 interface ProductVariantPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: ProductVariantPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const productVariant = await db.query.productVariantTable.findFirst({
+    where: eq(productVariantTable.slug, slug),
+    with: { product: true },
+  });
+  if (!productVariant) {
+    return { title: "Product not found | BEWEAR" };
+  }
+  const title = `${productVariant.product.name} — ${productVariant.name} | BEWEAR`;
+  const description = productVariant.product.description;
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      images: [{ url: productVariant.imageUrl }],
+    },
+  };
 }
 
 const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
@@ -45,8 +77,27 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
       variants: true,
     },
   });
+
+  const jsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    name: productVariant.product.name,
+    image: [productVariant.imageUrl],
+    description: productVariant.product.description,
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      price: (productVariant.priceInCents / 100).toFixed(2),
+      availability: "https://schema.org/InStock",
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
 
       <div className="px-5 py-8 md:px-8 lg:px-12">
@@ -83,12 +134,28 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
               sizes={sizes}
             />
 
-            <div className="space-y-2 border-t pt-6">
-              <h3 className="text-sm font-semibold">Description</h3>
-              <p className="text-muted-foreground text-sm leading-7">
-                {productVariant.product.description}
-              </p>
-            </div>
+            <Accordion type="single" collapsible className="border-t">
+              <AccordionItem value="details">
+                <AccordionTrigger>Details</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground text-sm leading-7">
+                  {productVariant.product.description}
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="size-fit">
+                <AccordionTrigger>Size &amp; Fit</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground text-sm leading-7">
+                  Fits true to size. We recommend ordering your usual size. The
+                  model is 6&apos;1&quot; and wears a size M.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="shipping">
+                <AccordionTrigger>Shipping &amp; Returns</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground text-sm leading-7">
+                  Free standard shipping on orders over $100. Free 30-day
+                  returns — no questions asked.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       </div>
