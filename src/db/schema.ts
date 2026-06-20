@@ -6,6 +6,7 @@ import {
   pgTable,
   text,
   timestamp,
+  uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
 
@@ -280,6 +281,37 @@ export const orderItemRelations = relations(orderItemTable, ({ one }) => ({
   }),
   productVariant: one(productVariantTable, {
     fields: [orderItemTable.productVariantId],
+    references: [productVariantTable.id],
+  }),
+}));
+
+export const wishlistItemTable = pgTable(
+  "wishlist_item",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => userTable.id, { onDelete: "cascade" }),
+    productVariantId: uuid("product_variant_id")
+      .notNull()
+      .references(() => productVariantTable.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("wishlist_user_variant_unique").on(
+      table.userId,
+      table.productVariantId,
+    ),
+  ],
+);
+
+export const wishlistItemRelations = relations(wishlistItemTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [wishlistItemTable.userId],
+    references: [userTable.id],
+  }),
+  productVariant: one(productVariantTable, {
+    fields: [wishlistItemTable.productVariantId],
     references: [productVariantTable.id],
   }),
 }));

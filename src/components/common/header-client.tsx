@@ -1,10 +1,17 @@
 "use client";
 
-import { LogInIcon, LogOutIcon, MenuIcon, UserIcon } from "lucide-react";
+import {
+  HeartIcon,
+  LogInIcon,
+  LogOutIcon,
+  MenuIcon,
+  UserIcon,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { useWishlist } from "@/hooks/queries/use-wishlist";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +40,8 @@ type HeaderClientProps = {
 
 const HeaderClient = ({ categories }: HeaderClientProps) => {
   const { data: session } = authClient.useSession();
+  const { data: wishlist } = useWishlist();
+  const wishlistCount = wishlist?.length ?? 0;
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -127,6 +136,12 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
                       {category.name}
                     </Link>
                   ))}
+                  <Link
+                    href="/wishlist"
+                    className="hover:bg-accent rounded-lg px-2 py-2 text-sm font-medium"
+                  >
+                    Wishlist
+                  </Link>
                   {session?.user && (
                     <Link
                       href="/my-orders"
@@ -168,6 +183,22 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
         {/* Right: search + account + cart */}
         <div className="flex items-center gap-2 justify-self-end">
           <SearchBar className="hidden w-48 md:block lg:w-64" />
+          <Button
+            variant="ghost"
+            size="icon"
+            asChild
+            aria-label="Wishlist"
+            className="relative hidden md:inline-flex"
+          >
+            <Link href="/wishlist">
+              <HeartIcon />
+              {wishlistCount > 0 && (
+                <span className="bg-foreground text-background absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-semibold">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
+          </Button>
           {session?.user ? (
             <div className="hidden items-center gap-1 md:flex">
               <Link href="/my-orders" aria-label="My orders">

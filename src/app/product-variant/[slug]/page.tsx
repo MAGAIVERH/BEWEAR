@@ -6,6 +6,7 @@ import Breadcrumbs from "@/components/common/breadcrumbs";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import ProductList from "@/components/common/product-list";
+import WishlistButton from "@/components/common/wishlist-button";
 import {
   Accordion,
   AccordionContent,
@@ -123,9 +124,15 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
           {/* Info */}
           <div className="mt-8 space-y-8 lg:mt-0">
             <div className="space-y-2">
-              <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
-                {productVariant.product.name}
-              </h1>
+              <div className="flex items-start justify-between gap-4">
+                <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
+                  {productVariant.product.name}
+                </h1>
+                <WishlistButton
+                  productVariantId={productVariant.id}
+                  className="shrink-0 border"
+                />
+              </div>
               <p className="text-xl font-semibold">
                 {formatCentsToUSD(productVariant.priceInCents)}
               </p>
