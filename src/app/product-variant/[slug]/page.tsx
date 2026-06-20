@@ -17,7 +17,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { db } from "@/db";
-import { productTable, productVariantTable, reviewTable } from "@/db/schema";
+import {
+  productTable,
+  productVariantStockTable,
+  productVariantTable,
+  reviewTable,
+} from "@/db/schema";
 import { formatCentsToUSD } from "@/helpers/money";
 import { getGalleryImages } from "@/helpers/product-gallery";
 import { getSizesForCategory } from "@/helpers/sizes";
@@ -73,7 +78,16 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
   if (!productVariant) {
     return notFound();
   }
-  const sizes = getSizesForCategory(productVariant.product.category.slug);
+  const stockRows = await db.query.productVariantStockTable.findMany({
+    where: eq(productVariantStockTable.productVariantId, productVariant.id),
+  });
+  const stockMap = new Map(stockRows.map((row) => [row.size, row.stock]));
+  const sizes = getSizesForCategory(productVariant.product.category.slug).map(
+    (size) => ({
+      size,
+      inStock: stockRows.length > 0 ? (stockMap.get(size) ?? 0) > 0 : true,
+    }),
+  );
   const galleryImages = getGalleryImages(
     productVariant.product.category.slug,
     productVariant.imageUrl,

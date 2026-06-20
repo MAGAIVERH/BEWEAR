@@ -348,3 +348,31 @@ export const reviewRelations = relations(reviewTable, ({ one }) => ({
     references: [productTable.id],
   }),
 }));
+
+export const productVariantStockTable = pgTable(
+  "product_variant_stock",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    productVariantId: uuid("product_variant_id")
+      .notNull()
+      .references(() => productVariantTable.id, { onDelete: "cascade" }),
+    size: text("size").notNull(),
+    stock: integer("stock").notNull().default(0),
+  },
+  (table) => [
+    uniqueIndex("variant_size_unique").on(
+      table.productVariantId,
+      table.size,
+    ),
+  ],
+);
+
+export const productVariantStockRelations = relations(
+  productVariantStockTable,
+  ({ one }) => ({
+    productVariant: one(productVariantTable, {
+      fields: [productVariantStockTable.productVariantId],
+      references: [productVariantTable.id],
+    }),
+  }),
+);

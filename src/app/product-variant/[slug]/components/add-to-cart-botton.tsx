@@ -36,8 +36,10 @@ const AddToCartButton = ({
       queryClient.invalidateQueries({ queryKey: getUseCartQueryKey() });
       toast.success("Added to bag.");
     },
-    onError: () => {
-      toast.error("Please select a size.");
+    onError: (error) => {
+      toast.error(
+        error instanceof Error ? error.message : "Something went wrong.",
+      );
     },
   });
   return (

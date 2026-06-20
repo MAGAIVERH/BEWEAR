@@ -10,13 +10,14 @@ import AddToCartButton from "./add-to-cart-botton";
 
 interface ProductActionsProps {
   productVariantId: string;
-  sizes: string[];
+  sizes: { size: string; inStock: boolean }[];
 }
 
 const ProductActions = ({ productVariantId, sizes }: ProductActionsProps) => {
   const [quantity, setQuantity] = useState(1);
+  const inStockSizes = sizes.filter((option) => option.inStock);
   const [selectedSize, setSelectedSize] = useState<string | null>(
-    sizes.length === 1 ? sizes[0] : null,
+    inStockSizes.length === 1 ? inStockSizes[0].size : null,
   );
 
   const handleDecrement = () => {
@@ -37,17 +38,20 @@ const ProductActions = ({ productVariantId, sizes }: ProductActionsProps) => {
           )}
         </div>
         <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-          {sizes.map((size) => (
+          {sizes.map(({ size, inStock }) => (
             <button
               key={size}
               type="button"
+              disabled={!inStock}
               onClick={() => setSelectedSize(size)}
               aria-pressed={selectedSize === size}
               className={cn(
                 "rounded-xl border py-2.5 text-sm font-medium transition",
-                selectedSize === size
-                  ? "border-foreground bg-foreground text-background"
-                  : "hover:border-foreground",
+                !inStock
+                  ? "text-muted-foreground/40 cursor-not-allowed line-through"
+                  : selectedSize === size
+                    ? "border-foreground bg-foreground text-background"
+                    : "hover:border-foreground",
               )}
             >
               {size}
