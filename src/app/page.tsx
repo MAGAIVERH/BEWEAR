@@ -6,6 +6,7 @@ import CategorySelector from "@/components/common/category-selector";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import ProductList from "@/components/common/product-list";
+import Reveal from "@/components/common/reveal";
 import { db } from "@/db";
 import { productTable } from "@/db/schema";
 
@@ -40,13 +41,17 @@ const Home = async () => {
           />
         </div>
 
-        <Brands title="Featured brands" />
+        <Reveal>
+          <Brands title="Featured brands" />
+        </Reveal>
 
-        <ProductList products={products} title="Best sellers" />
+        <Reveal>
+          <ProductList products={products} title="Best sellers" />
+        </Reveal>
 
-        <div className="px-5">
+        <Reveal className="px-5">
           <CategorySelector categories={categories} />
-        </div>
+        </Reveal>
 
         <div className="px-5">
           <Image
@@ -59,7 +64,9 @@ const Home = async () => {
           />
         </div>
 
-        <ProductList products={newlyCreateProducts} title="New arrivals" />
+        <Reveal>
+          <ProductList products={newlyCreateProducts} title="New arrivals" />
+        </Reveal>
         <Footer />
       </div>
     </>
