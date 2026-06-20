@@ -6,237 +6,237 @@ import { db } from ".";
 import { categoryTable, productTable, productVariantTable } from "./schema";
 
 const productImages = {
-  Mochila: {
-    Preta: [
+  Backpack: {
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Acesso%CC%81rios/1/78f9fa3b_c793_472a_b183_e32495033da2.jpg",
     ],
-    Branca: [
+    White: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Acesso%CC%81rios/1/dacd9927_7287_4b14_a94f_b3f18c9c4d15.jpg",
     ],
   },
-  "Meia Alta": {
-    Branca: [
+  "High Socks": {
+    White: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Acesso%CC%81rios/2/52c14d96_66fb_4b5e_b8a9_6b6cf21fb448.jpg",
     ],
-    Preta: [
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Acesso%CC%81rios/2/b38172d0_067a_4f03_975d_3c1c10cfc5f4.jpg",
     ],
   },
-  "Boné Nocta": {
-    Preto: [
+  "Nocta Cap": {
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Acesso%CC%81rios/3/41f38755_76ea_4630_ba49_59991c345513.jpg",
     ],
-    Vinho: [
+    Burgundy: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Acesso%CC%81rios/3/7a8c684b_9373_41aa_879a_c5ec99885b7a.jpg",
     ],
-    Azul: [
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Acesso%CC%81rios/3/9bb87d7b_b388_42d8_b5ca_7761804d24f7.jpg",
     ],
   },
-  "Boné Curvo": {
-    Azul: [
+  "Curved Cap": {
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Acesso%CC%81rios/4/6f6b54d9_f06d_47da_b34a_0641a5e34fa4.jpg",
     ],
-    Bege: [
+    Beige: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Acesso%CC%81rios/4/9a1a09d7_4499_4968_9b22_e95200434631.png",
     ],
-    Verde: [
+    Green: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Acesso%CC%81rios/4/ca47bcd5_e418_422d_b85c_45d8245aed03.jpg",
     ],
   },
-  "Shorts Active": {
-    Preto: [
+  "Active Shorts": {
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/1/2bd85c0d_d637_49f3_bc35_c6c7c0062b5f.jpg",
     ],
-    Azul: [
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/1/57208a2b_6dda_4f46_a856_dd1b90d7432d.png",
     ],
-    Verde: [
+    Green: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/1/91674907_139b_41b1_95fa_3e570d4376f1.jpg",
     ],
   },
-  "Shorts Core": {
-    Verde: [
+  "Core Shorts": {
+    Green: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/2/6120253a_d8b3_453b_a0b5_3ca783ae9510.jpg",
     ],
-    Preto: [
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/2/a5562ec7_e37a_49db_911b_26dd787463ab.jpg",
     ],
-    Azul: [
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/2/e067a9e3_f9b4_4d81_8129_c90effc1038b.jpg",
     ],
   },
-  "Shorts Challenger": {
-    Marrom: [
+  "Challenger Shorts": {
+    Brown: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/3/78253172_fe17_4add_b597_88c689a2af3f.jpg",
     ],
-    Preto: [
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/3/b8bf902f_de19_4ad9_bea8_87aa4d1f5679.webp",
     ],
-    Bege: [
+    Beige: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/3/eda6b80f_1fba_4934_a242_0cd93b401677.jpg",
     ],
   },
-  "Bermuda Premier": {
-    Verde: [
+  "Premier Shorts": {
+    Green: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/4/7a8d5bd9_0de8_4247_9374_aadce84042ea.jpg",
     ],
-    Preta: [
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/4/a277cf75_a377_4557_bb70_ef155651338e.jpg",
     ],
-    Azul: [
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Bermuda+%26+Shorts/4/a7948f93_42ac_4363_92a7_e2b3f7754230.jpg",
     ],
   },
-  "Calça Nike Club": {
-    Bege: [
+  "Nike Club Pants": {
+    Beige: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/1/1cef0dc4_e296_4809_94b6_66cb3164aa43.jpg",
     ],
-    Preta: [
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/1/611af69f_d7e7_4365_83a8_3aca96922d87.jpg",
     ],
-    Vinho: [
+    Burgundy: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/1/e4d6bfa8_88b0_484e_8e07_5f5fc5e5cfbb.jpg",
     ],
   },
-  "Calça Knit": {
-    Preta: [
+  "Knit Pants": {
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/2/3e90bb34_eb11_4cc0_930a_f1a4dcb5a4a1.png",
     ],
-    Branca: [
+    White: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/2/d2766b69_177e_4c1d_abfe_93bb92c502f6.png",
     ],
-    Azul: [
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/2/e5b271dd_1696_4ff0_8cc9_649b45ef2c88.jpg",
     ],
   },
-  "Calça Brooklin": {
-    Bege: [
+  "Brooklyn Pants": {
+    Beige: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/3/18a2f43f_a0bb_4d7e_a626_27c2f3b58017.jpg",
     ],
-    Branca: [
+    White: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/3/18a2f43f_a0bb_4d7e_a626_27c2f3b58017.jpg",
     ],
-    Preta: [
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/3/915f96a0_8714_42d7_8d2d_e897d5a9ce7a.jpg",
     ],
   },
-  "Calça Jordan": {
-    Verde: [
+  "Jordan Pants": {
+    Green: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/4/1805ffd2_5fb7_454b_b098_2b00902025f3.jpg",
     ],
-    Preta: [
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/4/b97f4616_986e_4f1e_a577_905cb99eb213.jpg",
     ],
-    Azul: [
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Calc%CC%A7as/4/d626872b_35b1_4a96_b58a_ea5f7d6ceab7.jpg",
     ],
   },
-  "Camiseta ACG": {
-    Bege: [
+  "ACG Tee": {
+    Beige: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Camisetas/1/4f57e719_e120_4525_83d5_16955e27061b.png",
     ],
-    Preta: [
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Camisetas/1/a8a08dfb_a495_4c1b_9873_aa504cfe2fd7.webp",
     ],
-    Branca: [
+    White: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Camisetas/1/a8c7b41f_69f0_4894_994f_de01533d1161.jpg",
     ],
   },
-  "Camiseta Run": {
-    Preta: [
+  "Run Tee": {
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Camisetas/2/67db843e_691c_44a6_87b6_f5e01a1bcafe.webp",
     ],
-    Azul: [
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Camisetas/2/83ab03e1_6383_450b_b203_3509a00fdaf7.jpg",
     ],
   },
-  "Camiseta Active": {
-    Branca: [
+  "Active Tee": {
+    White: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Camisetas/3/c222d1e5_7cd7_4794_b644_57f47c9d344c.jpg",
     ],
-    Preta: [
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Camisetas/3/d4c0657c_c2c2_4356_a509_61cd9ecc4148.webp",
     ],
   },
-  "Camiseta Nature": {
-    Preta: [
+  "Nature Tee": {
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Camisetas/4/caa3015c_61b3_4315_86b1_cc62ab1d2fee.jpg",
     ],
-    Azul: [
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Camisetas/4/d0e40dd5_2060_450e_a423_6e894bc0573f.webp",
     ],
   },
-  "Corta Vento": {
-    Preto: [
+  Windbreaker: {
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Jaquetas+%26+Moletons/1/4e134ee9_ce18_4b32_a4ad_aa55026a38f9.jpg",
     ],
-    Branco: [
+    White: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Jaquetas+%26+Moletons/1/74ab7c8c_7c54_4c49_8084_24a87fe0fc85.jpg",
     ],
   },
-  "Jaqueta Windrunner": {
-    Azul: [
+  "Windrunner Jacket": {
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Jaquetas+%26+Moletons/2/79afe358_deb0_4309_8301_02a6e6aa6108.jpg",
     ],
-    Bege: [
+    Beige: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Jaquetas+%26+Moletons/2/bc06d5b0_be4b_4c74_8c6e_8645ea7168bb.jpg",
     ],
   },
-  "Jaqueta Style": {
-    Marrom: [
+  "Style Jacket": {
+    Brown: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Jaquetas+%26+Moletons/3/06222020_01b8_4232_92f4_dc0c92bb25da.webp",
     ],
-    Cinza: [
+    Gray: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Jaquetas+%26+Moletons/3/97de604a_deef_4594_a5a6_f51c18c71216.jpg",
     ],
   },
-  "Jaqueta Nike Club": {
-    Azul: [
+  "Nike Club Jacket": {
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Jaquetas+%26+Moletons/4/134c9642_f032_4c6e_84a8_68de99e3dcb7.jpg",
     ],
-    Amarela: [
+    Yellow: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Jaquetas+%26+Moletons/4/d8d78682_c480_40b0_97a1_93ab201b3287.jpg",
     ],
   },
-  "Tênis Nike Vomero": {
-    Preto: [
+  "Nike Vomero": {
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Te%CC%82nis/1/85dc96b6_1cef_43ec_8cef_40e3938ac7cf.jpg",
     ],
-    Branco: [
+    White: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Te%CC%82nis/1/a4b97d0e_0065_4818_90f2_b0778ac48c6b.jpg",
     ],
-    Azul: [
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Te%CC%82nis/1/ac052fe0_60ce_4ce9_8b3c_fd5fb72eaf3b.jpg",
     ],
   },
-  "Tênis Nike Panda": {
-    Verde: [
+  "Nike Panda": {
+    Green: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Te%CC%82nis/2/2156e314_9889_4bdc_962d_7350f66cdf7f.jpg",
     ],
-    Azul: [
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Te%CC%82nis/2/2b938204_3950_4295_b61c_d4311045fed0.jpg",
     ],
-    Preto: [
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Te%CC%82nis/2/6ad78a9f_14a9_4590_8e7c_9392d0523678.jpg",
     ],
   },
-  "Tênis Nike Air Force": {
-    Preto: [
+  "Nike Air Force": {
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Te%CC%82nis/3/5daa00d9_afae_4125_a95c_fc71923b81c3.jpg",
     ],
-    Branco: [
+    White: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Te%CC%82nis/3/e6da41fa_1be4_4ce5_b89c_22be4f1f02d4.jpg",
     ],
   },
-  "Tênis Nike Dunk Low": {
-    Branco: [
+  "Nike Dunk Low": {
+    White: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Te%CC%82nis/4/4bc9c840_d8af_411a_9b72_a3f51f6dd3da.jpg",
     ],
-    Preto: [
+    Black: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Te%CC%82nis/4/72f07a5b_4fb8_4182_98b7_1f91ad71ed5c.jpg",
     ],
-    Azul: [
+    Blue: [
       "https://d4lgxe9bm8juw.cloudfront.net/products/Te%CC%82nis/4/bb4e381c_84ae_4ced_814f_8553afc6eacf.jpg",
     ],
   },
@@ -252,312 +252,300 @@ function generateSlug(name: string): string {
 
 const categories = [
   {
-    name: "Acessórios",
-    description: "Mochilas, bonés, meias e outros acessórios",
+    name: "Accessories",
+    description: "Backpacks, caps, socks and other accessories",
   },
   {
-    name: "Bermuda & Shorts",
-    description: "Bermudas e shorts para todas as ocasiões",
+    name: "Shorts",
+    description: "Shorts for every occasion",
   },
   {
-    name: "Calças",
-    description: "Calças casuais e esportivas",
+    name: "Pants",
+    description: "Casual and athletic pants",
   },
   {
-    name: "Camisetas",
-    description: "Camisetas casuais e esportivas",
+    name: "T-Shirts",
+    description: "Casual and athletic t-shirts",
   },
   {
-    name: "Jaquetas & Moletons",
-    description: "Jaquetas, corta-ventos e moletons",
+    name: "Jackets & Hoodies",
+    description: "Jackets, windbreakers and hoodies",
   },
   {
-    name: "Tênis",
-    description: "Tênis casuais e esportivos",
+    name: "Sneakers",
+    description: "Casual and athletic sneakers",
   },
 ];
 
 const products = [
-  // Acessórios
+  // Accessories
   {
-    name: "Mochila",
+    name: "Backpack",
     description:
-      "Mochila resistente e confortável, ideal para o dia a dia e viagens.",
-    categoryName: "Acessórios",
+      "Durable and comfortable backpack, ideal for everyday use and travel.",
+    categoryName: "Accessories",
     variants: [
-      { color: "Preta", price: 12999 },
-      { color: "Branca", price: 12999 },
+      { color: "Black", price: 12999 },
+      { color: "White", price: 12999 },
     ],
   },
   {
-    name: "Meia Alta",
-    description: "Meia alta de algodão, confortável e durável.",
-    categoryName: "Acessórios",
+    name: "High Socks",
+    description: "High cotton socks — comfortable and durable.",
+    categoryName: "Accessories",
     variants: [
-      { color: "Branca", price: 1999 },
-      { color: "Preta", price: 1999 },
+      { color: "White", price: 1999 },
+      { color: "Black", price: 1999 },
     ],
   },
   {
-    name: "Boné Nocta",
-    description: "Boné Nocta com design moderno e ajuste confortável.",
-    categoryName: "Acessórios",
+    name: "Nocta Cap",
+    description: "Nocta cap with a modern design and a comfortable fit.",
+    categoryName: "Accessories",
     variants: [
-      { color: "Preto", price: 8999 },
-      { color: "Vinho", price: 8999 },
-      { color: "Azul", price: 8999 },
+      { color: "Black", price: 8999 },
+      { color: "Burgundy", price: 8999 },
+      { color: "Blue", price: 8999 },
     ],
   },
   {
-    name: "Boné Curvo",
-    description: "Boné com aba curva, estilo clássico e versátil.",
-    categoryName: "Acessórios",
+    name: "Curved Cap",
+    description: "Curved-brim cap — a classic, versatile style.",
+    categoryName: "Accessories",
     variants: [
-      { color: "Azul", price: 7999 },
-      { color: "Bege", price: 7999 },
-      { color: "Verde", price: 7999 },
+      { color: "Blue", price: 7999 },
+      { color: "Beige", price: 7999 },
+      { color: "Green", price: 7999 },
     ],
   },
 
-  // Bermuda & Shorts
+  // Shorts
   {
-    name: "Shorts Active",
-    description:
-      "Shorts esportivo para atividades físicas, com tecido que absorve o suor.",
-    categoryName: "Bermuda & Shorts",
+    name: "Active Shorts",
+    description: "Athletic shorts for workouts, with sweat-wicking fabric.",
+    categoryName: "Shorts",
     variants: [
-      { color: "Preto", price: 6999 },
-      { color: "Azul", price: 6999 },
-      { color: "Verde", price: 6999 },
+      { color: "Black", price: 6999 },
+      { color: "Blue", price: 6999 },
+      { color: "Green", price: 6999 },
     ],
   },
   {
-    name: "Shorts Core",
-    description: "Shorts casual confortável, perfeito para o dia a dia.",
-    categoryName: "Bermuda & Shorts",
+    name: "Core Shorts",
+    description: "Comfortable casual shorts, perfect for everyday wear.",
+    categoryName: "Shorts",
     variants: [
-      { color: "Verde", price: 5999 },
-      { color: "Preto", price: 5999 },
-      { color: "Azul", price: 5999 },
+      { color: "Green", price: 5999 },
+      { color: "Black", price: 5999 },
+      { color: "Blue", price: 5999 },
     ],
   },
   {
-    name: "Shorts Challenger",
-    description:
-      "Shorts com design moderno e confortável, ideal para diversas ocasiões.",
-    categoryName: "Bermuda & Shorts",
+    name: "Challenger Shorts",
+    description: "Shorts with a modern, comfortable design for any occasion.",
+    categoryName: "Shorts",
     variants: [
-      { color: "Marrom", price: 7499 },
-      { color: "Preto", price: 7499 },
-      { color: "Bege", price: 7499 },
+      { color: "Brown", price: 7499 },
+      { color: "Black", price: 7499 },
+      { color: "Beige", price: 7499 },
     ],
   },
   {
-    name: "Bermuda Premier",
-    description:
-      "Bermuda premium com qualidade superior e design diferenciado.",
-    categoryName: "Bermuda & Shorts",
+    name: "Premier Shorts",
+    description: "Premium shorts with superior quality and a distinctive design.",
+    categoryName: "Shorts",
     variants: [
-      { color: "Verde", price: 8999 },
-      { color: "Preta", price: 8999 },
-      { color: "Azul", price: 8999 },
+      { color: "Green", price: 8999 },
+      { color: "Black", price: 8999 },
+      { color: "Blue", price: 8999 },
     ],
   },
 
-  // Calças
+  // Pants
   {
-    name: "Calça Nike Club",
+    name: "Nike Club Pants",
     description:
-      "Calça esportiva Nike Club, confortável e versátil para treinos e uso casual.",
-    categoryName: "Calças",
+      "Nike Club athletic pants — comfortable and versatile for training and casual wear.",
+    categoryName: "Pants",
     variants: [
-      { color: "Bege", price: 15999 },
-      { color: "Preta", price: 15999 },
-      { color: "Vinho", price: 15999 },
+      { color: "Beige", price: 15999 },
+      { color: "Black", price: 15999 },
+      { color: "Burgundy", price: 15999 },
     ],
   },
   {
-    name: "Calça Knit",
-    description:
-      "Calça de malha com tecido macio e confortável, ideal para relaxar.",
-    categoryName: "Calças",
+    name: "Knit Pants",
+    description: "Knit pants with soft, comfortable fabric — ideal for relaxing.",
+    categoryName: "Pants",
     variants: [
-      { color: "Preta", price: 12999 },
-      { color: "Branca", price: 12999 },
-      { color: "Azul", price: 12999 },
+      { color: "Black", price: 12999 },
+      { color: "White", price: 12999 },
+      { color: "Blue", price: 12999 },
     ],
   },
   {
-    name: "Calça Brooklin",
-    description:
-      "Calça com design urbano e moderno, perfeita para o street style.",
-    categoryName: "Calças",
+    name: "Brooklyn Pants",
+    description: "Pants with an urban, modern design — perfect for street style.",
+    categoryName: "Pants",
     variants: [
-      { color: "Bege", price: 13999 },
-      { color: "Branca", price: 13999 },
-      { color: "Preta", price: 13999 },
+      { color: "Beige", price: 13999 },
+      { color: "White", price: 13999 },
+      { color: "Black", price: 13999 },
     ],
   },
   {
-    name: "Calça Jordan",
-    description:
-      "Calça Jordan com qualidade premium e design icônico da marca.",
-    categoryName: "Calças",
+    name: "Jordan Pants",
+    description: "Jordan pants with premium quality and the brand's iconic design.",
+    categoryName: "Pants",
     variants: [
-      { color: "Verde", price: 18999 },
-      { color: "Preta", price: 18999 },
-      { color: "Azul", price: 18999 },
+      { color: "Green", price: 18999 },
+      { color: "Black", price: 18999 },
+      { color: "Blue", price: 18999 },
     ],
   },
 
-  // Camisetas
+  // T-Shirts
   {
-    name: "Camiseta ACG",
-    description:
-      "Camiseta ACG com design técnico e material de alta qualidade.",
-    categoryName: "Camisetas",
+    name: "ACG Tee",
+    description: "ACG tee with a technical design and high-quality materials.",
+    categoryName: "T-Shirts",
     variants: [
-      { color: "Bege", price: 6999 },
-      { color: "Preta", price: 6999 },
-      { color: "Branca", price: 6999 },
+      { color: "Beige", price: 6999 },
+      { color: "Black", price: 6999 },
+      { color: "White", price: 6999 },
     ],
   },
   {
-    name: "Camiseta Run",
-    description:
-      "Camiseta para corrida com tecido respirável e conforto superior.",
-    categoryName: "Camisetas",
+    name: "Run Tee",
+    description: "Running tee with breathable fabric and superior comfort.",
+    categoryName: "T-Shirts",
     variants: [
-      { color: "Preta", price: 5999 },
-      { color: "Azul", price: 5999 },
+      { color: "Black", price: 5999 },
+      { color: "Blue", price: 5999 },
     ],
   },
   {
-    name: "Camiseta Active",
-    description:
-      "Camiseta esportiva para atividades físicas com tecnologia Dri-FIT.",
-    categoryName: "Camisetas",
+    name: "Active Tee",
+    description: "Athletic tee for workouts with Dri-FIT technology.",
+    categoryName: "T-Shirts",
     variants: [
-      { color: "Branca", price: 5499 },
-      { color: "Preta", price: 5499 },
+      { color: "White", price: 5499 },
+      { color: "Black", price: 5499 },
     ],
   },
   {
-    name: "Camiseta Nature",
-    description:
-      "Camiseta com estampa inspirada na natureza, confortável e estilosa.",
-    categoryName: "Camisetas",
+    name: "Nature Tee",
+    description: "Tee with a nature-inspired print — comfortable and stylish.",
+    categoryName: "T-Shirts",
     variants: [
-      { color: "Preta", price: 6499 },
-      { color: "Azul", price: 6499 },
+      { color: "Black", price: 6499 },
+      { color: "Blue", price: 6499 },
     ],
   },
 
-  // Jaquetas & Moletons
+  // Jackets & Hoodies
   {
-    name: "Corta Vento",
+    name: "Windbreaker",
     description:
-      "Jaqueta corta-vento leve e resistente, ideal para atividades ao ar livre.",
-    categoryName: "Jaquetas & Moletons",
+      "Lightweight, durable windbreaker — ideal for outdoor activities.",
+    categoryName: "Jackets & Hoodies",
     variants: [
-      { color: "Preto", price: 19999 },
-      { color: "Branco", price: 19999 },
+      { color: "Black", price: 19999 },
+      { color: "White", price: 19999 },
     ],
   },
   {
-    name: "Jaqueta Windrunner",
-    description:
-      "Jaqueta Windrunner com design clássico e proteção contra o vento.",
-    categoryName: "Jaquetas & Moletons",
+    name: "Windrunner Jacket",
+    description: "Windrunner jacket with a classic design and wind protection.",
+    categoryName: "Jackets & Hoodies",
     variants: [
-      { color: "Azul", price: 22999 },
-      { color: "Bege", price: 22999 },
+      { color: "Blue", price: 22999 },
+      { color: "Beige", price: 22999 },
     ],
   },
   {
-    name: "Jaqueta Style",
-    description:
-      "Jaqueta com estilo urbano e moderno, perfeita para compor looks casuais.",
-    categoryName: "Jaquetas & Moletons",
+    name: "Style Jacket",
+    description: "Jacket with an urban, modern style — perfect for casual looks.",
+    categoryName: "Jackets & Hoodies",
     variants: [
-      { color: "Marrom", price: 17999 },
-      { color: "Cinza", price: 17999 },
+      { color: "Brown", price: 17999 },
+      { color: "Gray", price: 17999 },
     ],
   },
   {
-    name: "Jaqueta Nike Club",
-    description: "Jaqueta Nike Club com qualidade premium e design atemporal.",
-    categoryName: "Jaquetas & Moletons",
+    name: "Nike Club Jacket",
+    description: "Nike Club jacket with premium quality and a timeless design.",
+    categoryName: "Jackets & Hoodies",
     variants: [
-      { color: "Azul", price: 25999 },
-      { color: "Amarela", price: 25999 },
+      { color: "Blue", price: 25999 },
+      { color: "Yellow", price: 25999 },
     ],
   },
 
-  // Tênis
+  // Sneakers
   {
-    name: "Tênis Nike Vomero",
+    name: "Nike Vomero",
     description:
-      "Tênis Nike Vomero com tecnologia de amortecimento superior para corridas.",
-    categoryName: "Tênis",
+      "Nike Vomero with superior cushioning technology for running.",
+    categoryName: "Sneakers",
     variants: [
-      { color: "Preto", price: 79999 },
-      { color: "Branco", price: 79999 },
-      { color: "Azul", price: 79999 },
+      { color: "Black", price: 79999 },
+      { color: "White", price: 79999 },
+      { color: "Blue", price: 79999 },
     ],
   },
   {
-    name: "Tênis Nike Panda",
-    description: "Tênis Nike com design Panda icônico, confortável e estiloso.",
-    categoryName: "Tênis",
-    variants: [
-      { color: "Verde", price: 69999 },
-      { color: "Azul", price: 69999 },
-      { color: "Preto", price: 69999 },
-    ],
-  },
-  {
-    name: "Tênis Nike Air Force",
+    name: "Nike Panda",
     description:
-      "Tênis Nike Air Force 1, um clássico atemporal com design icônico.",
-    categoryName: "Tênis",
+      "Nike sneakers with the iconic Panda design — comfortable and stylish.",
+    categoryName: "Sneakers",
     variants: [
-      { color: "Preto", price: 89999 },
-      { color: "Branco", price: 89999 },
+      { color: "Green", price: 69999 },
+      { color: "Blue", price: 69999 },
+      { color: "Black", price: 69999 },
     ],
   },
   {
-    name: "Tênis Nike Dunk Low",
-    description: "Tênis Nike Dunk Low com design retrô e conforto moderno.",
-    categoryName: "Tênis",
+    name: "Nike Air Force",
+    description: "Nike Air Force 1 — a timeless classic with an iconic design.",
+    categoryName: "Sneakers",
     variants: [
-      { color: "Branco", price: 75999 },
-      { color: "Preto", price: 75999 },
-      { color: "Azul", price: 75999 },
+      { color: "Black", price: 89999 },
+      { color: "White", price: 89999 },
+    ],
+  },
+  {
+    name: "Nike Dunk Low",
+    description: "Nike Dunk Low with a retro design and modern comfort.",
+    categoryName: "Sneakers",
+    variants: [
+      { color: "White", price: 75999 },
+      { color: "Black", price: 75999 },
+      { color: "Blue", price: 75999 },
     ],
   },
 ];
 
 async function main() {
-  console.log("🌱 Iniciando o seeding do banco de dados...");
+  console.log("🌱 Starting database seeding...");
 
   try {
-    // Limpar dados existentes
-    console.log("🧹 Limpando dados existentes...");
+    // Clear existing data
+    console.log("🧹 Clearing existing data...");
     await db.delete(productVariantTable);
     await db.delete(productTable);
     await db.delete(categoryTable);
-    console.log("✅ Dados limpos com sucesso!");
+    console.log("✅ Data cleared successfully!");
 
-    // Inserir categorias primeiro
+    // Insert categories first
     const categoryMap = new Map<string, string>();
 
-    console.log("📂 Criando categorias...");
+    console.log("📂 Creating categories...");
     for (const categoryData of categories) {
       const categoryId = crypto.randomUUID();
       const categorySlug = generateSlug(categoryData.name);
 
-      console.log(`  📁 Criando categoria: ${categoryData.name}`);
+      console.log(`  📁 Creating category: ${categoryData.name}`);
 
       await db.insert(categoryTable).values({
         id: categoryId,
@@ -568,7 +556,7 @@ async function main() {
       categoryMap.set(categoryData.name, categoryId);
     }
 
-    // Inserir produtos
+    // Insert products
     for (const productData of products) {
       const productId = crypto.randomUUID();
       const productSlug = generateSlug(productData.name);
@@ -576,11 +564,11 @@ async function main() {
 
       if (!categoryId) {
         throw new Error(
-          `Categoria "${productData.categoryName}" não encontrada`,
+          `Category "${productData.categoryName}" not found`,
         );
       }
 
-      console.log(`📦 Criando produto: ${productData.name}`);
+      console.log(`📦 Creating product: ${productData.name}`);
 
       await db.insert(productTable).values({
         id: productId,
@@ -590,7 +578,7 @@ async function main() {
         categoryId: categoryId,
       });
 
-      // Inserir variantes do produto
+      // Insert product variants
       for (const variantData of productData.variants) {
         const variantId = crypto.randomUUID();
         const productKey = productData.name as keyof typeof productImages;
@@ -599,7 +587,7 @@ async function main() {
             variantData.color as keyof (typeof productImages)[typeof productKey]
           ] || [];
 
-        console.log(`  🎨 Criando variante: ${variantData.color}`);
+        console.log(`  🎨 Creating variant: ${variantData.color}`);
 
         await db.insert(productVariantTable).values({
           id: variantId,
@@ -613,17 +601,17 @@ async function main() {
       }
     }
 
-    console.log("✅ Seeding concluído com sucesso!");
+    console.log("✅ Seeding completed successfully!");
     console.log(
-      `📊 Foram criadas ${categories.length} categorias, ${
+      `📊 Created ${categories.length} categories and ${
         products.length
-      } produtos com ${products.reduce(
+      } products with ${products.reduce(
         (acc, p) => acc + p.variants.length,
         0,
-      )} variantes.`,
+      )} variants.`,
     );
   } catch (error) {
-    console.error("❌ Erro durante o seeding:", error);
+    console.error("❌ Error during seeding:", error);
     throw error;
   }
 }

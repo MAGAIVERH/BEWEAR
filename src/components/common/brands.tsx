@@ -21,7 +21,7 @@ const Brands = ({ title }: BrandsProps) => {
     <div className="space-y-6">
       <h3 className="section-title px-5">{title}</h3>
 
-      <Marquee gapClassName="gap-10 md:gap-16">
+      <Marquee>
         {BRANDS.map((brand) => (
           <div
             key={brand.name}
