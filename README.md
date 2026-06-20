@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# BEWEAR
 
-First, run the development server:
+**Premium streetwear & sneakers — a full-stack e-commerce built for the US market.**
+
+Next.js 15 · React 19 · TypeScript · Drizzle ORM · PostgreSQL (Neon) · Tailwind v4 · shadcn/ui · Stripe · Better Auth
+
+</div>
+
+> ⚠️ **Work in progress.** This is a living document, updated as the project evolves toward a
+> Nike-grade front-end experience. A final, portfolio-ready version (with live demo, screenshots and
+> architecture diagram) will ship once the build is complete.
+
+---
+
+## Overview
+
+BEWEAR is a modern fashion/streetwear store. The goal is a **premium front-end** on par with
+[nike.com](https://www.nike.com) — bold typography, generous spacing, smooth micro-interactions and
+flawless responsiveness — backed by a solid full-stack architecture (auth, cart, checkout, orders).
+
+The product is **fully localized for the US market**: English (en-US) UI, **USD** pricing and
+US-format checkout (State, ZIP code, US phone).
+
+## Tech stack
+
+| Area | Technology |
+|------|------------|
+| Framework | Next.js 15 (App Router), React 19 |
+| Language | TypeScript (strict) |
+| Database / ORM | PostgreSQL (Neon) + Drizzle ORM |
+| Styling | Tailwind CSS v4 |
+| UI components | shadcn/ui + lucide-react |
+| Forms / validation | React Hook Form + Zod |
+| Data fetching (client) | TanStack Query |
+| Auth | Better Auth |
+| Payments | Stripe (Checkout + webhook) |
+| Notifications | Sonner |
+| Package manager | pnpm |
+
+## Features
+
+- 🔐 **Authentication** — email/password and Google sign-in (Better Auth)
+- 🛍️ **Catalog** — products, variants (color/size) and categories
+- 🧺 **Cart** — add/remove items, quantity controls, live totals
+- 📦 **Checkout** — US shipping address (State dropdown, ZIP, US phone) + **Stripe** payment in **USD**
+- 🧾 **Orders** — order history with statuses (paid / pending / canceled)
+- 🇺🇸 **Localization** — English (en-US) UI and USD throughout
+
+### Roadmap (high level)
+
+Foundation & design system → Premium home (hero/editorial) → PLP (filters/search) →
+PDP (gallery/variants) → Cart & checkout polish → Account & orders → Motion/a11y/responsive →
+Performance, SEO, deploy. Full day-by-day plan in [`docs/guia-desenvolvimento-bewear.md`](docs/guia-desenvolvimento-bewear.md).
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# 1. Install dependencies
+pnpm install
+
+# 2. Configure environment (see below), then run migrations / seed
+pnpm drizzle-kit migrate
+pnpm tsx src/db/seed.ts
+
+# 3. Start the dev server
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env` file with:
 
-## Learn More
+```bash
+DATABASE_URL=postgresql://...                 # Neon Postgres
+BETTER_AUTH_SECRET=...                         # Better Auth
+BETTER_AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+STRIPE_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+# Optional (Google social login)
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Project structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/            # App Router: pages, layout, API routes (auth, stripe webhook)
+├── actions/        # Server Actions (one folder per action: index.ts + schema.ts)
+├── components/
+│   ├── ui/         # shadcn/ui primitives
+│   └── common/     # domain components (header, footer, product-item, cart, ...)
+├── db/             # Drizzle schema, client and seed
+├── helpers/        # money (USD), us-states, ...
+├── hooks/          # TanStack Query (queries/) and mutations/
+├── lib/            # auth, utils
+└── providers/      # React Query provider
+docs/               # development guide + per-day task logs
+.cursor/rules/      # project rules
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Conventions
 
-## Deploy on Vercel
+- **Code in English; UI/copy in English (en-US); money in USD (cents in DB).**
+- No hardcoded colors — design tokens live in `src/app/globals.css`.
+- shadcn/ui first; forms with React Hook Form + Zod; feedback via Sonner.
+- Conventional Commits; feature branches per phase. See [`.cursor/rules/bewear.mdc`](.cursor/rules/bewear.mdc).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<div align="center">
+
+Built by <a href="https://my-portifolio-three-navy.vercel.app/#s-home">Magaiver Magalhães</a>
+
+</div>

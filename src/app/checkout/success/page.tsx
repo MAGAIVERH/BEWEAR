@@ -26,15 +26,15 @@ const CheckoutSuccessPage = () => {
             height={300}
             className="mx-auto"
           />
-          <DialogTitle className="mt-4 text-2xl">Pedido efetuado!</DialogTitle>
+          <DialogTitle className="mt-4 text-2xl">Order placed!</DialogTitle>
           <DialogDescription className="font-medium">
-            Seu pedido foi efetuado com sucesso. Você pode acompanhar o status
-            na seção de “Meus Pedidos”.
+            Your order has been placed successfully. You can track its status in
+            the “My Orders” section.
           </DialogDescription>
 
           <DialogFooter>
             <Button className="rounded-full" size="lg">
-              <Link href="/my-orders">Ver meus pedidos</Link>
+              <Link href="/my-orders">View my orders</Link>
             </Button>
             <Button
               className="rounded-full"
@@ -42,7 +42,7 @@ const CheckoutSuccessPage = () => {
               size="lg"
               asChild
             >
-              <Link href="/">Voltar para a loja</Link>
+              <Link href="/">Back to store</Link>
             </Button>
           </DialogFooter>
         </DialogContent>

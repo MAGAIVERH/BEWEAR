@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
+import Image from "next/image";
 import { toast } from "sonner";
 
-import { formatCentsToBRL } from "@/helpers/money";
+import { formatCentsToUSD } from "@/helpers/money";
 import { useDecreaseCartProduct } from "@/hooks/mutations/use-decrease-cart-product";
 import { useIncreaseCartProduct } from "@/hooks/mutations/use-increase-cart-product";
 import { useRemoveProductFromCart } from "@/hooks/mutations/use-remove-product-from-cart";
@@ -38,10 +38,10 @@ const CartItem = ({
   const handleDeleteClick = () => {
     removeProductFromCartMutation.mutate(undefined, {
       onSuccess: () => {
-        toast.success("Produto removido do carrinho.");
+        toast.success("Product removed from cart.");
       },
       onError: () => {
-        toast.error("Erro ao remover produto do carrinho.");
+        toast.error("Failed to remove product from cart.");
       },
     });
   };
@@ -49,7 +49,7 @@ const CartItem = ({
   const handleDecreaseQuantityClick = () => {
     decreaseCartProductQuantityMutation.mutate(undefined, {
       onSuccess: () => {
-        toast.success("Quantidade do produto diminuida.");
+        toast.success("Quantity decreased.");
       },
     });
   };
@@ -57,7 +57,7 @@ const CartItem = ({
   const handleIncreaseQuantityClick = () => {
     increaseCartProductQuantityMutation.mutate(undefined, {
       onSuccess: () => {
-        toast.success("Quantidade do produto aumentada.");
+        toast.success("Quantity increased.");
       },
     });
   };
@@ -100,7 +100,7 @@ const CartItem = ({
           <TrashIcon />
         </Button>
         <p className="text-sm font-bold">
-          {formatCentsToBRL(productVariantPriceInCents)}
+          {formatCentsToUSD(productVariantPriceInCents)}
         </p>
       </div>
     </div>

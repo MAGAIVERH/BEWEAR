@@ -53,7 +53,7 @@ export const createCheckoutSession = async (
     line_items: orderItems.map((orderItem) => {
       return {
         price_data: {
-          currency: "brl",
+          currency: "usd",
           product_data: {
             name: `${orderItem.productVariant.product.name} - ${orderItem.productVariant.name}`,
             description: orderItem.productVariant.product.description,

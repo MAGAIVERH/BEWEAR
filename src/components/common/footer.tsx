@@ -3,10 +3,10 @@ const Footer = () => {
     <div className="bg-accent w-full gap-1 p-4">
       <div className="text-center">
         <p className="text-muted-foreground text-xs">
-          © 2025 BEWEAR. Todos os direitos reservados.
+          © 2025 BEWEAR. All rights reserved.
         </p>
         <p className="text-muted-foreground text-xs">
-          Desenvolvido por{" "}
+          Built by{" "}
           <a
             href="https://my-portifolio-three-navy.vercel.app/#s-home"
             target="_blank"

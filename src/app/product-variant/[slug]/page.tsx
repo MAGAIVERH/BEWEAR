@@ -7,7 +7,7 @@ import Header from "@/components/common/header";
 import ProductList from "@/components/common/product-list";
 import { db } from "@/db";
 import { productTable, productVariantTable } from "@/db/schema";
-import { formatCentsToBRL } from "@/helpers/money";
+import { formatCentsToUSD } from "@/helpers/money";
 
 import ProductActions from "./components/product-actions";
 import VariantSelector from "./components/variant-selector";
@@ -58,7 +58,7 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
         </div>
 
         <div className="px-5">
-          {/* DESCRIÇÃO */}
+          {/* DESCRIPTION */}
           <h2 className="text-lg font-semibold">
             {productVariant.product.name}
           </h2>
@@ -66,7 +66,7 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
             {productVariant.name}
           </h3>
           <h3 className="text-lg font-semibold">
-            {formatCentsToBRL(productVariant.priceInCents)}
+            {formatCentsToUSD(productVariant.priceInCents)}
           </h3>
         </div>
 
@@ -78,7 +78,7 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
           </p>
         </div>
 
-        <ProductList title="Talvez você goste" products={likelyProducts} />
+        <ProductList title="You might also like" products={likelyProducts} />
 
         <Footer />
       </div>

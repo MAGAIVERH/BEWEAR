@@ -30,17 +30,17 @@ export const createShippingAddress = async (
     .values({
       userId: session.user.id,
       recipientName: data.fullName,
-      street: data.address,
-      number: data.number,
+      street: data.street,
+      number: "",
       complement: data.complement || null,
       city: data.city,
       state: data.state,
-      neighborhood: data.neighborhood,
+      neighborhood: "",
       zipCode: data.zipCode,
-      country: "Brasil",
+      country: "United States",
       phone: data.phone,
       email: data.email,
-      cpfOrCnpj: data.cpf,
+      cpfOrCnpj: "",
     })
     .returning();
 
