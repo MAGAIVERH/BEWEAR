@@ -200,6 +200,7 @@ export const cartItemTable = pgTable("cart_item", {
   productVariantId: uuid("product_variant_id")
     .notNull()
     .references(() => productVariantTable.id, { onDelete: "cascade" }),
+  size: text("size"),
   quantity: integer("quantity").notNull().default(1),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
@@ -266,6 +267,7 @@ export const orderItemTable = pgTable("order_item", {
   productVariantId: uuid("product_variant_id")
     .notNull()
     .references(() => productVariantTable.id, { onDelete: "restrict" }),
+  size: text("size"),
   quantity: integer("quantity").notNull(),
   priceInCents: integer("price_in_cents").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),

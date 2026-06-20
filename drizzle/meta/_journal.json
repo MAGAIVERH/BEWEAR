@@ -8,6 +8,13 @@
       "when": 1781912398455,
       "tag": "0000_lazy_bullseye",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1781968670274,
+      "tag": "0001_add_size_to_cart_and_order_items",
+      "breakpoints": true
     }
   ]
 }

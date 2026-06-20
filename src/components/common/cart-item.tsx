@@ -16,6 +16,7 @@ interface CartItemProps {
   productVariantName: string;
   productVariantImageUrl: string;
   productVariantPriceInCents: number;
+  size: string | null;
   quantity: number;
 }
 
@@ -26,14 +27,17 @@ const CartItem = ({
   productVariantName,
   productVariantImageUrl,
   productVariantPriceInCents,
+  size,
   quantity,
 }: CartItemProps) => {
   const removeProductFromCartMutation = useRemoveProductFromCart(id);
 
   const decreaseCartProductQuantityMutation = useDecreaseCartProduct(id);
 
-  const increaseCartProductQuantityMutation =
-    useIncreaseCartProduct(productVariantId);
+  const increaseCartProductQuantityMutation = useIncreaseCartProduct(
+    productVariantId,
+    size ?? "",
+  );
 
   const handleDeleteClick = () => {
     removeProductFromCartMutation.mutate(undefined, {
@@ -75,6 +79,7 @@ const CartItem = ({
           <p className="text-sm font-semibold">{productName}</p>
           <p className="text-muted-foreground text-xs font-medium">
             {productVariantName}
+            {size ? ` · Size ${size}` : ""}
           </p>
           <div className="flex w-[100px] items-center justify-between rounded-lg border p-1">
             <Button

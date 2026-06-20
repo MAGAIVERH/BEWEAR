@@ -1,7 +1,6 @@
 "use server";
 
 import { eq } from "drizzle-orm";
-
 import { headers } from "next/headers";
 
 import { db } from "@/db";
@@ -75,6 +74,7 @@ export const finishOrder = async () => {
       cart.items.map((item) => ({
         orderId: order.id,
         productVariantId: item.productVariant.id,
+        size: item.size,
         quantity: item.quantity,
         priceInCents: item.productVariant.priceInCents,
       }));

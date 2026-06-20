@@ -46,6 +46,7 @@ const MyOrdersPage = async () => {
               imageUrl: item.productVariant.imageUrl,
               productName: item.productVariant.product.name,
               productVariantName: item.productVariant.name,
+              size: item.size,
               priceInCents: item.productVariant.priceInCents,
               quantity: item.quantity,
             })),
