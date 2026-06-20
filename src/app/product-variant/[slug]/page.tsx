@@ -1,11 +1,14 @@
 import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import Breadcrumbs from "@/components/common/breadcrumbs";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import ProductList from "@/components/common/product-list";
+import StarRating from "@/components/common/star-rating";
 import WishlistButton from "@/components/common/wishlist-button";
 import {
   Accordion,
@@ -14,13 +17,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { db } from "@/db";
-import { productTable, productVariantTable } from "@/db/schema";
+import { productTable, productVariantTable, reviewTable } from "@/db/schema";
 import { formatCentsToUSD } from "@/helpers/money";
 import { getGalleryImages } from "@/helpers/product-gallery";
 import { getSizesForCategory } from "@/helpers/sizes";
+import { auth } from "@/lib/auth";
 
 import ProductActions from "./components/product-actions";
 import ProductGallery from "./components/product-gallery";
+import ProductReviews from "./components/product-reviews";
 import VariantSelector from "./components/variant-selector";
 
 interface ProductVariantPageProps {
@@ -80,6 +85,26 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
     },
   });
 
+  const reviews = await db.query.reviewTable.findMany({
+    where: eq(reviewTable.productId, productVariant.productId),
+    orderBy: (review, { desc }) => [desc(review.createdAt)],
+    with: {
+      user: {
+        columns: { name: true },
+      },
+    },
+  });
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const userReview = session?.user
+    ? reviews.find((review) => review.userId === session.user.id)
+    : undefined;
+  const reviewCount = reviews.length;
+  const averageRating = reviewCount
+    ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviewCount
+    : 0;
+
   const jsonLd = {
     "@context": "https://schema.org/",
     "@type": "Product",
@@ -92,6 +117,15 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
       price: (productVariant.priceInCents / 100).toFixed(2),
       availability: "https://schema.org/InStock",
     },
+    ...(reviewCount > 0
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: averageRating.toFixed(1),
+            reviewCount,
+          },
+        }
+      : {}),
   };
 
   return (
@@ -136,6 +170,14 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
               <p className="text-xl font-semibold">
                 {formatCentsToUSD(productVariant.priceInCents)}
               </p>
+              {reviewCount > 0 && (
+                <Link href="#reviews" className="flex items-center gap-2">
+                  <StarRating value={averageRating} />
+                  <span className="text-muted-foreground text-sm underline-offset-4 hover:underline">
+                    {reviewCount} {reviewCount === 1 ? "review" : "reviews"}
+                  </span>
+                </Link>
+              )}
             </div>
 
             <div className="space-y-3">
@@ -176,6 +218,15 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
               </AccordionItem>
             </Accordion>
           </div>
+        </div>
+
+        <div className="mt-12 max-w-3xl">
+          <ProductReviews
+            productId={productVariant.productId}
+            reviews={reviews}
+            isLoggedIn={!!session?.user}
+            userReview={userReview}
+          />
         </div>
       </div>
 
