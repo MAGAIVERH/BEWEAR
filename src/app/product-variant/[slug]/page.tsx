@@ -8,6 +8,7 @@ import ProductList from "@/components/common/product-list";
 import { db } from "@/db";
 import { productTable, productVariantTable } from "@/db/schema";
 import { formatCentsToUSD } from "@/helpers/money";
+import { getSizesForCategory } from "@/helpers/sizes";
 
 import ProductActions from "./components/product-actions";
 import VariantSelector from "./components/variant-selector";
@@ -24,6 +25,7 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
       product: {
         with: {
           variants: true,
+          category: true,
         },
       },
     },
@@ -31,6 +33,7 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
   if (!productVariant) {
     return notFound();
   }
+  const sizes = getSizesForCategory(productVariant.product.category.slug);
   const likelyProducts = await db.query.productTable.findMany({
     where: eq(productTable.categoryId, productVariant.product.categoryId),
     with: {
@@ -70,7 +73,7 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
           </h3>
         </div>
 
-        <ProductActions productVariantId={productVariant.id} />
+        <ProductActions productVariantId={productVariant.id} sizes={sizes} />
 
         <div className="px-5">
           <p className="text-shadow-amber-600">

@@ -47,6 +47,7 @@ const Cart = () => {
                     productVariantPriceInCents={
                       item.productVariant.priceInCents
                     }
+                    size={item.size}
                     quantity={item.quantity}
                   />
                 ))}
