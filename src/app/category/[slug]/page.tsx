@@ -5,10 +5,13 @@ import { Suspense } from "react";
 import Breadcrumbs from "@/components/common/breadcrumbs";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
+import Pagination from "@/components/common/pagination";
 import ProductFilters from "@/components/common/product-filters";
 import ProductItem from "@/components/common/product-item";
 import { db } from "@/db";
 import { categoryTable, productTable } from "@/db/schema";
+
+const PAGE_SIZE = 8;
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
@@ -17,6 +20,7 @@ interface CategoryPageProps {
     sort?: string;
     minPrice?: string;
     maxPrice?: string;
+    page?: string;
   }>;
 }
 
@@ -26,7 +30,7 @@ const getFirstVariantPrice = (product: {
 
 const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
   const { slug } = await params;
-  const { color, sort, minPrice, maxPrice } = await searchParams;
+  const { color, sort, minPrice, maxPrice, page } = await searchParams;
 
   const category = await db.query.categoryTable.findFirst({
     where: eq(categoryTable.slug, slug),
@@ -80,6 +84,15 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
     );
   }
 
+  // Pagination
+  const totalProducts = products.length;
+  const totalPages = Math.max(1, Math.ceil(totalProducts / PAGE_SIZE));
+  const currentPage = Math.min(Math.max(1, Number(page ?? 1)), totalPages);
+  const startIndex = (currentPage - 1) * PAGE_SIZE;
+  const paginatedProducts = products.slice(startIndex, startIndex + PAGE_SIZE);
+  const rangeStart = totalProducts === 0 ? 0 : startIndex + 1;
+  const rangeEnd = Math.min(startIndex + PAGE_SIZE, totalProducts);
+
   return (
     <>
       <Header />
@@ -93,7 +106,9 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
           <p className="text-eyebrow-brand">Category</p>
           <h1 className="section-title">{category.name}</h1>
           <p className="text-muted-foreground text-sm">
-            {products.length} {products.length === 1 ? "product" : "products"}
+            {totalProducts === 0
+              ? "No products"
+              : `Showing ${rangeStart}–${rangeEnd} of ${totalProducts}`}
           </p>
         </div>
 
@@ -111,11 +126,21 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
             </p>
           </div>
         ) : (
-          <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4">
-            {products.map((product) => (
-              <ProductItem key={product.id} product={product} />
-            ))}
-          </div>
+          <>
+            <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4">
+              {paginatedProducts.map((product) => (
+                <ProductItem key={product.id} product={product} />
+              ))}
+            </div>
+
+            {totalPages > 1 && (
+              <div className="mt-10">
+                <Suspense fallback={null}>
+                  <Pagination totalPages={totalPages} />
+                </Suspense>
+              </div>
+            )}
+          </>
         )}
       </div>
 
