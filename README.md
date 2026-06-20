@@ -6,6 +6,12 @@
 
 Next.js 15 · React 19 · TypeScript · Drizzle ORM · PostgreSQL (Neon) · Tailwind v4 · shadcn/ui · Stripe · Better Auth
 
+<br/>
+
+<img src="public/screenshots/home.png" alt="BEWEAR — Nike-grade home page with editorial sections" width="900" />
+
+<sub>Home page — editorial hero, brand marquee and feature cards (Nike-grade UI).</sub>
+
 </div>
 
 > ⚠️ **Work in progress.** This is a living document, updated as the project evolves toward a
@@ -47,6 +53,15 @@ US-format checkout (State, ZIP code, US phone).
 - 📦 **Checkout** — US shipping address (State dropdown, ZIP, US phone) + **Stripe** payment in **USD**
 - 🧾 **Orders** — order history with statuses (paid / pending / canceled)
 - 🇺🇸 **Localization** — English (en-US) UI and USD throughout
+
+### UI highlights (Nike-grade front-end)
+
+- 🎬 **Hero video carousel** with progress ring, play/pause and prev/next controls
+- 🏷️ Brand **marquee**, **feature cards**, **campaign grid**, **video impact** section and **split editorials**
+- 🛹 **Floating product** carousels (transparent look) and a curated **Trending** grid
+- ✨ Editorial typography with accent headings, smooth **scroll reveals** (Framer Motion + Lenis) and
+  hover micro-interactions — all respecting `prefers-reduced-motion`
+- 📱 Fully **responsive** (mobile-first) with a sticky, centered navbar
 
 ### Roadmap (high level)
 
