@@ -1,0 +1,342 @@
+---
+description: Regras globais do projeto BEWEAR (e-commerce premium estilo Nike)
+globs: ["**/*.ts", "**/*.tsx"]
+alwaysApply: true
+---
+
+# BEWEAR — Regras do projeto
+
+## Objetivo do projeto
+
+BEWEAR é um **e-commerce de moda/streetwear** (roupas, calçados e acessórios) com
+catálogo, carrinho, checkout (Stripe) e área do cliente.
+
+**Meta de qualidade:** o front-end deve ter o nível do site da **Nike**
+(https://www.nike.com) — não em conteúdo, mas em **acabamento**: tipografia forte,
+espaçamento generoso, hierarquia editorial, fotografia em destaque, micro-interações,
+transições suaves e responsividade impecável. Quando um recrutador abrir este site,
+deve concluir, em 5 segundos, que **o autor domina front-end**.
+
+> "Igual à Nike" = **texto, espaçamentos, efeitos, interatividade e polimento** —
+> não significa copiar marca, logo ou conteúdo da Nike.
+
+A identidade visual vive em **tokens** em `src/app/globals.css`. Estética **light/editorial**
+(fundo claro, preto forte, muito respiro) — **não** é dark mode.
+
+---
+
+## Stack tecnológica (real — não inventar)
+
+- Framework: **Next.js 15** (App Router) · React 19
+- Linguagem: **TypeScript** — strict, sem `any`, sem erros de compilação
+- Banco / ORM: **Drizzle ORM** + **PostgreSQL (Neon)** — **NÃO é Prisma**
+- Styling: **Tailwind CSS v4**
+- UI Components: **shadcn/ui** (USAR AO MÁXIMO) — em `@/components/ui`
+- Ícones: **lucide-react**
+- Validação: **Zod**
+- Formulários: **React Hook Form** + `@hookform/resolvers` (zodResolver)
+- Data fetching no client: **TanStack Query** (`@tanstack/react-query`)
+- Notificações: **Sonner** (toast)
+- Auth: **Better Auth** (`@/lib/auth.ts`, `@/lib/auth-client.ts`)
+- Pagamentos: **Stripe** (`stripe`, `@stripe/stripe-js`) + webhook
+- Animação (a adicionar quando aprovado): **Framer Motion** + **Lenis** (smooth scroll)
+- **Idioma do produto/UI: inglês (en-US)** — mercado americano · Moeda: **USD ($)**, valores em **centavos**
+
+> ⚠️ **Localização:** o produto é **100% em inglês (en-US)** para o mercado dos EUA.
+> Toda string de UI, label, mensagem de erro, e-mail e dado de seed deve ser **US English**.
+> Moeda **USD**, formato `$1,299.00`. Endereços no padrão americano (State, ZIP code),
+> telefone `(555) 123-4567`. O código (variáveis/funções/pastas) permanece em inglês — já é o padrão.
+> O conteúdo atual está em pt-BR/BRL e **precisa ser migrado** (ver fase de localização no guia).
+
+---
+
+## Fluxo de Trabalho — OBRIGATÓRIO
+
+1. Sempre **Conventional Commits** (`feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `chore:`).
+2. **Nunca** faça commit, push ou deploy sem pedido explícito do usuário.
+3. Ao concluir uma tarefa/conjunto de alterações, pergunte: **"Deseja que eu faça o commit/push/deploy agora?"**
+4. **Antes de concluir**, verifique erros de TypeScript dos arquivos alterados
+   (diagnostics do IDE ou `npx tsc --noEmit`) e o lint (`pnpm lint`). Corrija tudo antes de entregar.
+5. **Sempre** crie uma branch antes de iniciar uma fase/feature nova.
+   Padrão: `feat/fase-[n]-[descricao]` (ex.: `feat/fase-1-home-premium`).
+   Nunca trabalhe direto na `main`. Ao concluir a fase, abra um PR e aguarde confirmação do merge.
+6. **Gerenciador de pacotes: `pnpm`** (existe `pnpm-lock.yaml` / `pnpm-workspace.yaml`).
+   Não usar `npm`/`yarn`.
+7. Toda tarefa nova → atualizar o guia (`docs/guia-desenvolvimento-bewear.md`) e criar/atualizar
+   o arquivo do dia em `docs/tasks/` (ver seção "Documentação de tarefas").
+8. **README sempre atualizado.** A cada feature/fase concluída, atualizar o `README.md` para refletir o
+   estado real do projeto (o que já existe, stack, como rodar, prints/links). O README é um documento
+   **vivo**, mantido continuamente **até o projeto ficar pronto**, quando produzo a **versão final**
+   (nível portfólio sênior: problema, solução, arquitetura, screenshots/GIFs, demo ao vivo). Nunca deixar
+   o README desatualizado nem com o conteúdo padrão do `create-next-app`.
+
+---
+
+## Estrutura de diretórios (real)
+
+```
+BEWEAR/
+├── drizzle/                      # migrations geradas pelo drizzle-kit
+├── public/                       # imagens, banners, logos das marcas
+├── docs/
+│   ├── guia-desenvolvimento-bewear.md   # roadmap dia a dia (consulta)
+│   └── tasks/                    # 1 arquivo por dia de tarefa
+├── src/
+│   ├── app/                      # App Router (pages, layout, api routes)
+│   │   ├── globals.css           # TOKENS de cor (fonte única do design system)
+│   │   ├── layout.tsx
+│   │   ├── page.tsx              # Home
+│   │   ├── api/                  # route handlers (auth, stripe webhook)
+│   │   ├── authentication/
+│   │   ├── cart/
+│   │   ├── category/[slug]/
+│   │   ├── product-variant/[slug]/
+│   │   ├── checkout/
+│   │   └── my-orders/
+│   ├── actions/                  # Server Actions: [nome]/index.ts (+ schema.ts)
+│   ├── components/
+│   │   ├── ui/                   # shadcn (Button, Input, Card, Sheet, ...)
+│   │   └── common/               # componentes do domínio (header, footer, product-item, ...)
+│   ├── db/                       # Drizzle: index.ts (client) + schema.ts + seed.ts
+│   ├── helpers/                  # money.ts (formatCentsToBRL), etc.
+│   ├── hooks/
+│   │   ├── queries/              # TanStack Query (useCart, useUserAddresses, ...)
+│   │   └── mutations/            # TanStack mutations (useIncreaseCartProduct, ...)
+│   ├── lib/                      # auth.ts, auth-client.ts, utils.ts (cn)
+│   └── providers/                # react-query provider
+```
+
+> **Convenção de Server Actions deste projeto:** cada action é uma pasta em `src/actions/<nome>/`
+> com `index.ts` (`"use server"` + lógica) e, quando houver entrada, `schema.ts` (Zod).
+> **Não** introduza pasta `modules/` nem mova actions para dentro de `app/`.
+
+---
+
+## shadcn/ui — OBRIGATÓRIO
+
+1. **USAR AO MÁXIMO** os componentes de `@/components/ui` (Button, Input, Card, Dialog, Sheet,
+   Tabs, Badge, Separator, Avatar, ScrollArea, RadioGroup, Form, Accordion...).
+2. Antes de criar UI do zero, verifique se o shadcn já oferece; instale via CLI se faltar
+   (`pnpm dlx shadcn@latest add <componente>`).
+3. Estenda com `className` + tokens do tema (`cn()` de `@/lib/utils`); não recrie primitivos.
+4. Padrões repetidos → extraia para `src/components/common/`.
+
+---
+
+## Design system — padrão "Nike" (OBRIGATÓRIO)
+
+### Cores — regra crítica
+- **NUNCA** cor hardcoded: sem `#hex`, `rgb()`, `oklch()`/`hsl()` inline, nem `bg-[#...]`/`text-[#...]`.
+- **SEMPRE** tokens de `src/app/globals.css` via classes do tema Tailwind
+  (`bg-background`, `text-foreground`, `border-border`, `bg-primary`, `text-muted-foreground`, ...).
+- Cor nova? Crie a variável em `globals.css` primeiro (`:root`), depois use no componente.
+
+### Linguagem visual (referência Nike)
+- **Tema:** light/editorial — fundo claro, **preto forte** para texto e CTAs, muito respiro.
+- **Tipografia:** hierarquia ousada. Títulos de seção/hero **grandes, peso bold/black, tracking apertado**
+  (`tracking-tight`/`-tracking-[0.02em]`), caixa alta em rótulos/eyebrows com `tracking-wide` (uppercase).
+  Texto corrido em `text-muted-foreground`, leading confortável.
+- **Espaçamento:** generoso e consistente (escala de 4/8). Seções com respiro vertical amplo
+  (`py-12`/`py-16`/`py-24` no desktop). Nunca apertar conteúdo.
+- **Imagem em destaque:** fotografia/produto é protagonista — full-bleed, proporções consistentes,
+  `next/image` sempre, com `sizes` corretos e `priority` no hero.
+- **Micro-interações:** hover com `transition`, `duration-300`, `ease-out`; zoom suave na imagem do produto
+  (`group-hover:scale-105` com `overflow-hidden`); estados de foco visíveis; feedback tátil em botões.
+- **Animação de entrada/scroll:** Framer Motion (fade/slide stagger) + Lenis (smooth scroll) — discretas,
+  sempre respeitando `prefers-reduced-motion`.
+- **Arredondamento:** `rounded-3xl` em cards/imagens de produto · `rounded-xl` em inputs/itens internos
+  (já é o padrão atual do projeto — manter consistência).
+
+### Padrões de classe
+- Card de produto (imagem): `className="overflow-hidden rounded-3xl"` + `<Image className="transition-transform duration-300 group-hover:scale-105" />`
+- Container de página: padding horizontal `px-5` no mobile, escalando no desktop (`md:px-8 lg:px-12`).
+- Eyebrow/rótulo de seção: `className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground"`
+- Título de seção: `className="text-2xl font-bold tracking-tight md:text-4xl"`
+- CTA primário: `Button` do shadcn (preto/`bg-primary`), `size="lg"`, cantos arredondados, hover suave.
+
+### Responsividade (Nike é mobile-first E desktop impecável)
+- **Mobile-first**, mas **todo layout precisa de versão desktop** rica (grids, navbar com menus, hover).
+- Breakpoints Tailwind padrão. Grids de produto: `grid-cols-2 md:grid-cols-3 lg:grid-cols-4`.
+- Header vira navbar completa no desktop (links de categoria, busca, conta, carrinho).
+
+---
+
+## Regras de TypeScript — OBRIGATÓRIAS
+
+1. **NUNCA** `any` — nem explícito (`: any`), nem `as any`, nem `Record<string, any>`. Use `unknown`,
+   genéricos ou tipos explícitos. Arquivos com `any` serão rejeitados.
+2. **NUNCA** entregue arquivo com erro de TypeScript (`strict: true`). Tudo deve compilar.
+3. Verifique erros após criar/editar `.ts`/`.tsx` (diagnostics do IDE ou `npx tsc --noEmit`) antes de finalizar.
+4. **NUNCA** `@ts-ignore`/`@ts-expect-error` para mascarar erro — resolva a causa.
+5. Derive tipos de schemas Zod com `z.infer<typeof schema>` — não duplique tipos.
+6. Tipos de dados simples: prefira `type` a `interface`.
+7. Props de componente: `type NomeProps = { ... }` antes do componente.
+8. Server Actions devem ter retorno tipado e explícito.
+9. Use `satisfies` para validar objeto contra tipo sem perder inferência literal.
+10. Tipos de tabela/coluna vêm do Drizzle: `typeof productTable.$inferSelect`. Enums vêm do `schema.ts`
+    (`orderStatus`) — nunca redefina manualmente.
+
+---
+
+## Regras de arquitetura — OBRIGATÓRIAS
+
+1. **Server Components** buscam dados direto via `db` (`@/db`) com `db.query...` (Drizzle relational).
+   Páginas que precisam de dados são `async`.
+2. **Mutações** via **Server Actions** em `src/actions/<nome>/`. Fluxo:
+   validar entrada com Zod (`schema.ts` + `safeParse`) → checar sessão (Better Auth) → executar no `db`
+   → `revalidatePath` quando aplicável → retornar resultado tipado.
+3. **Client Components** que precisam de dados/estado de servidor usam **TanStack Query**
+   via hooks em `src/hooks/queries` (leitura) e `src/hooks/mutations` (escrita, chamando as actions).
+   Nunca faça `fetch` cru em componente.
+4. Não coloque lógica pesada de negócio dentro de páginas `app/` — extraia para `actions/`, `helpers/` ou hooks.
+5. Schemas Zod de uma action ficam no `schema.ts` da própria action; reutilize-os nos hooks/forms.
+6. `searchParams` e `params` em páginas devem ser **awaited** (Next 15): `const { slug } = await params`.
+7. Escopo do usuário: toda action/consulta sensível valida a sessão via `auth.api.getSession({ headers: await headers() })`
+   e filtra por `userId`. Nunca confie em id vindo do client.
+
+---
+
+## Formulários — OBRIGATÓRIO
+
+1. **Todo formulário** usa **React Hook Form** (`useForm`). Nunca `useState` por campo.
+2. Validação com **Zod** + `zodResolver`; reutilize o schema da action correspondente.
+3. Tipagem: `useForm<z.infer<typeof schema>>()`.
+4. UI via shadcn **`Form`** (`@/components/ui/form`): `Form`, `FormField`, `FormItem`, `FormLabel`,
+   `FormControl`, `FormMessage`.
+5. Submit: chame a mutation do TanStack (que chama a Server Action); loading via `isPending` da mutation
+   ou `useTransition` — nunca `useState` só para loading.
+6. Erros de validação → `FormMessage`; erros da action → `toast` do Sonner.
+7. Máscaras no padrão **americano** (preço em USD, ZIP code, telefone `(555) 123-4567`,
+   State como dropdown dos 50 estados + DC): usar `react-number-format` (já no projeto).
+
+---
+
+## Regras de componentes — OBRIGATÓRIAS
+
+1. Client Components começam com `"use client"` na primeira linha.
+2. Mutações com `isPending` (TanStack) ou `useTransition` — nunca `useState` só para loading.
+3. Feedback ao usuário sempre via `toast` do Sonner. **Nunca** `alert()`/`confirm()`/`prompt()`.
+4. Após mutation com redirecionamento: `router.push` + `router.refresh()`.
+5. Não use `<form action={serverAction}>`. Use RHF: `<form onSubmit={form.handleSubmit(onSubmit)}>`.
+6. `.map()` sempre com `key` única e estável (id), **nunca** índice.
+7. Imagens **sempre** `next/image` com `alt` descritivo, `sizes` e `priority` no que está acima da dobra.
+8. Componente reutilizável de domínio → `src/components/common/`.
+
+---
+
+## Banco de dados / Drizzle — OBRIGATÓRIAS
+
+1. Cliente Drizzle importado de `@/db` (`db`). Schema em `@/db/schema`.
+2. Leitura: prefira a API relacional (`db.query.<tabela>.findMany/findFirst`) com `with`/`columns`
+   para selecionar só o necessário — não traga colunas/relacionamentos desnecessários.
+3. Filtre por `userId`/escopo do usuário em tudo que for sensível (carrinho, pedidos, endereços).
+4. Use `Promise.all([...])` para consultas paralelas — nunca sequencial sem necessidade.
+5. Erros em `try/catch`; em Server Actions, `console.error` no catch e retorno de erro tratado
+   — nunca vaze stack/erro cru para o client.
+6. **Valores monetários em centavos** (`priceInCents`, `totalPriceInCents`). Conversão para exibição
+   em **USD** via helper de `@/helpers/money` (migrar `formatCentsToBRL` → `formatCentsToUSD`,
+   `Intl.NumberFormat("en-US", { style: "currency", currency: "USD" })`) — nunca formate na mão no componente.
+7. Migrations via `drizzle-kit` (pasta `drizzle/`). Nunca edite migration aplicada à mão.
+
+---
+
+## Convenções de nomenclatura — OBRIGATÓRIAS
+
+| Item | Padrão | Exemplo |
+|------|--------|---------|
+| Arquivos | kebab-case | `add-cart-product/index.ts` |
+| Componentes React | PascalCase | `ProductItem` |
+| Hooks | camelCase + `use` | `useCart`, `useIncreaseCartProduct` |
+| Server Actions (pasta) | kebab-case verbo | `create-checkout-session/` |
+| Schemas Zod | camelCase + `Schema` | `addCartProductSchema` |
+| Tipos Zod | PascalCase + `z.infer` | `type AddCartProductInput` |
+| Tabelas Drizzle | camelCase + `Table` | `productVariantTable` |
+| Constantes de array | SCREAMING_SNAKE_CASE | `BRAND_LOGOS` |
+| Imports | sempre alias `@/` | `@/components/common/...` |
+| Idioma do código | inglês | variáveis, funções, tipos, pastas |
+| Idioma da UI | **inglês (en-US)** | textos, labels, mensagens de erro, e-mails, seed |
+
+---
+
+## Restrições absolutas — NUNCA faça
+
+- NUNCA `any` em TypeScript (explícito ou implícito) — arquivo com `any` é rejeitado.
+- NUNCA entregue arquivo que não compila — verifique antes de finalizar.
+- NUNCA `@ts-ignore`/`@ts-expect-error` sem justificativa real.
+- NUNCA cor hardcoded — só tokens de `globals.css` / tema Tailwind.
+- NUNCA ignore shadcn quando já existe equivalente em `@/components/ui`.
+- NUNCA `fetch` cru em Client Component — use hooks do TanStack Query.
+- NUNCA `alert()`/`confirm()`/`prompt()` — use Sonner toast.
+- NUNCA `<form action={...}>` para mutation — use RHF + mutation.
+- NUNCA gerencie campos de formulário com `useState` — use React Hook Form.
+- NUNCA índice de array como `key` no `.map()`.
+- NUNCA confie em `userId` vindo do client — valide a sessão (Better Auth) no servidor.
+- NUNCA exiba valor monetário sem o helper de formatação USD.
+- NUNCA escreva UI/copy/seed em português — **tudo em inglês (en-US)**, moeda **USD**.
+- NUNCA introduza Prisma, pasta `modules/` ou dark-mode (a menos que o usuário peça).
+- NUNCA `console.log` em código entregue (apenas `console.error` em catch de action).
+- NUNCA commit/push/deploy sem pedido explícito do usuário.
+
+---
+
+## Arquivos de referência (padrões reais a seguir)
+
+- **Server Action:** `src/actions/add-cart-product/index.ts` (+ `schema.ts`)
+- **Query hook:** `src/hooks/queries/use-cart.ts`
+- **Mutation hook:** `src/hooks/mutations/use-increase-cart-product.ts`
+- **Server Component com dados:** `src/app/page.tsx`
+- **Componente de domínio:** `src/components/common/product-item.tsx`
+- **Form (RHF + zod + shadcn):** `src/app/authentication/components/sign-in-form.tsx`
+- **Helper de formatação:** `src/helpers/money.ts`
+- **Tokens do design system:** `src/app/globals.css`
+
+---
+
+## Documentação de tarefas — OBRIGATÓRIO
+
+1. O roadmap vive em `docs/guia-desenvolvimento-bewear.md` (consulta antes de iniciar qualquer fase).
+2. Para **cada dia de trabalho**, crie/atualize um arquivo em `docs/tasks/` no formato
+   `dia-NN-descricao.md` (use `docs/tasks/_template.md` como base).
+3. Ao concluir o dia, marque o checklist e o critério **Done**; registre bloqueios.
+4. Mantenha o guia atualizado quando o escopo mudar.
+5. **Mantenha o `README.md` atualizado a cada feature/fase** (documento vivo) e produza a **versão final**
+   quando o projeto estiver pronto.
+
+---
+
+## Decisões tomadas & pendências
+
+### ✅ Decisões confirmadas (2026-06-19)
+- **Paleta:** **preto/branco + 1 acento** (migrar tokens em `globals.css`; preto nos CTAs).
+- **Animação:** adicionar **`framer-motion` + `lenis` + `embla-carousel-react`**
+  (reveal on scroll, smooth scroll, carrosséis) — sempre com `prefers-reduced-motion`.
+- **Imagens:** usar **placeholders de alta qualidade (Unsplash)** até haver material real.
+- **Localização:** migrar tudo de **pt-BR/BRL → en-US/USD** (UI, `formatCentsToBRL` → `formatCentsToUSD`,
+  endereço/checkout americano, seed em inglês). É a primeira tarefa de código (Dia 2).
+- **Desktop:** construir as versões desktop de todas as páginas (navbar completa, grids, mega-menu).
+
+### ⏳ Pendências (ainda dependem do usuário)
+- [ ] **Tipografia:** manter Geist ou adicionar fonte display (ex.: Archivo/Anton) para hero/títulos? *(a decidir no Dia 3)*
+- [ ] **Variáveis de ambiente (`.env`):** confirmar `DATABASE_URL` (Neon), `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`,
+      `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET` e (se login social)
+      `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET`.
+- [ ] **Deploy:** alvo é **Vercel**? Há domínio definido?
+- [ ] **Conteúdo:** nome/coleções/categorias reais para o seed, **em inglês** (hoje há dados em pt-BR).
+
+---
+
+## Resumo rápido
+
+- **TypeScript** — zero `any`, zero erros; verifique antes de entregar.
+- **Arquitetura** — Server Components leem do `db`; mutações em `actions/`; client usa TanStack Query.
+- **UI** — shadcn ao máximo · **light/editorial nível Nike** · tokens em `globals.css`.
+- **Cores** — nunca hardcode; criar variável em `globals.css` se faltar.
+- **Formulários** — RHF + zodResolver + shadcn Form; nunca `useState` por campo.
+- **Monetário** — centavos no banco; formatação **USD** na exibição.
+- **Imports** — sempre alias `@/`.
+- **Idioma** — código em inglês; **UI/copy/seed em inglês (en-US)**, moeda **USD**.
+- **Feedback** — sempre Sonner toast.
+- **Git** — Conventional Commits + `pnpm`; perguntar antes de commit/push/deploy.
+- **Docs** — manter guia + arquivo do dia em `docs/tasks/`.
+</content>
+</invoke>
