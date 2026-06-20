@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
+import Breadcrumbs from "@/components/common/breadcrumbs";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import ProductFilters from "@/components/common/product-filters";
@@ -84,7 +85,11 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
       <Header />
 
       <div className="px-5 py-10 md:px-8 lg:px-12">
-        <div className="space-y-2">
+        <Breadcrumbs
+          items={[{ label: "Home", href: "/" }, { label: category.name }]}
+        />
+
+        <div className="mt-6 space-y-2">
           <p className="text-eyebrow-brand">Category</p>
           <h1 className="section-title">{category.name}</h1>
           <p className="text-muted-foreground text-sm">

@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import Breadcrumbs from "@/components/common/breadcrumbs";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import ProductList from "@/components/common/product-list";
@@ -101,7 +102,18 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
       <Header />
 
       <div className="px-5 py-8 md:px-8 lg:px-12">
-        <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-12">
+        <Breadcrumbs
+          items={[
+            { label: "Home", href: "/" },
+            {
+              label: productVariant.product.category.name,
+              href: `/category/${productVariant.product.category.slug}`,
+            },
+            { label: productVariant.product.name },
+          ]}
+        />
+
+        <div className="mt-6 lg:grid lg:grid-cols-2 lg:items-start lg:gap-12">
           {/* Gallery */}
           <ProductGallery
             images={galleryImages}
