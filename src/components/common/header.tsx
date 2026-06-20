@@ -25,6 +25,7 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import Cart from "./cart";
+import SearchBar from "./search-bar";
 
 const Header = () => {
   const { data: session } = authClient.useSession();
@@ -64,6 +65,8 @@ const Header = () => {
               </SheetHeader>
 
               <div className="flex flex-col gap-6 px-5">
+                <SearchBar className="w-full" />
+
                 {session?.user ? (
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -152,8 +155,9 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Right: account + cart */}
-        <div className="flex items-center gap-1">
+        {/* Right: search + account + cart */}
+        <div className="flex items-center gap-2">
+          <SearchBar className="hidden w-48 md:block lg:w-64" />
           {session?.user ? (
             <div className="hidden items-center gap-1 md:flex">
               <Link href="/my-orders" aria-label="My orders">
