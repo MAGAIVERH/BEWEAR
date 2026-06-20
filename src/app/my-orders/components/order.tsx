@@ -66,13 +66,15 @@ const Orders = ({ orders }: OrdersProps) => {
                       key={product.id}
                     >
                       <div className="flex items-center gap-4">
-                        <Image
-                          src={product.imageUrl}
-                          alt={product.productName}
-                          width={78}
-                          height={78}
-                          className="rounded-lg"
-                        />
+                        <div className="bg-muted relative h-[78px] w-[78px] shrink-0 overflow-hidden rounded-xl">
+                          <Image
+                            src={product.imageUrl}
+                            alt={product.productName}
+                            fill
+                            sizes="78px"
+                            className="object-cover"
+                          />
+                        </div>
                         <div className="flex flex-col gap-1">
                           <p className="text-sm font-semibold">
                             {product.productName}
