@@ -2,8 +2,10 @@
 
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import Link from "next/link";
 import { useCallback } from "react";
 
+import { Button } from "@/components/ui/button";
 import { productTable, productVariantTable } from "@/db/schema";
 
 import ProductItem from "./product-item";
@@ -13,9 +15,18 @@ interface ProductListProps {
   products: (typeof productTable.$inferSelect & {
     variants: (typeof productVariantTable.$inferSelect)[];
   })[];
+  floating?: boolean;
+  ctaLabel?: string;
+  ctaHref?: string;
 }
 
-const ProductList = ({ title, products }: ProductListProps) => {
+const ProductList = ({
+  title,
+  products,
+  floating,
+  ctaLabel,
+  ctaHref,
+}: ProductListProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     dragFree: true,
@@ -27,7 +38,7 @@ const ProductList = ({ title, products }: ProductListProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-end justify-between px-5 md:px-8 lg:px-12">
+      <div className="container-bw flex items-end justify-between">
         <h3 className="section-title">{title}</h3>
 
         <div className="hidden gap-2 md:flex">
@@ -50,18 +61,28 @@ const ProductList = ({ title, products }: ProductListProps) => {
         </div>
       </div>
 
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex gap-4 px-5 md:px-8 lg:px-12">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="min-w-0 shrink-0 basis-[45%] sm:basis-[33%] md:basis-[28%] lg:basis-[22%] xl:basis-[19%]"
-            >
-              <ProductItem product={product} />
-            </div>
-          ))}
+      <div className="container-bw">
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-4">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="min-w-0 shrink-0 basis-[45%] sm:basis-[33%] md:basis-[28%] lg:basis-[22%] xl:basis-[19%]"
+              >
+                <ProductItem product={product} floating={floating} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+
+      {ctaLabel && ctaHref && (
+        <div className="container-bw flex justify-center pt-2">
+          <Button asChild size="lg" className="rounded-full">
+            <Link href={ctaHref}>{ctaLabel}</Link>
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
