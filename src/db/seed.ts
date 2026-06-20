@@ -2,8 +2,14 @@ import "dotenv/config";
 
 import crypto from "crypto";
 
+import { getSizesForCategory } from "../helpers/sizes";
 import { db } from ".";
-import { categoryTable, productTable, productVariantTable } from "./schema";
+import {
+  categoryTable,
+  productTable,
+  productVariantStockTable,
+  productVariantTable,
+} from "./schema";
 
 const productImages = {
   Backpack: {
@@ -598,6 +604,19 @@ async function main() {
           priceInCents: variantData.price,
           slug: generateSlug(`${productData.name}-${variantData.color}`),
         });
+
+        // Stock per size (one mid size out of stock for variety).
+        const sizes = getSizesForCategory(
+          generateSlug(productData.categoryName),
+        );
+        for (let i = 0; i < sizes.length; i++) {
+          const outOfStock = sizes.length > 2 && i === sizes.length - 2;
+          await db.insert(productVariantStockTable).values({
+            productVariantId: variantId,
+            size: sizes[i],
+            stock: outOfStock ? 0 : 8 + ((i * 5) % 13),
+          });
+        }
       }
     }
 

@@ -45,6 +45,18 @@ export const addProductToCart = async (data: AddProductToCartSchema) => {
         eq(cartItem.size, data.size),
       ),
   });
+  const stockRow = await db.query.productVariantStockTable.findFirst({
+    where: (stockItem, { and, eq }) =>
+      and(
+        eq(stockItem.productVariantId, data.productVariantId),
+        eq(stockItem.size, data.size),
+      ),
+  });
+  const currentQuantity = cartItem?.quantity ?? 0;
+  if (stockRow !== undefined && currentQuantity + data.quantity > stockRow.stock) {
+    throw new Error("Not enough stock for the selected size.");
+  }
+
   if (cartItem) {
     await db
       .update(cartItemTable)
