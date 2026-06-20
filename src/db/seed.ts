@@ -1,5 +1,6 @@
-import crypto from "crypto";
 import "dotenv/config";
+
+import crypto from "crypto";
 
 import { db } from ".";
 import { categoryTable, productTable, productVariantTable } from "./schema";
