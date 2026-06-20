@@ -167,4 +167,25 @@
   .section-subtitle {
     @apply text-muted-foreground max-w-prose text-sm leading-7 md:text-base;
   }
+  /* Infinite horizontal marquee track (expects two identical copies inside) */
+  .marquee-track {
+    @apply flex w-max items-center;
+    animation: marquee 30s linear infinite;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
 }

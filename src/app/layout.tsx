@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { Toaster } from "@/components/ui/sonner";
 import ReactQueryProvider from "@/providers/react-query";
+import SmoothScrollProvider from "@/providers/smooth-scroll";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <SmoothScrollProvider>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+        </SmoothScrollProvider>
         <Toaster position="top-center" />
       </body>
     </html>
