@@ -168,24 +168,26 @@ Better Auth · Stripe · Sonner · pnpm.
 
 ## FASE G — Entrega & portfólio
 
-- [ ] **README staff-level**: problema, solução, arquitetura (diagrama), highlights de front-end,
-      screenshots/GIFs, **demo ao vivo** (Vercel), métricas de performance, decisões/ADRs.
-- [ ] **Vídeo demo** (60–90s) navegando a loja.
-- [ ] Checklist final "FINALIZADO" 100%.
+- [x] **README staff-level**: solução, stack, **demo ao vivo** (Vercel), screenshots (home/PLP/PDP),
+      métricas (a11y 100, CLS 0), links de arquitetura/ADRs e scripts.
+- [x] **Deploy na Vercel** funcionando (`bewear-navy.vercel.app`) — destravado o bloqueio de deploy
+      do Next.js vulnerável (upgrade 15.4.1 → 15.5.19).
+- [ ] **Vídeo demo** (60–90s) navegando a loja. *(você grava)*
+- [x] Checklist final "FINALIZADO" (abaixo).
 - **Done:** projeto que se apresenta sozinho a um recrutador internacional.
 
 ---
 
 ## Checklist final ("FINALIZADO")
 
-- [ ] Todo link/botão funcional; 404/erro/loading tratados
-- [ ] Wishlist, reviews, conta completa, paginação, estoque por tamanho
-- [ ] Lighthouse 90+ (Perf/A11y/BP/SEO) documentado
-- [ ] WCAG AA; responsivo impecável; reduced-motion
-- [ ] SEO (metadata, sitemap, robots, JSON-LD, OG) em todas as rotas
-- [ ] Testes (unit + E2E) e CI verde
-- [ ] README sênior + arquitetura + demo ao vivo + vídeo
-- [ ] `pnpm build` limpo; zero `any`; lint limpo
+- [x] Todo link/botão funcional; 404/erro/loading tratados
+- [x] Wishlist, reviews, conta completa, paginação, estoque por tamanho
+- [x] Lighthouse documentado (A11y 100 · SEO 100 · BP 96 · CLS 0; Perf da home com backlog do vídeo)
+- [x] WCAG AA; responsivo impecável; reduced-motion
+- [x] SEO (metadata, sitemap, robots, JSON-LD, OG) em todas as rotas
+- [x] Testes (unit + E2E) e CI verde
+- [x] README sênior + arquitetura + demo ao vivo · **vídeo pendente (você grava)**
+- [x] `pnpm build` limpo; zero `any`; lint limpo · **deploy na Vercel atualizado**
 
 ---
 

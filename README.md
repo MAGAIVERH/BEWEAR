@@ -6,6 +6,8 @@
 
 Next.js 15 · React 19 · TypeScript · Drizzle ORM · PostgreSQL (Neon) · Tailwind v4 · shadcn/ui · Stripe · Better Auth
 
+### [🔗 Live demo → bewear-navy.vercel.app](https://bewear-navy.vercel.app)
+
 <br/>
 
 <img src="public/screenshots/home.png" alt="BEWEAR — Nike-grade home page with editorial sections" width="900" />
@@ -97,7 +99,27 @@ US-format checkout (State, ZIP code, US phone).
 
 Foundation & design system → Premium home (hero/editorial) → PLP (filters/search) →
 PDP (gallery/variants) → Cart & checkout polish → Account & orders → Motion/a11y/responsive →
-Performance, SEO, deploy. Full day-by-day plan in [`docs/guia-desenvolvimento-bewear.md`](docs/guia-desenvolvimento-bewear.md).
+Performance, SEO, testing/CI, deploy. Full day-by-day plan in
+[`docs/guia-desenvolvimento-bewear.md`](docs/guia-desenvolvimento-bewear.md).
+
+## Screenshots
+
+| Listing (PLP) | Product (PDP) |
+|:--:|:--:|
+| <img src="public/screenshots/plp.png" alt="Category listing with filters and product grid" width="440" /> | <img src="public/screenshots/pdp.png" alt="Product detail with gallery, size selector and reviews" width="440" /> |
+| Filters (color/price/sort), responsive grid, wishlist | Gallery + thumbnails, variant & size selectors, reviews |
+
+## Quality at a glance
+
+| Lighthouse (mobile) | Score |
+|---------------------|-------|
+| Accessibility | **100** (home/PLP/PDP) |
+| Best Practices | 96 |
+| SEO | 100 |
+| CLS | **0** |
+
+- TypeScript strict, zero `any` · ESLint clean · **25 unit tests** + **E2E** green · CI on every PR
+- Measurement details and the performance backlog in [`docs/performance.md`](docs/performance.md)
 
 ## Getting started
 
