@@ -10,6 +10,7 @@ import Header from "@/components/common/header";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/db";
+import { BLUR_DATA_URL } from "@/helpers/image";
 import { formatCentsToUSD } from "@/helpers/money";
 import { auth } from "@/lib/auth";
 
@@ -90,6 +91,8 @@ const OrderDetailPage = async ({ params }: OrderDetailPageProps) => {
                       src={item.productVariant.imageUrl}
                       alt={item.productVariant.product.name}
                       fill
+                      placeholder="blur"
+                      blurDataURL={BLUR_DATA_URL}
                       sizes="78px"
                       className="object-cover"
                     />

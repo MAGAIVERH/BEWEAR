@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { productTable, productVariantTable } from "@/db/schema";
+import { BLUR_DATA_URL } from "@/helpers/image";
 import { formatCentsToUSD } from "@/helpers/money";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +34,8 @@ const ProductItem = ({ product, className, floating }: ProductItemProps) => {
           src={firstVariant.imageUrl}
           alt={firstVariant.name}
           fill
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
           sizes="(min-width: 1024px) 20vw, (min-width: 768px) 30vw, 45vw"
           className={cn(
             "transition-transform duration-500 ease-out group-hover:scale-105",

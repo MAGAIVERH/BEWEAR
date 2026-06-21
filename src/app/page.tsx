@@ -1,4 +1,4 @@
-import { desc } from "drizzle-orm";
+import dynamic from "next/dynamic";
 
 import Brands from "@/components/common/brands";
 import CampaignGrid from "@/components/common/campaign-grid";
@@ -7,30 +7,33 @@ import FeatureCards from "@/components/common/feature-cards";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import Hero from "@/components/common/hero";
-import ImpactSection from "@/components/common/impact-section";
 import ProductList from "@/components/common/product-list";
 import Reveal from "@/components/common/reveal";
 import SectionHeader from "@/components/common/section-header";
 import SplitEditorial from "@/components/common/split-editorial";
 import TrendingSection from "@/components/common/trending-section";
-import { db } from "@/db";
-import { productTable } from "@/db/schema";
+import {
+  getCategories,
+  getNewestProductsWithVariants,
+  getProductsWithVariants,
+} from "@/db/queries";
+
+// Below-the-fold, motion-heavy client section: code-split so its JS (and the
+// video poster logic) is not part of the initial home bundle.
+const ImpactSection = dynamic(
+  () => import("@/components/common/impact-section"),
+);
+
+// Refresh the statically rendered home periodically (ISR) so new catalog data
+// appears without a rebuild.
+export const revalidate = 3600;
 
 const Home = async () => {
-  const products = await db.query.productTable.findMany({
-    with: {
-      variants: true,
-    },
-  });
-
-  const newlyCreateProducts = await db.query.productTable.findMany({
-    orderBy: [desc(productTable.createdAt)],
-    with: {
-      variants: true,
-    },
-  });
-
-  const categories = await db.query.categoryTable.findMany({});
+  const [products, newlyCreateProducts, categories] = await Promise.all([
+    getProductsWithVariants(),
+    getNewestProductsWithVariants(),
+    getCategories(),
+  ]);
 
   return (
     <>

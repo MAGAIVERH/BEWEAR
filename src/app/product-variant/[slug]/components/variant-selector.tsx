@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { productVariantTable } from "@/db/schema";
+import { BLUR_DATA_URL } from "@/helpers/image";
 import { cn } from "@/lib/utils";
 
 interface VariantSelectorProps {
@@ -34,6 +35,8 @@ const VariantSelector = ({
               src={variant.imageUrl}
               alt={variant.name}
               fill
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
               sizes="64px"
               className="object-cover"
             />

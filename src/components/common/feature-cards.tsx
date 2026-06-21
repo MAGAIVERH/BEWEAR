@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { categoryTable } from "@/db/schema";
+import { BLUR_DATA_URL } from "@/helpers/image";
 
 type FeatureCardsProps = {
   categories: (typeof categoryTable.$inferSelect)[];
@@ -33,6 +34,8 @@ const FeatureCards = ({ categories }: FeatureCardsProps) => {
               src={FEATURE_IMAGES[index % FEATURE_IMAGES.length]}
               alt={category.name}
               fill
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
               sizes="(min-width: 640px) 33vw, 100vw"
               className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             />

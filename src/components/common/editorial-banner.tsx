@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { BLUR_DATA_URL } from "@/helpers/image";
 
 const EditorialBanner = () => {
   return (
@@ -11,6 +12,8 @@ const EditorialBanner = () => {
           src="/home/banner-authentic.jpg"
           alt="Be authentic — the new BEWEAR collection"
           fill
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
           sizes="100vw"
           className="object-cover"
         />

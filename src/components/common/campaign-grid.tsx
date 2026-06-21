@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { BLUR_DATA_URL } from "@/helpers/image";
+
 type CampaignTile = {
   src: string;
   title: string;
@@ -32,6 +34,8 @@ const Tile = ({ tile }: { tile: CampaignTile }) => (
       src={tile.src}
       alt={tile.title}
       fill
+      placeholder="blur"
+      blurDataURL={BLUR_DATA_URL}
       sizes="(min-width: 768px) 50vw, 100vw"
       className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
     />
@@ -56,6 +60,8 @@ const CampaignGrid = () => {
           src="/home/campaign-1.jpg"
           alt="Carry it all"
           fill
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
           sizes="(min-width: 768px) 50vw, 100vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />

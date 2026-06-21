@@ -63,6 +63,17 @@ US-format checkout (State, ZIP code, US phone).
   hover micro-interactions — all respecting `prefers-reduced-motion`
 - 📱 Fully **responsive** (mobile-first) with a sticky, centered navbar
 
+### Performance
+
+- ⚡ **ISR** on the home (`revalidate`) and cached catalog reads (`unstable_cache`, `catalog` tag) so
+  dynamic PLP/PDP don't hit the database on every request
+- 🖼️ **Optimized images** — `next/image` everywhere with correct `sizes`/`priority`, blur
+  placeholders, and AVIF/WebP served automatically
+- 🌊 **Streaming + Suspense** with route-level skeletons (home/PLP/PDP/search); below-the-fold
+  related products stream in
+- 📦 **Code-splitting** of heavy client sections and **bundle analysis** via `pnpm analyze`
+- 📊 Targets, build snapshot and how to measure (Lighthouse) in [`docs/performance.md`](docs/performance.md)
+
 ### Roadmap (high level)
 
 Foundation & design system → Premium home (hero/editorial) → PLP (filters/search) →

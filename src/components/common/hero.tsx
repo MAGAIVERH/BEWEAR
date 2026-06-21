@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { BLUR_DATA_URL } from "@/helpers/image";
 import { cn } from "@/lib/utils";
 
 type Slide = {
@@ -113,6 +114,8 @@ const Hero = () => {
                 alt={slide.title}
                 fill
                 priority={i === 0}
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
                 sizes="100vw"
                 className="object-cover"
               />

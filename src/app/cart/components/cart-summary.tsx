@@ -3,6 +3,7 @@ import React from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { BLUR_DATA_URL } from "@/helpers/image";
 import { formatCentsToUSD } from "@/helpers/money";
 
 interface CartSummaryProps {
@@ -73,6 +74,8 @@ const CartSummary = ({
                 alt={product.name}
                 width={78}
                 height={78}
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
                 className="rounded-lg"
               />
               <div className="flex flex-col gap-1">
