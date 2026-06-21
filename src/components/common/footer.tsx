@@ -32,7 +32,7 @@ const Footer = () => {
   return (
     <footer className="bg-muted/40 mt-16 border-t">
       <div className="px-5 py-12 md:px-8 lg:px-12">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 lg:grid-cols-4">
           {/* Brand + newsletter */}
           <div className="space-y-4 lg:col-span-1">
             <h2 className="text-xl font-black tracking-tight">BEWEAR</h2>
@@ -43,10 +43,12 @@ const Footer = () => {
             <NewsletterForm />
           </div>
 
-          {/* Link columns */}
-          <FooterColumn title="Shop" links={SHOP_LINKS} />
-          <FooterColumn title="Help" links={HELP_LINKS} />
-          <FooterColumn title="Company" links={COMPANY_LINKS} />
+          {/* Link columns — spread across the width instead of stacking left */}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-3 lg:gap-10">
+            <FooterColumn title="Shop" links={SHOP_LINKS} />
+            <FooterColumn title="Help" links={HELP_LINKS} />
+            <FooterColumn title="Company" links={COMPANY_LINKS} />
+          </div>
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t pt-6 sm:flex-row">

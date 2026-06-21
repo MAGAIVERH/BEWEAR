@@ -12,16 +12,16 @@ type CampaignTile = {
 
 const SECONDARY: CampaignTile[] = [
   {
-    src: "/home/campaign-2.jpg",
-    title: "Everyday essentials",
-    subtitle: "Built for the long run.",
-    href: "/category/pants",
+    src: "/gallery/sneakers-1.jpg",
+    title: "Run the city",
+    subtitle: "Performance built to move.",
+    href: "/category/sneakers",
   },
   {
-    src: "/home/campaign-3.jpg",
-    title: "Move freely",
-    subtitle: "Shorts that keep up.",
-    href: "/category/shorts",
+    src: "/gallery/sneakers-2.jpg",
+    title: "Street icons",
+    subtitle: "Classic silhouettes, daily.",
+    href: "/category/sneakers",
   },
 ];
 
