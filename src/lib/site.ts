@@ -4,7 +4,7 @@
  * domain; the fallback keeps local/build runs working.
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://bewear.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://bewear-navy.vercel.app"
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "BEWEAR";
