@@ -14,9 +14,10 @@ Next.js 15 · React 19 · TypeScript · Drizzle ORM · PostgreSQL (Neon) · Tail
 
 </div>
 
-> ⚠️ **Work in progress.** This is a living document, updated as the project evolves toward a
-> Nike-grade front-end experience. A final, portfolio-ready version (with live demo, screenshots and
-> architecture diagram) will ship once the build is complete.
+> **Status:** core build complete — catalog, cart, Stripe checkout, account, wishlist and reviews;
+> Nike-grade UI; **Lighthouse Accessibility 100**; SEO (sitemap/robots/JSON-LD); unit + E2E tests and
+> CI. Remaining: production deploy (Vercel) and a demo video. This README is kept up to date as the
+> project evolves.
 
 ---
 
@@ -43,6 +44,8 @@ US-format checkout (State, ZIP code, US phone).
 | Auth | Better Auth |
 | Payments | Stripe (Checkout + webhook) |
 | Notifications | Sonner |
+| Testing | Vitest (unit) · Playwright (E2E) |
+| CI | GitHub Actions (lint · typecheck · test · build) |
 | Package manager | pnpm |
 
 ## Features
@@ -72,7 +75,23 @@ US-format checkout (State, ZIP code, US phone).
 - 🌊 **Streaming + Suspense** with route-level skeletons (home/PLP/PDP/search); below-the-fold
   related products stream in
 - 📦 **Code-splitting** of heavy client sections and **bundle analysis** via `pnpm analyze`
+- 🎞️ Below-the-fold video lazy-loaded (IntersectionObserver); hero **poster as LCP** (video mounts post-hydration)
 - 📊 Targets, build snapshot and how to measure (Lighthouse) in [`docs/performance.md`](docs/performance.md)
+
+### Accessibility & SEO
+
+- ♿ **Lighthouse Accessibility 100** (home/PLP/PDP): `<main>` landmark + skip link, labelled
+  controls, correct heading order, AA contrast, `prefers-reduced-motion`
+- 🔎 **SEO**: per-page metadata + canonical, `sitemap.xml`, `robots.txt`, brand favicon, and JSON-LD
+  (`WebSite`, `BreadcrumbList`, `Product`)
+
+### Testing & quality
+
+- ✅ **Unit tests** (Vitest) for helpers and Zod schemas — `pnpm test`
+- 🎭 **E2E** (Playwright) for browse and search flows — `pnpm test:e2e`
+- 🤖 **CI** (GitHub Actions): lint · typecheck · unit tests, plus a build job
+- 🏛️ Architecture and decisions in [`docs/architecture.md`](docs/architecture.md) and
+  [`docs/adr/`](docs/adr/)
 
 ### Roadmap (high level)
 
@@ -86,8 +105,8 @@ Performance, SEO, deploy. Full day-by-day plan in [`docs/guia-desenvolvimento-be
 # 1. Install dependencies
 pnpm install
 
-# 2. Configure environment (see below), then run migrations / seed
-pnpm drizzle-kit migrate
+# 2. Configure environment (see below), then push the schema and seed
+pnpm drizzle-kit push
 pnpm tsx src/db/seed.ts
 
 # 3. Start the dev server
@@ -95,6 +114,18 @@ pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+### Scripts
+
+```bash
+pnpm dev          # dev server
+pnpm build        # production build
+pnpm lint         # ESLint
+pnpm typecheck    # tsc --noEmit
+pnpm test         # unit tests (Vitest)
+pnpm test:e2e     # end-to-end tests (Playwright)
+pnpm analyze      # bundle analyzer
+```
 
 ### Environment variables
 
@@ -108,6 +139,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 STRIPE_SECRET_KEY=sk_test_...
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
+NEXT_PUBLIC_SITE_URL=https://your-domain.com  # canonical/sitemap base URL
 # Optional (Google social login)
 GOOGLE_CLIENT_ID=...
 GOOGLE_CLIENT_SECRET=...
@@ -122,12 +154,14 @@ src/
 ├── components/
 │   ├── ui/         # shadcn/ui primitives
 │   └── common/     # domain components (header, footer, product-item, cart, ...)
-├── db/             # Drizzle schema, client and seed
-├── helpers/        # money (USD), us-states, ...
+├── db/             # Drizzle schema, client, seed and cached queries
+├── helpers/        # pure functions (money, sizes, coupon, ...) — unit-tested
 ├── hooks/          # TanStack Query (queries/) and mutations/
-├── lib/            # auth, utils
+├── lib/            # auth, utils, site (SEO config)
 └── providers/      # React Query provider
-docs/               # development guide + per-day task logs
+e2e/                # Playwright end-to-end specs
+docs/               # guide, task logs, architecture.md, adr/, performance.md
+.github/workflows/  # CI (GitHub Actions)
 .cursor/rules/      # project rules
 ```
 

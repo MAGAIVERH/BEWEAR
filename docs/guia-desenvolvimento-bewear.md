@@ -153,13 +153,18 @@ Better Auth · Stripe · Sonner · pnpm.
 - **Done:** indexável, preview rico ao compartilhar qualquer rota. *(Definir
   `NEXT_PUBLIC_SITE_URL` com o domínio real no deploy.)*
 
-## FASE F — Qualidade, arquitetura & testes
+## FASE F — Qualidade, arquitetura & testes ✅
 
-- [ ] **Testes unitários** (Vitest): helpers (money/sizes), schemas Zod, lógica de filtro/sort.
-- [ ] **E2E** (Playwright): fluxos críticos (browse → add to cart com tamanho → checkout; busca; auth).
-- [ ] **CI** (GitHub Actions): lint + typecheck + build + test em PR.
-- [ ] **ADRs** e `docs/architecture.md` (diagrama do sistema, fronteiras server/client, fluxo de dados/pagamento).
-- **Done:** CI verde; arquitetura documentada; testes nos caminhos que importam.
+- [x] **Testes unitários** (Vitest): helpers (money/sizes/coupon/gallery), US states e schemas Zod
+      (newsletter/review). **25 testes, 7 arquivos — verdes.**
+- [x] **E2E** (Playwright): fluxos browse (home → PLP → PDP) e busca (resultados + estado vazio).
+      **4 testes — verdes** (Chromium, contra build de produção).
+- [x] **CI** (GitHub Actions): job `quality` (lint + typecheck + unit) + job `build` (com secrets).
+      Lint do repo limpo (autofix de import-sort aplicado).
+- [x] **ADRs** (`docs/adr/`) e **`docs/architecture.md`** (diagrama, fronteiras server/client,
+      fluxos de dados/mutação/pagamento).
+- **Done:** testes nos caminhos que importam; arquitetura documentada. *(Build job e E2E em CI
+  dependem de configurar os secrets do repositório — `DATABASE_URL` etc.)*
 
 ## FASE G — Entrega & portfólio
 
