@@ -8,9 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/db";
 import { auth } from "@/lib/auth";
 
-import CartSummary from "../components/cart-summary";
 import { formatAddress } from "../helpers/address";
-import FinishOrderButton from "./components/finish-order-button";
+import ConfirmationOrder from "./components/confirmation-order";
 
 const ConfirmationPage = async () => {
   const session = await auth.api.getSession({
@@ -59,14 +58,12 @@ const ConfirmationPage = async () => {
               <div className="bg-muted/40 rounded-xl border p-4">
                 <p className="text-sm">{formatAddress(cart.shippingAddress)}</p>
               </div>
-              <FinishOrderButton />
             </CardContent>
           </Card>
 
           <div className="lg:sticky lg:top-24">
-            <CartSummary
+            <ConfirmationOrder
               subtotalInCents={cartTotalInCents}
-              totalInCents={cartTotalInCents}
               products={cart.items.map((item) => ({
                 id: item.productVariant.id,
                 name: item.productVariant.product.name,

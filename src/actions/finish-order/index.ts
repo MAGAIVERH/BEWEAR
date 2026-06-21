@@ -1,18 +1,23 @@
 "use server";
 
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { headers } from "next/headers";
 
 import { db } from "@/db";
 import {
   cartItemTable,
   cartTable,
+  couponTable,
   orderItemTable,
   orderTable,
 } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
-export const finishOrder = async () => {
+import { findValidCoupon } from "../validate-coupon/find-valid-coupon";
+
+type FinishOrderInput = { couponCode?: string | null } | undefined;
+
+export const finishOrder = async (input?: FinishOrderInput) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -37,10 +42,18 @@ export const finishOrder = async () => {
   if (!cart.shippingAddress) {
     throw new Error("Shipping address not found");
   }
-  const totalPriceInCents = cart.items.reduce(
+  const subtotalInCents = cart.items.reduce(
     (acc, item) => acc + item.productVariant.priceInCents * item.quantity,
     0,
   );
+
+  // Re-validate the coupon server-side (never trust the client total).
+  const coupon = input?.couponCode
+    ? await findValidCoupon(input.couponCode, subtotalInCents)
+    : null;
+  const discountInCents = coupon?.discountInCents ?? 0;
+  const totalPriceInCents = subtotalInCents - discountInCents;
+
   let orderId: string | undefined;
   await db.transaction(async (tx) => {
     if (!cart.shippingAddress) {
@@ -63,6 +76,8 @@ export const finishOrder = async () => {
         street: cart.shippingAddress.street,
         userId: session.user.id,
         totalPriceInCents,
+        couponCode: coupon?.code ?? null,
+        discountInCents,
         shippingAddressId: cart.shippingAddress!.id,
       })
       .returning();
@@ -70,6 +85,12 @@ export const finishOrder = async () => {
       throw new Error("Failed to create order");
     }
     orderId = order.id;
+    if (coupon) {
+      await tx
+        .update(couponTable)
+        .set({ timesRedeemed: sql`${couponTable.timesRedeemed} + 1` })
+        .where(eq(couponTable.code, coupon.code));
+    }
     const orderItemsPayload: Array<typeof orderItemTable.$inferInsert> =
       cart.items.map((item) => ({
         orderId: order.id,

@@ -10,8 +10,8 @@ export const useFinishOrder = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: getUseFinishOrderMutationKey(),
-    mutationFn: async () => {
-      return await finishOrder();
+    mutationFn: async (input?: { couponCode?: string | null }) => {
+      return await finishOrder(input);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: getUseCartQueryKey() });

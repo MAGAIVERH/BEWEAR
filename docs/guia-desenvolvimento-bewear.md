@@ -108,8 +108,8 @@ Better Auth · Stripe · Sonner · pnpm.
 - [ ] `/account` (perfil), gestão de **endereços** (CRUD), **detalhe do pedido** (`/my-orders/[id]`), logout.
 - **Done:** central do cliente comparável a grandes lojas.
 
-**B6. Promoções / cupom (opcional v1.1)**
-- [ ] Campo de cupom no checkout; desconto aplicado ao total/Stripe.
+**B6. Promoções / cupom (opcional v1.1)** ✅
+- [x] Campo de cupom no checkout; desconto aplicado ao total/Stripe.
 
 **B7. Newsletter real**
 - [ ] Persistir e-mail (tabela/serviço) com validação e feedback.

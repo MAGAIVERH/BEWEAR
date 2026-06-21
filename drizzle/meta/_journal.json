@@ -36,6 +36,13 @@
       "when": 1781996785237,
       "tag": "0004_add_variant_stock",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1782010921508,
+      "tag": "0005_add_coupon_and_order_discount",
+      "breakpoints": true
     }
   ]
 }

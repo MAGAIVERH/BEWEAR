@@ -8,6 +8,8 @@ import { formatCentsToUSD } from "@/helpers/money";
 interface CartSummaryProps {
   subtotalInCents: number;
   totalInCents: number;
+  discountInCents?: number;
+  couponCode?: string | null;
   products: Array<{
     id: string;
     name: string;
@@ -22,6 +24,8 @@ interface CartSummaryProps {
 const CartSummary = ({
   subtotalInCents,
   totalInCents,
+  discountInCents = 0,
+  couponCode,
   products,
 }: CartSummaryProps) => {
   return (
@@ -40,9 +44,19 @@ const CartSummary = ({
           <p className="text-sm">Shipping</p>
           <p className="text-muted-foreground text-sm font-medium">FREE</p>
         </div>
+        {discountInCents > 0 && (
+          <div className="flex justify-between">
+            <p className="text-sm">
+              Discount{couponCode ? ` (${couponCode})` : ""}
+            </p>
+            <p className="text-brand text-sm font-medium">
+              −{formatCentsToUSD(discountInCents)}
+            </p>
+          </div>
+        )}
         <div className="flex justify-between">
-          <p className="text-sm">Total</p>
-          <p className="text-muted-foreground text-sm font-medium">
+          <p className="text-sm font-semibold">Total</p>
+          <p className="text-sm font-semibold">
             {formatCentsToUSD(totalInCents)}
           </p>
         </div>

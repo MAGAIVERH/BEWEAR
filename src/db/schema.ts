@@ -223,6 +223,25 @@ export const orderStatus = pgEnum("order_status", [
   "canceled",
 ]);
 
+export const couponDiscountType = pgEnum("coupon_discount_type", [
+  "percent",
+  "fixed",
+]);
+
+export const couponTable = pgTable("coupon", {
+  id: uuid().primaryKey().defaultRandom(),
+  code: text("code").notNull().unique(),
+  discountType: couponDiscountType("discount_type").notNull(),
+  // percent: 1-100 ; fixed: amount in cents
+  value: integer("value").notNull(),
+  minOrderInCents: integer("min_order_in_cents").notNull().default(0),
+  active: boolean("active").notNull().default(true),
+  expiresAt: timestamp("expires_at"),
+  maxRedemptions: integer("max_redemptions"),
+  timesRedeemed: integer("times_redeemed").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 export const orderTable = pgTable("order", {
   id: uuid().primaryKey().defaultRandom(),
   userId: text("user_id")
@@ -244,6 +263,8 @@ export const orderTable = pgTable("order", {
   email: text().notNull(),
   cpfOrCnpj: text().notNull(),
   totalPriceInCents: integer("total_price_in_cents").notNull(),
+  couponCode: text("coupon_code"),
+  discountInCents: integer("discount_in_cents").notNull().default(0),
   status: orderStatus().notNull().default("pending"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
