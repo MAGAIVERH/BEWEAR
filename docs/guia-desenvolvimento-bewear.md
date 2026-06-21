@@ -125,8 +125,11 @@ Better Auth · Stripe · Sonner · pnpm.
       em Suspense; `ProductRailSkeleton`).
 - [x] Bundle analysis (`@next/bundle-analyzer` + `pnpm analyze`); metas **Lighthouse 90+** e guia
       de medição em `docs/performance.md`.
-- **Done (parcial):** otimizações de código entregues e `pnpm build` ok; **falta rodar o
-  Lighthouse** (build de produção) e salvar o relatório / preencher a tabela em `docs/performance.md`.
+- [x] Lighthouse rodado (mobile, build de prod): relatórios em `docs/lighthouse/` e tabela em
+      `docs/performance.md`. **CLS=0, SEO 100, BP 96, A11y 88–90** em todas as páginas.
+- **Done (com ressalva):** relatório salvo e LCP/CLS documentados (CLS=0). **Performance ainda
+  < 90** (Home 45 · PLP 74 · PDP 64) — gargalo nos **vídeos autoplay (~10 MB na home)** e TBT das
+  libs de motion. Backlog de otimização registrado em `docs/performance.md`; re-medir na Vercel.
 
 ## FASE D — Acessibilidade & responsividade
 

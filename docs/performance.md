@@ -119,12 +119,45 @@ pnpm analyze
 
 ---
 
-## Resultados Lighthouse (preencher após rodar)
+## Resultados Lighthouse
 
-| Página                  | Perf | A11y | BP  | SEO | LCP | CLS | Data |
-| ----------------------- | ---- | ---- | --- | --- | --- | --- | ---- |
-| Home `/`                |      |      |     |     |     |     |      |
-| PLP `/category/[slug]`  |      |      |     |     |     |     |      |
-| PDP `/product-variant/` |      |      |     |     |     |     |      |
+**Medição:** 2026-06-21 · Lighthouse mobile (preset padrão: slow-4G + 4× CPU throttling) ·
+build de produção via `next start` em `localhost:3100` · Chrome headless.
+Relatórios HTML/JSON completos em [`docs/lighthouse/`](lighthouse/) (`home`, `plp`, `pdp`).
 
-> Salvar os relatórios HTML/JSON em `docs/lighthouse/` ao gerar.
+| Página                                  | Perf | A11y | BP  | SEO | LCP   | CLS   | TBT     | FCP   |
+| --------------------------------------- | ---- | ---- | --- | --- | ----- | ----- | ------- | ----- |
+| Home `/`                                | 45   | 88   | 96  | 100 | 7.7 s | 0     | 1980 ms | 1.1 s |
+| PLP `/category/accessories`             | 74   | 90   | 96  | 100 | 3.4 s | 0     | 670 ms  | 1.1 s |
+| PDP `/product-variant/backpack-black`   | 64   | 88   | 96  | 100 | 4.4 s | 0     | 760 ms  | 1.1 s |
+
+### Leitura dos resultados
+
+- ✅ **CLS = 0** em todas as páginas (blur placeholders + dimensões reservadas funcionaram).
+- ✅ **SEO 100 · Best Practices 96 · A11y 88–90** — a11y já perto da meta (refinar na **Fase D**).
+- ✅ **FCP ~1.1 s** consistente — o shell pinta rápido.
+- ⚠️ **Performance abaixo de 90** (Home 45 · PLP 74 · PDP 64), puxada por **LCP** e **TBT**.
+
+### Causa raiz (Home)
+
+- **Peso total ~10 MB**, dominado por **dois vídeos autoplay**: `public/hero.mp4` (~4 MB, acima da
+  dobra) e `public/home/impact.mp4` (~4,7 MB, abaixo da dobra). Sob o throttling de slow-4G do
+  laboratório isso empurra o **LCP para 7.7 s**.
+- **Main-thread work ~9.3 s / bootup ~3.1 s** — custo de hidratação das libs de motion
+  (Framer Motion + Lenis + Embla) presentes na home.
+
+> ⚠️ **Contexto de medição:** números de **laboratório local** (`next start` num notebook, com
+> throttling agressivo mobile). O alvo canônico é o **deploy de produção na Vercel** (CDN/edge,
+> compressão e cache de borda), onde LCP/TBT tendem a melhorar de forma relevante. Re-medir o site
+> publicado e atualizar esta tabela.
+
+### Backlog de performance (caminho até 90+)
+
+Itens fora do escopo já entregue da Fase C — candidatos a um `perf:` dedicado:
+
+1. **Vídeo do hero (maior alavanca de LCP):** comprimir/encurtar o `.mp4` (alvo < 1,5–2 MB) e/ou
+   tratar o **poster otimizado como LCP** (carregar o vídeo só depois). Avaliar `preload="none"`.
+2. **Vídeo do impact (abaixo da dobra):** montar/autoplay só ao entrar na viewport
+   (IntersectionObserver) para tirar ~4,7 MB do carregamento inicial.
+3. **Reduzir JS de motion na dobra:** carregar `Reveal`/Lenis de forma mais preguiçosa para baixar o TBT.
+4. **Servir mídia por CDN** (já vale para imagens remotas; estender a vídeos) e medir na Vercel.
