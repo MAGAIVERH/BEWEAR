@@ -1,6 +1,8 @@
 import { InstagramIcon, TwitterIcon, YoutubeIcon } from "lucide-react";
 import Link from "next/link";
 
+import { cn } from "@/lib/utils";
+
 import NewsletterForm from "./newsletter-form";
 
 const SHOP_LINKS = [
@@ -43,11 +45,22 @@ const Footer = () => {
             <NewsletterForm />
           </div>
 
-          {/* Link columns — spread across the width instead of stacking left */}
+          {/* Link columns. On mobile: Shop + Company (3 items each) side by side,
+              with Help (4 items) full-width below in a horizontal row. Desktop
+              keeps the original Shop · Help · Company order. */}
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-3 lg:gap-10">
-            <FooterColumn title="Shop" links={SHOP_LINKS} />
-            <FooterColumn title="Help" links={HELP_LINKS} />
-            <FooterColumn title="Company" links={COMPANY_LINKS} />
+            <FooterColumn title="Shop" links={SHOP_LINKS} className="order-1" />
+            <FooterColumn
+              title="Help"
+              links={HELP_LINKS}
+              className="order-3 col-span-2 sm:order-2 sm:col-span-1"
+              horizontalOnMobile
+            />
+            <FooterColumn
+              title="Company"
+              links={COMPANY_LINKS}
+              className="order-2 sm:order-3"
+            />
           </div>
         </div>
 
@@ -90,15 +103,29 @@ const Footer = () => {
 type FooterColumnProps = {
   title: string;
   links: { label: string; href: string }[];
+  className?: string;
+  /** Lay the links out in a horizontal row on mobile (used for the Help column). */
+  horizontalOnMobile?: boolean;
 };
 
-const FooterColumn = ({ title, links }: FooterColumnProps) => {
+const FooterColumn = ({
+  title,
+  links,
+  className,
+  horizontalOnMobile,
+}: FooterColumnProps) => {
   return (
-    <div className="space-y-3">
+    <div className={cn("space-y-3", className)}>
       <h3 className="text-xs font-semibold tracking-[0.18em] uppercase">
         {title}
       </h3>
-      <ul className="space-y-2">
+      <ul
+        className={cn(
+          horizontalOnMobile
+            ? "flex flex-wrap gap-x-6 gap-y-2 sm:block sm:space-y-2"
+            : "space-y-2",
+        )}
+      >
         {links.map((link) => (
           <li key={link.label}>
             <Link
