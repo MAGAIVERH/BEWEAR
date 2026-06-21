@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
@@ -8,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { BLUR_DATA_URL } from "@/helpers/image";
 
 export const metadata: Metadata = {
   title: "Help center",
@@ -59,43 +61,67 @@ const HelpPage = () => {
       <Header />
 
       <main id="main-content" className="container-bw flex-1 py-12">
-        <div className="space-y-2">
-          <p className="text-eyebrow-brand">Support</p>
-          <h1 className="section-title">Help center</h1>
-          <p className="section-subtitle">
-            Everything you need to know about orders, shipping and returns.
-          </p>
-        </div>
+        <div className="lg:grid lg:grid-cols-[1fr_minmax(0,440px)] lg:items-start lg:gap-16">
+          {/* Content */}
+          <div className="max-w-3xl">
+            <div className="space-y-2">
+              <p className="text-eyebrow-brand">Support</p>
+              <h1 className="section-title">Help center</h1>
+              <p className="section-subtitle">
+                Everything you need to know about orders, shipping and returns.
+              </p>
+            </div>
 
-        <div className="mt-10 max-w-3xl space-y-12">
-          {SECTIONS.map((section) => (
-            <section
-              key={section.id}
-              id={section.id}
-              className="scroll-mt-24 space-y-2"
-            >
-              <h2 className="text-xl font-bold tracking-tight">
-                {section.title}
-              </h2>
-              <p className="text-muted-foreground leading-7">{section.body}</p>
-            </section>
-          ))}
-
-          <section id="faq" className="scroll-mt-24 space-y-4">
-            <h2 className="text-xl font-bold tracking-tight">
-              Frequently asked questions
-            </h2>
-            <Accordion type="single" collapsible className="border-t">
-              {FAQ.map((item) => (
-                <AccordionItem key={item.q} value={item.q}>
-                  <AccordionTrigger>{item.q}</AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-7">
-                    {item.a}
-                  </AccordionContent>
-                </AccordionItem>
+            <div className="mt-10 space-y-12">
+              {SECTIONS.map((section) => (
+                <section
+                  key={section.id}
+                  id={section.id}
+                  className="scroll-mt-24 space-y-2"
+                >
+                  <h2 className="text-xl font-bold tracking-tight">
+                    {section.title}
+                  </h2>
+                  <p className="text-muted-foreground leading-7">
+                    {section.body}
+                  </p>
+                </section>
               ))}
-            </Accordion>
-          </section>
+
+              <section id="faq" className="scroll-mt-24 space-y-4">
+                <h2 className="text-xl font-bold tracking-tight">
+                  Frequently asked questions
+                </h2>
+                <Accordion type="single" collapsible className="border-t">
+                  {FAQ.map((item) => (
+                    <AccordionItem key={item.q} value={item.q}>
+                      <AccordionTrigger>{item.q}</AccordionTrigger>
+                      <AccordionContent className="text-muted-foreground leading-7">
+                        {item.a}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </section>
+            </div>
+          </div>
+
+          {/* Editorial image (desktop only) */}
+          <div className="hidden lg:block">
+            <div className="sticky top-28 overflow-hidden rounded-3xl">
+              <div className="relative aspect-[4/5] w-full">
+                <Image
+                  src="/home/feature-1.jpg"
+                  alt="BEWEAR sneakers"
+                  fill
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
+                  sizes="440px"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
