@@ -67,7 +67,12 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
         <div className="flex items-center gap-2 justify-self-start">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden"
+                aria-label="Open menu"
+              >
                 <MenuIcon />
               </Button>
             </SheetTrigger>

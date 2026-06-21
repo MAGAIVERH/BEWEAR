@@ -39,7 +39,7 @@ const MyOrdersPage = async () => {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <div className="container-bw flex-1 py-10">
+      <main id="main-content" className="container-bw flex-1 py-10">
         <div className="space-y-2">
           <p className="text-eyebrow-brand">Account</p>
           <h1 className="section-title">My orders</h1>
@@ -79,7 +79,7 @@ const MyOrdersPage = async () => {
             />
           )}
         </div>
-      </div>
+      </main>
 
       <Footer />
     </div>

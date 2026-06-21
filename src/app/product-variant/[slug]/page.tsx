@@ -130,6 +130,7 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
       />
       <Header />
 
+      <main id="main-content">
       <div className="px-5 py-8 md:px-8 lg:px-12">
         <Breadcrumbs
           items={[
@@ -234,6 +235,7 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
           />
         </Suspense>
       </div>
+      </main>
 
       <Footer />
     </>

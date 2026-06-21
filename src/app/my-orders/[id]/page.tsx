@@ -51,7 +51,7 @@ const OrderDetailPage = async ({ params }: OrderDetailPageProps) => {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <div className="container-bw flex-1 py-10">
+      <main id="main-content" className="container-bw flex-1 py-10">
         <Link
           href="/my-orders"
           className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors"
@@ -141,7 +141,7 @@ const OrderDetailPage = async ({ params }: OrderDetailPageProps) => {
             </div>
           </div>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </div>

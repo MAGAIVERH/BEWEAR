@@ -39,7 +39,7 @@ const ProductList = ({
   return (
     <div className="space-y-6">
       <div className="container-bw flex items-end justify-between">
-        <h3 className="section-title">{title}</h3>
+        <h2 className="section-title">{title}</h2>
 
         <div className="hidden gap-2 md:flex">
           <button

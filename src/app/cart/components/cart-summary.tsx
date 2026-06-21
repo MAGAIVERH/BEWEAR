@@ -50,7 +50,7 @@ const CartSummary = ({
             <p className="text-sm">
               Discount{couponCode ? ` (${couponCode})` : ""}
             </p>
-            <p className="text-brand text-sm font-medium">
+            <p className="text-brand-strong text-sm font-medium">
               −{formatCentsToUSD(discountInCents)}
             </p>
           </div>

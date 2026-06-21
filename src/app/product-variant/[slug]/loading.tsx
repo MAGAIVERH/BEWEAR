@@ -6,6 +6,7 @@ const ProductVariantLoading = () => {
     <>
       <Header />
 
+      <main id="main-content">
       <div className="px-5 py-8 md:px-8 lg:px-12">
         {/* Breadcrumbs */}
         <div className="bg-muted h-3 w-48 animate-pulse rounded" />
@@ -47,6 +48,7 @@ const ProductVariantLoading = () => {
       <div className="mt-8">
         <ProductRailSkeleton title="You might also like" />
       </div>
+      </main>
     </>
   );
 };

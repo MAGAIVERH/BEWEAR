@@ -32,7 +32,7 @@ const AboutPage = () => {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <div className="container-bw flex-1 py-12">
+      <main id="main-content" className="container-bw flex-1 py-12">
         <div className="space-y-2">
           <p className="text-eyebrow-brand">BEWEAR</p>
           <h1 className="section-title">
@@ -58,7 +58,7 @@ const AboutPage = () => {
             </section>
           ))}
         </div>
-      </div>
+      </main>
 
       <Footer />
     </div>

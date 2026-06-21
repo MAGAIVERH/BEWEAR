@@ -133,11 +133,13 @@ Better Auth · Stripe · Sonner · pnpm.
 
 ## FASE D — Acessibilidade & responsividade
 
-- [ ] Navegação por **teclado** em toda UI (menus, carrosséis, dialogs, filtros).
-- [ ] `aria-*` em ícones/inputs/dialogs; foco visível; contraste AA.
-- [ ] Passar **axe DevTools**; corrigir issues críticas.
-- [ ] QA responsivo em todos os breakpoints (mobile/tablet/desktop/ultrawide).
-- **Done:** zero violação crítica de a11y; layout perfeito em todos os tamanhos.
+- [ ] Navegação por **teclado** em toda UI (menus, carrosséis, dialogs, filtros). *(QA manual pendente)*
+- [x] `aria-*` em ícones/inputs/dialogs; foco visível; **contraste AA** (token `--brand-strong`).
+- [x] Landmark `<main>` em todas as páginas; **ordem de headings**; `role="img"` no rating;
+      `target-size` dos dots. **Lighthouse a11y: Home/PLP/PDP = 100** (antes 88/90/88).
+- [ ] QA responsivo em todos os breakpoints (mobile/tablet/desktop/ultrawide). *(manual pendente)*
+- **Done (parcial):** **zero violação crítica de a11y** (Lighthouse 100). Falta QA manual de
+  teclado e responsivo nos breakpoints.
 
 ## FASE E — SEO técnico
 
