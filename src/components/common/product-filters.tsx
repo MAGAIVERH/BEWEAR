@@ -38,6 +38,8 @@ const ProductFilters = ({ availableColors }: ProductFiltersProps) => {
   const pushParams = (mutate: (params: URLSearchParams) => void) => {
     const params = new URLSearchParams(searchParams.toString());
     mutate(params);
+    // Changing a filter or sort should reset back to the first page.
+    params.delete("page");
     const query = params.toString();
     router.push(query ? `${pathname}?${query}` : pathname);
   };
