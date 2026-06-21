@@ -77,6 +77,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
+        <a
+          href="#main-content"
+          className="focus:bg-foreground focus:text-background sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:px-4 focus:py-2 focus:not-sr-only focus:shadow-lg"
+        >
+          Skip to content
+        </a>
         <SmoothScrollProvider>
           <ReactQueryProvider>{children}</ReactQueryProvider>
         </SmoothScrollProvider>

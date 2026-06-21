@@ -9,7 +9,10 @@ const Authentication = async () => {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <main className="flex flex-1 items-start justify-center px-5 py-12">
+      <main
+        id="main-content"
+        className="flex flex-1 items-start justify-center px-5 py-12"
+      >
         <div className="w-full max-w-md">
           <Tabs defaultValue="sign-in">
             <TabsList className="grid w-full grid-cols-2">

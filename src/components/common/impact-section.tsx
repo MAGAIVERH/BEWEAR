@@ -3,27 +3,52 @@
 import { useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { BLUR_DATA_URL } from "@/helpers/image";
 
 const ImpactSection = () => {
   const prefersReducedMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLDivElement>(null);
+  // This section is below the fold: only load the (~4.7MB) video once it scrolls
+  // near the viewport, so it never weighs on the initial page load.
+  const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setShowVideo(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [prefersReducedMotion]);
 
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="relative aspect-[4/5] min-h-[460px] w-full sm:aspect-[3/2] md:aspect-video">
-        {prefersReducedMotion ? (
-          <Image
-            src="/home/impact.jpg"
-            alt="No off-season"
-            fill
-            placeholder="blur"
-            blurDataURL={BLUR_DATA_URL}
-            sizes="100vw"
-            className="object-cover"
-          />
-        ) : (
+      <div
+        ref={sectionRef}
+        className="relative aspect-[4/5] min-h-[460px] w-full sm:aspect-[3/2] md:aspect-video"
+      >
+        {/* Poster image is always present; the video overlays it when in view. */}
+        <Image
+          src="/home/impact.jpg"
+          alt="No off-season"
+          fill
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
+          sizes="100vw"
+          className="object-cover"
+        />
+        {showVideo && !prefersReducedMotion && (
           <video
             className="absolute inset-0 h-full w-full object-cover"
             poster="/home/impact.jpg"

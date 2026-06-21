@@ -64,6 +64,9 @@ const Hero = () => {
   const prefersReducedMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
+  // Mount videos only after hydration so the optimized poster image is the LCP
+  // (the heavy .mp4 then loads without blocking first paint).
+  const [mounted, setMounted] = useState(false);
   const count = SLIDES.length;
 
   const goNext = useCallback(() => setIndex((i) => (i + 1) % count), [count]);
@@ -71,6 +74,8 @@ const Hero = () => {
     () => setIndex((i) => (i - 1 + count) % count),
     [count],
   );
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -97,7 +102,19 @@ const Hero = () => {
               i === index ? "opacity-100" : "pointer-events-none opacity-0",
             )}
           >
-            {slide.type === "video" && !prefersReducedMotion ? (
+            {/* Optimized poster is always rendered — it is the LCP for the
+                first slide. The video overlays it once mounted. */}
+            <Image
+              src={slide.type === "video" ? (slide.poster as string) : slide.src}
+              alt={slide.title}
+              fill
+              priority={i === 0}
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
+              sizes="100vw"
+              className="object-cover"
+            />
+            {slide.type === "video" && mounted && !prefersReducedMotion && (
               <video
                 className="absolute inset-0 h-full w-full object-cover"
                 poster={slide.poster}
@@ -108,17 +125,6 @@ const Hero = () => {
               >
                 <source src={slide.src} type="video/mp4" />
               </video>
-            ) : (
-              <Image
-                src={slide.type === "video" ? (slide.poster as string) : slide.src}
-                alt={slide.title}
-                fill
-                priority={i === 0}
-                placeholder="blur"
-                blurDataURL={BLUR_DATA_URL}
-                sizes="100vw"
-                className="object-cover"
-              />
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
           </div>
