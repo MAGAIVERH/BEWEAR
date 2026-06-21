@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 
 import Brands from "@/components/common/brands";
@@ -27,6 +28,10 @@ const ImpactSection = dynamic(
 // Refresh the statically rendered home periodically (ISR) so new catalog data
 // appears without a rebuild.
 export const revalidate = 3600;
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 const Home = async () => {
   const [products, newlyCreateProducts, categories] = await Promise.all([

@@ -10,9 +10,10 @@ import {
 } from "@/components/ui/accordion";
 
 export const metadata: Metadata = {
-  title: "Help center | BEWEAR",
+  title: "Help center",
   description:
     "Orders, shipping, returns and answers to common questions about BEWEAR.",
+  alternates: { canonical: "/help" },
 };
 
 const FAQ = [
