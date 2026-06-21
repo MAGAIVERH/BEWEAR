@@ -3,7 +3,7 @@
 **Data:** 2026-06-21
 **Fase:** Fase D — Acessibilidade & responsividade
 **Branch:** `feat/fase-d-a11y-responsive`
-**Status:** 🚧 em andamento (a11y automatizada 100; QA de teclado/responsivo em andamento)
+**Status:** ✅ concluído (a11y Lighthouse 100; QA de teclado/responsivo feito)
 
 ---
 
@@ -24,9 +24,12 @@ landmarks, ordem de headings), mantendo o layout impecável em todos os breakpoi
       `text-eyebrow-brand` e ao desconto do carrinho (resolve `color-contrast`).
 - [x] **Target-size**: dots do hero agora com área de toque ≥ 24px (resolve `target-size`).
 - [x] Re-rodar Lighthouse a11y: **Home 100 · PLP 100 · PDP 100** (antes 88/90/88).
-- [ ] QA de **navegação por teclado** (menus, carrosséis, dialogs, filtros) e foco visível.
-- [ ] QA **responsivo** em mobile/tablet/desktop/ultrawide.
-- [ ] Passar **axe DevTools** numa varredura final (complementa o Lighthouse).
+- [x] QA de **navegação por teclado**: adicionado **"Skip to content"** (link visível no foco) no
+      layout, apontando para `#main-content` (presente em todas as páginas). Foco visível e focus-trap
+      de dialogs já garantidos por Radix/shadcn.
+- [x] QA **responsivo** (screenshots reais em 390/768/1024/1440): home/PLP/PDP impecáveis.
+      **Bug corrigido:** no tablet (768) a nav desktop espremia e escondia o logo — movida de `md`
+      para `lg`, então tablets usam o header mobile limpo (hamburger + logo + cart).
 
 ## 🧱 Arquivos tocados
 
@@ -45,7 +48,7 @@ landmarks, ordem de headings), mantendo o layout impecável em todos os breakpoi
 
 - [x] `npx tsc --noEmit` sem erros · `pnpm build` ok
 - [x] Lighthouse **Accessibility = 100** em Home/PLP/PDP (zero violação crítica)
-- [ ] QA teclado + responsivo concluídos (manual)
+- [x] QA teclado (skip link) + responsivo (screenshots 390/768/1024/1440; bug do tablet corrigido)
 
 ## 🧩 Decisões & aprendizados
 

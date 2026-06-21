@@ -8,7 +8,10 @@ const NotFound = () => {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <main className="container-bw flex flex-1 flex-col items-center justify-center gap-4 py-24 text-center">
+      <main
+        id="main-content"
+        className="container-bw flex flex-1 flex-col items-center justify-center gap-4 py-24 text-center"
+      >
         <p className="text-eyebrow-brand">404</p>
         <h1 className="text-4xl font-black tracking-tight md:text-6xl">
           Page not found

@@ -70,7 +70,7 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden"
+                className="lg:hidden"
                 aria-label="Open menu"
               >
                 <MenuIcon />
@@ -180,7 +180,7 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
         </div>
 
         {/* Center: desktop nav */}
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-8 lg:flex">
           {categories.map((category) => (
             <Link
               key={category.id}
@@ -195,13 +195,13 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
 
         {/* Right: search + account + cart */}
         <div className="flex items-center gap-2 justify-self-end">
-          <SearchBar className="hidden w-48 md:block lg:w-64" />
+          <SearchBar className="hidden w-48 lg:block xl:w-64" />
           <Button
             variant="ghost"
             size="icon"
             asChild
             aria-label="Wishlist"
-            className="relative hidden md:inline-flex"
+            className="relative hidden lg:inline-flex"
           >
             <Link href="/wishlist">
               <HeartIcon />
@@ -213,7 +213,7 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
             </Link>
           </Button>
           {session?.user ? (
-            <div className="hidden items-center gap-1 md:flex">
+            <div className="hidden items-center gap-1 lg:flex">
               <Link href="/account" aria-label="Account">
                 <Avatar className="h-8 w-8">
                   <AvatarImage
@@ -238,7 +238,7 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
               variant="ghost"
               size="icon"
               asChild
-              className="hidden md:inline-flex"
+              className="hidden lg:inline-flex"
               aria-label="Sign in"
             >
               <Link href="/authentication">

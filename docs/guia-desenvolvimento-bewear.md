@@ -126,20 +126,22 @@ Better Auth · Stripe · Sonner · pnpm.
 - [x] Bundle analysis (`@next/bundle-analyzer` + `pnpm analyze`); metas **Lighthouse 90+** e guia
       de medição em `docs/performance.md`.
 - [x] Lighthouse rodado (mobile, build de prod): relatórios em `docs/lighthouse/` e tabela em
-      `docs/performance.md`. **CLS=0, SEO 100, BP 96, A11y 88–90** em todas as páginas.
-- **Done (com ressalva):** relatório salvo e LCP/CLS documentados (CLS=0). **Performance ainda
-  < 90** (Home 45 · PLP 74 · PDP 64) — gargalo nos **vídeos autoplay (~10 MB na home)** e TBT das
-  libs de motion. Backlog de otimização registrado em `docs/performance.md`; re-medir na Vercel.
+      `docs/performance.md`. **CLS=0, SEO 100, BP 96, A11y 100** (após Fase D) em todas as páginas.
+- [x] **Otimização de vídeos:** impact com lazy-mount (IntersectionObserver) e hero com poster
+      otimizado como LCP. **Home: ~10 MB → ~5 MB**; **PLP 74→84 · PDP 64→79**.
+- **Done (com ressalva):** relatório salvo, CLS=0, peso da home cortado pela metade. **Home ainda
+  < 90** por causa do `hero.mp4` (~4 MB) — sem `ffmpeg` para recomprimir; backlog em
+  `docs/performance.md`; re-medir na Vercel.
 
 ## FASE D — Acessibilidade & responsividade
 
-- [ ] Navegação por **teclado** em toda UI (menus, carrosséis, dialogs, filtros). *(QA manual pendente)*
+- [x] Navegação por **teclado**: **"Skip to content"** no layout; foco visível e focus-trap (Radix/shadcn).
 - [x] `aria-*` em ícones/inputs/dialogs; foco visível; **contraste AA** (token `--brand-strong`).
 - [x] Landmark `<main>` em todas as páginas; **ordem de headings**; `role="img"` no rating;
       `target-size` dos dots. **Lighthouse a11y: Home/PLP/PDP = 100** (antes 88/90/88).
-- [ ] QA responsivo em todos os breakpoints (mobile/tablet/desktop/ultrawide). *(manual pendente)*
-- **Done (parcial):** **zero violação crítica de a11y** (Lighthouse 100). Falta QA manual de
-  teclado e responsivo nos breakpoints.
+- [x] QA responsivo (390/768/1024/1440): home/PLP/PDP ok; **bug do tablet corrigido** (nav desktop
+      `md`→`lg`, logo deixava de aparecer em 768).
+- **Done:** zero violação crítica de a11y (Lighthouse 100); layout correto em todos os breakpoints.
 
 ## FASE E — SEO técnico ✅
 

@@ -154,13 +154,26 @@ Relatórios HTML/JSON completos em [`docs/lighthouse/`](lighthouse/) (`home`, `p
 > compressão e cache de borda), onde LCP/TBT tendem a melhorar de forma relevante. Re-medir o site
 > publicado e atualizar esta tabela.
 
-### Backlog de performance (caminho até 90+)
+### Otimização de vídeos — follow-up entregue
 
-Itens fora do escopo já entregue da Fase C — candidatos a um `perf:` dedicado:
+- [x] **Vídeo do impact (abaixo da dobra):** montado só ao entrar na viewport (IntersectionObserver),
+      tirando **~4,7 MB** do carregamento inicial.
+- [x] **Hero:** o **poster otimizado (`next/image`, `priority`) é a primeira pintura (LCP)**; o vídeo
+      é montado só após a hidratação, então o `.mp4` deixa de bloquear o LCP.
 
-1. **Vídeo do hero (maior alavanca de LCP):** comprimir/encurtar o `.mp4` (alvo < 1,5–2 MB) e/ou
-   tratar o **poster otimizado como LCP** (carregar o vídeo só depois). Avaliar `preload="none"`.
-2. **Vídeo do impact (abaixo da dobra):** montar/autoplay só ao entrar na viewport
-   (IntersectionObserver) para tirar ~4,7 MB do carregamento inicial.
-3. **Reduzir JS de motion na dobra:** carregar `Reveal`/Lenis de forma mais preguiçosa para baixar o TBT.
-4. **Servir mídia por CDN** (já vale para imagens remotas; estender a vídeos) e medir na Vercel.
+**Impacto medido (mobile, local):**
+
+| Página | Peso total | Perf | LCP | TBT |
+| ------ | ---------- | ---- | --- | --- |
+| Home   | ~10 MB → **~5 MB** | 45 → ~50 | 7.7 s → **6.2 s** | ~2 s |
+| PLP    | —          | 74 → **84** | 3.4 → 3.9 s | **230 ms** |
+| PDP    | —          | 64 → **79** | 4.4 → 3.9 s | **370 ms** |
+
+### Backlog restante (caminho até 90+ na home)
+
+A home segue limitada pelo **hero.mp4 (~4 MB)**, que ainda baixa após o LCP. Sem `ffmpeg` no ambiente
+não foi possível recomprimir. Próximos passos:
+
+1. **Comprimir o `hero.mp4`** (alvo < 1,5–2 MB) — maior alavanca restante; precisa de ffmpeg/asset novo.
+2. **Reduzir JS de motion na dobra** (Reveal/Lenis) para baixar o TBT.
+3. **Servir mídia por CDN** e **re-medir na Vercel** (onde os números tendem a melhorar).
