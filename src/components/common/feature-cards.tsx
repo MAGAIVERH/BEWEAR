@@ -2,37 +2,28 @@ import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { categoryTable } from "@/db/schema";
 import { BLUR_DATA_URL } from "@/helpers/image";
 
-type FeatureCardsProps = {
-  categories: (typeof categoryTable.$inferSelect)[];
-};
-
-const FEATURE_IMAGES = [
-  "/home/feature-1.jpg",
-  "/home/feature-2.jpg",
-  "/home/feature-3.jpg",
+// Curated so each image matches its category name and link.
+const FEATURES = [
+  { src: "/home/feature-1.jpg", label: "Sneakers", slug: "sneakers" },
+  { src: "/home/feature-2.jpg", label: "Jackets", slug: "jackets-hoodies" },
+  { src: "/home/feature-3.jpg", label: "Shirts", slug: "t-shirts" },
 ];
 
-const FeatureCards = ({ categories }: FeatureCardsProps) => {
-  const featured = categories.slice(0, 3);
-  if (featured.length === 0) {
-    return null;
-  }
-
+const FeatureCards = () => {
   return (
     <div className="container-bw grid gap-4 sm:grid-cols-3">
-      {featured.map((category, index) => (
+      {FEATURES.map((feature) => (
         <Link
-          key={category.id}
-          href={`/category/${category.slug}`}
+          key={feature.slug}
+          href={`/category/${feature.slug}`}
           className="group relative block overflow-hidden rounded-3xl"
         >
           <div className="relative aspect-[4/5] w-full">
             <Image
-              src={FEATURE_IMAGES[index % FEATURE_IMAGES.length]}
-              alt={category.name}
+              src={feature.src}
+              alt={feature.label}
               fill
               placeholder="blur"
               blurDataURL={BLUR_DATA_URL}
@@ -47,7 +38,7 @@ const FeatureCards = ({ categories }: FeatureCardsProps) => {
                   Shop
                 </p>
                 <h3 className="mt-1 text-lg font-bold tracking-tight text-white md:text-xl">
-                  {category.name}
+                  {feature.label}
                 </h3>
               </div>
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-black transition-transform duration-300 group-hover:translate-x-1">
