@@ -397,3 +397,9 @@ export const productVariantStockRelations = relations(
     }),
   }),
 );
+
+export const newsletterSubscriberTable = pgTable("newsletter_subscriber", {
+  id: uuid().primaryKey().defaultRandom(),
+  email: text("email").notNull().unique(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});

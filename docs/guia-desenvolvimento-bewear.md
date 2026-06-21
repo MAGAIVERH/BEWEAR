@@ -111,8 +111,8 @@ Better Auth · Stripe · Sonner · pnpm.
 **B6. Promoções / cupom (opcional v1.1)** ✅
 - [x] Campo de cupom no checkout; desconto aplicado ao total/Stripe.
 
-**B7. Newsletter real**
-- [ ] Persistir e-mail (tabela/serviço) com validação e feedback.
+**B7. Newsletter real** ✅
+- [x] Persistir e-mail (tabela/serviço) com validação e feedback.
 
 ## FASE C — Performance
 

@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useSubscribeNewsletter } from "@/hooks/mutations/use-subscribe-newsletter";
 
 const newsletterSchema = z.object({
   email: z.email("Invalid email."),
@@ -27,10 +28,20 @@ const NewsletterForm = () => {
     defaultValues: { email: "" },
   });
 
-  const onSubmit = (values: NewsletterValues) => {
-    // No backend yet — acknowledge the subscription locally.
-    toast.success(`Thanks for subscribing, ${values.email}!`);
-    form.reset();
+  const subscribeMutation = useSubscribeNewsletter();
+
+  const onSubmit = async (values: NewsletterValues) => {
+    try {
+      const { alreadySubscribed } = await subscribeMutation.mutateAsync(values);
+      if (alreadySubscribed) {
+        toast.info("You're already subscribed.");
+      } else {
+        toast.success("Thanks for subscribing!");
+      }
+      form.reset();
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -48,6 +59,7 @@ const NewsletterForm = () => {
                 <Input
                   type="email"
                   placeholder="Enter your email"
+                  disabled={subscribeMutation.isPending}
                   {...field}
                 />
               </FormControl>
@@ -55,8 +67,12 @@ const NewsletterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="rounded-full">
-          Subscribe
+        <Button
+          type="submit"
+          className="rounded-full"
+          disabled={subscribeMutation.isPending}
+        >
+          {subscribeMutation.isPending ? "Subscribing…" : "Subscribe"}
         </Button>
       </form>
     </Form>
