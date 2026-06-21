@@ -32,7 +32,7 @@ const Cart = () => {
           variant="outline"
           size="icon"
           aria-label="Open cart"
-          className="relative"
+          className="relative rounded-full"
         >
           <ShoppingBagIcon />
           {itemCount > 0 && (
