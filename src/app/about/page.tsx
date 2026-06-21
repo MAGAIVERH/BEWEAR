@@ -4,9 +4,10 @@ import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 
 export const metadata: Metadata = {
-  title: "About | BEWEAR",
+  title: "About",
   description:
     "BEWEAR — premium streetwear, sneakers and accessories engineered for everyday motion.",
+  alternates: { canonical: "/about" },
 };
 
 const SECTIONS = [

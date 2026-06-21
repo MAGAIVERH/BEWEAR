@@ -1,4 +1,5 @@
 import { ilike, or } from "drizzle-orm";
+import type { Metadata } from "next";
 
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
@@ -8,6 +9,21 @@ import { productTable } from "@/db/schema";
 
 interface SearchPageProps {
   searchParams: Promise<{ q?: string }>;
+}
+
+export async function generateMetadata({
+  searchParams,
+}: SearchPageProps): Promise<Metadata> {
+  const { q } = await searchParams;
+  const query = (q ?? "").trim();
+  return {
+    title: query ? `Search: ${query}` : "Search",
+    description:
+      "Search premium streetwear, sneakers and accessories at BEWEAR.",
+    // Search result pages should not be indexed.
+    robots: { index: false, follow: true },
+    alternates: { canonical: "/search" },
+  };
 }
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {

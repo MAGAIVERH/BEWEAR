@@ -141,12 +141,15 @@ Better Auth · Stripe · Sonner · pnpm.
 - **Done (parcial):** **zero violação crítica de a11y** (Lighthouse 100). Falta QA manual de
   teclado e responsivo nos breakpoints.
 
-## FASE E — SEO técnico
+## FASE E — SEO técnico ✅
 
-- [ ] `generateMetadata` em todas as páginas (PLP/category/search/home).
-- [ ] `app/sitemap.ts` e `app/robots.ts`.
-- [ ] OG default + por página; JSON-LD `BreadcrumbList` e `WebSite` (PDP `Product` já feito).
-- **Done:** indexável, preview rico ao compartilhar qualquer rota.
+- [x] **Favicon da marca** (`app/icon.svg`) substituindo o triângulo padrão do Next.
+- [x] `generateMetadata`/metadata por página (home/PLP/search/PDP/about/help) com canonical e
+      `title.template` `%s | BEWEAR`; OG/Twitter padrão em `layout.tsx` (`metadataBase`).
+- [x] `app/sitemap.ts` (rotas + categorias + produtos, 72 URLs) e `app/robots.ts`.
+- [x] JSON-LD `WebSite` (+SearchAction) global; `BreadcrumbList` (PLP/PDP); `Product` na PDP.
+- **Done:** indexável, preview rico ao compartilhar qualquer rota. *(Definir
+  `NEXT_PUBLIC_SITE_URL` com o domínio real no deploy.)*
 
 ## FASE F — Qualidade, arquitetura & testes
 

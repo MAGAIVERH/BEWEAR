@@ -41,17 +41,20 @@ export async function generateMetadata({
   const { slug } = await params;
   const productVariant = await getProductVariantBySlug(slug);
   if (!productVariant) {
-    return { title: "Product not found | BEWEAR" };
+    return { title: "Product not found" };
   }
-  const title = `${productVariant.product.name} — ${productVariant.name} | BEWEAR`;
+  const title = `${productVariant.product.name} — ${productVariant.name}`;
   const description = productVariant.product.description;
+  const canonical = `/product-variant/${slug}`;
   return {
     title,
     description,
+    alternates: { canonical },
     openGraph: {
-      title,
+      title: `${title} | BEWEAR`,
       description,
       type: "website",
+      url: canonical,
       images: [{ url: productVariant.imageUrl }],
     },
   };

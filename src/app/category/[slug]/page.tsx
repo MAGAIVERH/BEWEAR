@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -20,6 +21,30 @@ interface CategoryPageProps {
     maxPrice?: string;
     page?: string;
   }>;
+}
+
+export async function generateMetadata({
+  params,
+}: CategoryPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const category = await getCategoryBySlug(slug);
+  if (!category) {
+    return { title: "Category not found" };
+  }
+  const title = category.name;
+  const description = `Shop ${category.name} at BEWEAR — premium streetwear, sneakers and accessories built for everyday motion.`;
+  const canonical = `/category/${slug}`;
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title: `${title} | BEWEAR`,
+      description,
+      url: canonical,
+      type: "website",
+    },
+  };
 }
 
 const getFirstVariantPrice = (product: {
