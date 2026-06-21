@@ -25,7 +25,9 @@ regressão visual.
 - [x] Consultas paralelizadas com `Promise.all` (home e PDP).
 - [x] **Bundle analysis**: `@next/bundle-analyzer` + script `pnpm analyze`.
 - [x] `docs/performance.md` com metas, snapshot do build e guia de medição.
-- [ ] Rodar Lighthouse (build de produção) e preencher a tabela em `docs/performance.md`.
+- [x] Rodar Lighthouse (build de produção) e preencher a tabela em `docs/performance.md`
+      (relatórios em `docs/lighthouse/`). Resultado: CLS=0/SEO 100/BP 96/A11y 88–90 em tudo;
+      **Performance < 90** (Home 45 · PLP 74 · PDP 64) por vídeos pesados — backlog registrado.
 
 ## 🧱 Arquivos tocados
 
