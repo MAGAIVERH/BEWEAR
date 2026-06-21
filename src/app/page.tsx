@@ -14,7 +14,6 @@ import SectionHeader from "@/components/common/section-header";
 import SplitEditorial from "@/components/common/split-editorial";
 import TrendingSection from "@/components/common/trending-section";
 import {
-  getCategories,
   getNewestProductsWithVariants,
   getProductsWithVariants,
 } from "@/db/queries";
@@ -34,10 +33,9 @@ export const metadata: Metadata = {
 };
 
 const Home = async () => {
-  const [products, newlyCreateProducts, categories] = await Promise.all([
+  const [products, newlyCreateProducts] = await Promise.all([
     getProductsWithVariants(),
     getNewestProductsWithVariants(),
-    getCategories(),
   ]);
 
   return (
@@ -53,7 +51,7 @@ const Home = async () => {
         </Reveal>
 
         <Reveal>
-          <FeatureCards categories={categories} />
+          <FeatureCards />
         </Reveal>
 
         <section id="best-sellers" className="scroll-mt-24">
