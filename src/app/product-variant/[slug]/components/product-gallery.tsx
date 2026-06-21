@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
+import { BLUR_DATA_URL } from "@/helpers/image";
 import { cn } from "@/lib/utils";
 
 type ProductGalleryProps = {
@@ -22,6 +23,8 @@ const ProductGallery = ({ images, alt }: ProductGalleryProps) => {
           alt={alt}
           fill
           priority
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
           sizes="(min-width: 1024px) 50vw, 100vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
@@ -47,6 +50,8 @@ const ProductGallery = ({ images, alt }: ProductGalleryProps) => {
                 src={image}
                 alt=""
                 fill
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
                 sizes="80px"
                 className="object-cover"
               />

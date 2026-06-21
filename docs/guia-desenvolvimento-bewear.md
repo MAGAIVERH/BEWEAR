@@ -116,12 +116,17 @@ Better Auth · Stripe · Sonner · pnpm.
 
 ## FASE C — Performance
 
-- [ ] **Dynamic import** de componentes client pesados (carrosséis, motion) fora da dobra.
-- [ ] Auditar `next/image` (sizes, priority, placeholder/blur); converter assets pesados p/ `.webp`.
-- [ ] **ISR / revalidate** no catálogo (home/PLP/PDP) — dados frescos sem rebuild.
-- [ ] **Streaming + Suspense** com skeletons nas seções de dados.
-- [ ] Bundle analysis; metas **Lighthouse 90+** (Perf/A11y/Best Practices/SEO) documentadas em `docs/`.
-- **Done:** relatório Lighthouse salvo; LCP/CLS controlados.
+- [x] **Dynamic import** de componentes client pesados (motion) fora da dobra (`ImpactSection`).
+- [x] Auditar `next/image` (sizes, priority, placeholder/blur); AVIF/WebP via `next/image`
+      (decisão: confiar no pipeline em vez de converter assets manualmente).
+- [x] **ISR / revalidate** no catálogo: home com `revalidate=3600` (Static+ISR); leituras de
+      catálogo cacheadas (`unstable_cache`, tag `catalog`) em `src/db/queries.ts`.
+- [x] **Streaming + Suspense** com skeletons (`loading.tsx` home/PDP/search; relacionados da PDP
+      em Suspense; `ProductRailSkeleton`).
+- [x] Bundle analysis (`@next/bundle-analyzer` + `pnpm analyze`); metas **Lighthouse 90+** e guia
+      de medição em `docs/performance.md`.
+- **Done (parcial):** otimizações de código entregues e `pnpm build` ok; **falta rodar o
+  Lighthouse** (build de produção) e salvar o relatório / preencher a tabela em `docs/performance.md`.
 
 ## FASE D — Acessibilidade & responsividade
 

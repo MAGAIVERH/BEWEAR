@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { orderTable } from "@/db/schema";
+import { BLUR_DATA_URL } from "@/helpers/image";
 import { formatCentsToUSD } from "@/helpers/money";
 
 interface OrdersProps {
@@ -72,6 +73,8 @@ const Orders = ({ orders }: OrdersProps) => {
                             src={product.imageUrl}
                             alt={product.productName}
                             fill
+                            placeholder="blur"
+                            blurDataURL={BLUR_DATA_URL}
                             sizes="78px"
                             className="object-cover"
                           />

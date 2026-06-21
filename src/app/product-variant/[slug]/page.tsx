@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 import Breadcrumbs from "@/components/common/breadcrumbs";
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
-import ProductList from "@/components/common/product-list";
+import ProductRailSkeleton from "@/components/common/product-rail-skeleton";
 import StarRating from "@/components/common/star-rating";
 import WishlistButton from "@/components/common/wishlist-button";
 import {
@@ -17,12 +18,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { db } from "@/db";
-import {
-  productTable,
-  productVariantStockTable,
-  productVariantTable,
-  reviewTable,
-} from "@/db/schema";
+import { getProductVariantBySlug } from "@/db/queries";
+import { productVariantStockTable, reviewTable } from "@/db/schema";
 import { formatCentsToUSD } from "@/helpers/money";
 import { getGalleryImages } from "@/helpers/product-gallery";
 import { getSizesForCategory } from "@/helpers/sizes";
@@ -31,6 +28,7 @@ import { auth } from "@/lib/auth";
 import ProductActions from "./components/product-actions";
 import ProductGallery from "./components/product-gallery";
 import ProductReviews from "./components/product-reviews";
+import RelatedProducts from "./components/related-products";
 import VariantSelector from "./components/variant-selector";
 
 interface ProductVariantPageProps {
@@ -41,10 +39,7 @@ export async function generateMetadata({
   params,
 }: ProductVariantPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const productVariant = await db.query.productVariantTable.findFirst({
-    where: eq(productVariantTable.slug, slug),
-    with: { product: true },
-  });
+  const productVariant = await getProductVariantBySlug(slug);
   if (!productVariant) {
     return { title: "Product not found | BEWEAR" };
   }
@@ -64,23 +59,27 @@ export async function generateMetadata({
 
 const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
   const { slug } = await params;
-  const productVariant = await db.query.productVariantTable.findFirst({
-    where: eq(productVariantTable.slug, slug),
-    with: {
-      product: {
-        with: {
-          variants: true,
-          category: true,
-        },
-      },
-    },
-  });
+  const productVariant = await getProductVariantBySlug(slug);
   if (!productVariant) {
     return notFound();
   }
-  const stockRows = await db.query.productVariantStockTable.findMany({
-    where: eq(productVariantStockTable.productVariantId, productVariant.id),
-  });
+  const [stockRows, reviews, session] = await Promise.all([
+    db.query.productVariantStockTable.findMany({
+      where: eq(productVariantStockTable.productVariantId, productVariant.id),
+    }),
+    db.query.reviewTable.findMany({
+      where: eq(reviewTable.productId, productVariant.productId),
+      orderBy: (review, { desc }) => [desc(review.createdAt)],
+      with: {
+        user: {
+          columns: { name: true },
+        },
+      },
+    }),
+    auth.api.getSession({
+      headers: await headers(),
+    }),
+  ]);
   const stockMap = new Map(stockRows.map((row) => [row.size, row.stock]));
   const sizes = getSizesForCategory(productVariant.product.category.slug).map(
     (size) => ({
@@ -92,25 +91,6 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
     productVariant.product.category.slug,
     productVariant.imageUrl,
   );
-  const likelyProducts = await db.query.productTable.findMany({
-    where: eq(productTable.categoryId, productVariant.product.categoryId),
-    with: {
-      variants: true,
-    },
-  });
-
-  const reviews = await db.query.reviewTable.findMany({
-    where: eq(reviewTable.productId, productVariant.productId),
-    orderBy: (review, { desc }) => [desc(review.createdAt)],
-    with: {
-      user: {
-        columns: { name: true },
-      },
-    },
-  });
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
   const userReview = session?.user
     ? reviews.find((review) => review.userId === session.user.id)
     : undefined;
@@ -245,7 +225,14 @@ const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
       </div>
 
       <div className="mt-8">
-        <ProductList title="You might also like" products={likelyProducts} />
+        <Suspense
+          fallback={<ProductRailSkeleton title="You might also like" />}
+        >
+          <RelatedProducts
+            categoryId={productVariant.product.categoryId}
+            excludeProductId={productVariant.productId}
+          />
+        </Suspense>
       </div>
 
       <Footer />

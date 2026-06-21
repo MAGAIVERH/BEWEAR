@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { productTable, productVariantTable } from "@/db/schema";
+import { BLUR_DATA_URL } from "@/helpers/image";
 
 type ProductWithVariants = typeof productTable.$inferSelect & {
   variants: (typeof productVariantTable.$inferSelect)[];
@@ -73,6 +74,8 @@ const TrendingSection = ({ products }: TrendingSectionProps) => {
                   src={variant.imageUrl}
                   alt={product.name}
                   fill
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
                   sizes="80px"
                   className="object-contain brightness-[1.06] contrast-[1.22] transition-transform duration-300 ease-out group-hover:scale-110"
                 />

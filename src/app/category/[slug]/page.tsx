@@ -1,4 +1,3 @@
-import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -8,8 +7,7 @@ import Header from "@/components/common/header";
 import Pagination from "@/components/common/pagination";
 import ProductFilters from "@/components/common/product-filters";
 import ProductItem from "@/components/common/product-item";
-import { db } from "@/db";
-import { categoryTable, productTable } from "@/db/schema";
+import { getCategoryBySlug, getProductsByCategoryId } from "@/db/queries";
 
 const PAGE_SIZE = 8;
 
@@ -32,19 +30,12 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
   const { slug } = await params;
   const { color, sort, minPrice, maxPrice, page } = await searchParams;
 
-  const category = await db.query.categoryTable.findFirst({
-    where: eq(categoryTable.slug, slug),
-  });
+  const category = await getCategoryBySlug(slug);
   if (!category) {
     return notFound();
   }
 
-  const allProducts = await db.query.productTable.findMany({
-    where: eq(productTable.categoryId, category.id),
-    with: {
-      variants: true,
-    },
-  });
+  const allProducts = await getProductsByCategoryId(category.id);
 
   const availableColors = Array.from(
     new Set(allProducts.flatMap((product) => product.variants.map((v) => v.color))),

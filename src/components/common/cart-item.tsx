@@ -2,6 +2,7 @@ import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
 
+import { BLUR_DATA_URL } from "@/helpers/image";
 import { formatCentsToUSD } from "@/helpers/money";
 import { useDecreaseCartProduct } from "@/hooks/mutations/use-decrease-cart-product";
 import { useIncreaseCartProduct } from "@/hooks/mutations/use-increase-cart-product";
@@ -71,6 +72,8 @@ const CartItem = ({
           src={productVariantImageUrl}
           alt={productVariantName}
           fill
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
           sizes="80px"
           className="object-cover"
         />

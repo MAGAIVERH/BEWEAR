@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { BLUR_DATA_URL } from "@/helpers/image";
 
 const ImpactSection = () => {
   const prefersReducedMotion = useReducedMotion();
@@ -17,6 +18,8 @@ const ImpactSection = () => {
             src="/home/impact.jpg"
             alt="No off-season"
             fill
+            placeholder="blur"
+            blurDataURL={BLUR_DATA_URL}
             sizes="100vw"
             className="object-cover"
           />

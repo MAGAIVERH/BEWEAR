@@ -2,6 +2,8 @@ import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { BLUR_DATA_URL } from "@/helpers/image";
+
 type SplitTile = {
   src: string;
   title: string;
@@ -27,6 +29,8 @@ const SplitEditorial = () => {
               src={tile.src}
               alt={tile.title}
               fill
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
               sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             />
