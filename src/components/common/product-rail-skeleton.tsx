@@ -12,7 +12,7 @@ const ProductRailSkeleton = ({ title, count = 5 }: ProductRailSkeletonProps) => 
   return (
     <div className="space-y-6">
       <div className="container-bw">
-        <h3 className="section-title">{title}</h3>
+        <h2 className="section-title">{title}</h2>
       </div>
 
       <div className="container-bw">

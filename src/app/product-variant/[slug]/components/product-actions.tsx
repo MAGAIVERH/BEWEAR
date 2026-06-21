@@ -32,7 +32,7 @@ const ProductActions = ({ productVariantId, sizes }: ProductActionsProps) => {
     <>
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-medium">Select size</h3>
+          <h2 className="text-sm font-medium">Select size</h2>
           {!selectedSize && (
             <span className="text-muted-foreground text-xs">Required</span>
           )}
@@ -61,13 +61,23 @@ const ProductActions = ({ productVariantId, sizes }: ProductActionsProps) => {
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-sm font-medium">Quantity</h3>
+        <h2 className="text-sm font-medium">Quantity</h2>
         <div className="flex w-[100px] items-center justify-between rounded-lg border">
-          <Button size="icon" variant="ghost" onClick={handleDecrement}>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={handleDecrement}
+            aria-label="Decrease quantity"
+          >
             <MinusIcon />
           </Button>
-          <p>{quantity}</p>
-          <Button size="icon" variant="ghost" onClick={handleIncrement}>
+          <p aria-live="polite">{quantity}</p>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={handleIncrement}
+            aria-label="Increase quantity"
+          >
             <PlusIcon />
           </Button>
         </div>

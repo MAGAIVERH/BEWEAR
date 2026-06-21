@@ -30,7 +30,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     <>
       <Header />
 
-      <div className="px-5 py-10 md:px-8 lg:px-12">
+      <main id="main-content" className="px-5 py-10 md:px-8 lg:px-12">
         <div className="space-y-2">
           <p className="text-eyebrow-brand">Search</p>
           <h1 className="section-title">
@@ -64,7 +64,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
             ))}
           </div>
         )}
-      </div>
+      </main>
 
       <Footer />
     </>

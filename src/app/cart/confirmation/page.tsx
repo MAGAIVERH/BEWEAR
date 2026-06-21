@@ -46,7 +46,7 @@ const ConfirmationPage = async () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <div className="container-bw flex-1 py-8 md:py-12">
+      <main id="main-content" className="container-bw flex-1 py-8 md:py-12">
         <CheckoutSteps current="payment" />
 
         <div className="mt-8 grid items-start gap-8 lg:grid-cols-[1fr_380px]">
@@ -76,7 +76,7 @@ const ConfirmationPage = async () => {
             />
           </div>
         </div>
-      </div>
+      </main>
       <div className="mt-auto">
         <Footer />
       </div>

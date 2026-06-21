@@ -36,7 +36,7 @@ const AccountPage = async () => {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <div className="container-bw flex-1 space-y-10 py-10">
+      <main id="main-content" className="container-bw flex-1 space-y-10 py-10">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-2">
             <p className="text-eyebrow-brand">Account</p>
@@ -65,7 +65,7 @@ const AccountPage = async () => {
         </div>
 
         <AddressBook initialAddresses={addresses} />
-      </div>
+      </main>
 
       <Footer />
     </div>

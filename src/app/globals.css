@@ -34,6 +34,7 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
   --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
   --color-brand-foreground: var(--brand-foreground);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
@@ -60,6 +61,8 @@
   --primary-foreground: oklch(0.985 0 0);
   /* Brand accent = orange: use sparingly (eyebrows, highlights, badges) */
   --brand: oklch(0.67 0.2 41);
+  /* Darker brand for small text on light bg (WCAG AA, ~5:1 on white) */
+  --brand-strong: oklch(0.56 0.18 41);
   --brand-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -96,6 +99,8 @@
   --primary: oklch(0.985 0 0);
   --primary-foreground: oklch(0.205 0 0);
   --brand: oklch(0.7 0.19 42);
+  /* On dark bg the lighter brand already meets contrast for text */
+  --brand-strong: oklch(0.78 0.18 42);
   --brand-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
@@ -151,9 +156,9 @@
   .text-eyebrow {
     @apply text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase;
   }
-  /* Brand-colored eyebrow variant */
+  /* Brand-colored eyebrow variant (uses the AA-contrast brand for small text) */
   .text-eyebrow-brand {
-    @apply text-brand text-xs font-semibold tracking-[0.18em] uppercase;
+    @apply text-brand-strong text-xs font-semibold tracking-[0.18em] uppercase;
   }
   /* Hero / oversized display heading */
   .text-display {

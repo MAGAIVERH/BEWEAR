@@ -9,7 +9,7 @@ const Authentication = async () => {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <div className="flex flex-1 items-start justify-center px-5 py-12">
+      <main className="flex flex-1 items-start justify-center px-5 py-12">
         <div className="w-full max-w-md">
           <Tabs defaultValue="sign-in">
             <TabsList className="grid w-full grid-cols-2">
@@ -24,7 +24,7 @@ const Authentication = async () => {
             </TabsContent>
           </Tabs>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

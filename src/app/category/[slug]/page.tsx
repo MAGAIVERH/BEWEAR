@@ -88,7 +88,7 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
     <>
       <Header />
 
-      <div className="px-5 py-10 md:px-8 lg:px-12">
+      <main id="main-content" className="px-5 py-10 md:px-8 lg:px-12">
         <Breadcrumbs
           items={[{ label: "Home", href: "/" }, { label: category.name }]}
         />
@@ -133,7 +133,7 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
             )}
           </>
         )}
-      </div>
+      </main>
 
       <Footer />
     </>

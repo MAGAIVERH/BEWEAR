@@ -6,7 +6,9 @@ const CheckoutSuccessPage = () => {
   return (
     <>
       <Header />
-      <SuccessDialog />
+      <main id="main-content">
+        <SuccessDialog />
+      </main>
     </>
   );
 };

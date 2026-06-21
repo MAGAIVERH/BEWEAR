@@ -127,16 +127,19 @@ Relatórios HTML/JSON completos em [`docs/lighthouse/`](lighthouse/) (`home`, `p
 
 | Página                                  | Perf | A11y | BP  | SEO | LCP   | CLS   | TBT     | FCP   |
 | --------------------------------------- | ---- | ---- | --- | --- | ----- | ----- | ------- | ----- |
-| Home `/`                                | 45   | 88   | 96  | 100 | 7.7 s | 0     | 1980 ms | 1.1 s |
-| PLP `/category/accessories`             | 74   | 90   | 96  | 100 | 3.4 s | 0     | 670 ms  | 1.1 s |
-| PDP `/product-variant/backpack-black`   | 64   | 88   | 96  | 100 | 4.4 s | 0     | 760 ms  | 1.1 s |
+| Home `/`                                | 54   | 100  | 96  | 100 | 7.7 s | 0     | ~2.0 s  | 1.1 s |
+| PLP `/category/accessories`             | 74   | 100  | 96  | 100 | 3.4 s | 0     | 670 ms  | 1.1 s |
+| PDP `/product-variant/backpack-black`   | 69   | 100  | 96  | 100 | 4.4 s | 0     | 760 ms  | 1.1 s |
+
+> **A11y 88–90 → 100** após a **Fase D** (landmark `<main>`, `aria-label` em botões só-ícone,
+> `role="img"` no rating, ordem de headings, contraste do eyebrow, target-size dos dots).
 
 ### Leitura dos resultados
 
 - ✅ **CLS = 0** em todas as páginas (blur placeholders + dimensões reservadas funcionaram).
-- ✅ **SEO 100 · Best Practices 96 · A11y 88–90** — a11y já perto da meta (refinar na **Fase D**).
+- ✅ **A11y 100 · SEO 100 · Best Practices 96** em todas as páginas.
 - ✅ **FCP ~1.1 s** consistente — o shell pinta rápido.
-- ⚠️ **Performance abaixo de 90** (Home 45 · PLP 74 · PDP 64), puxada por **LCP** e **TBT**.
+- ⚠️ **Performance abaixo de 90** (Home 54 · PLP 74 · PDP 69), puxada por **LCP** e **TBT**.
 
 ### Causa raiz (Home)
 

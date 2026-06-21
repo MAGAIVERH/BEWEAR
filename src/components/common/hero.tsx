@@ -153,11 +153,15 @@ const Hero = () => {
               aria-label={`Go to slide ${i + 1}`}
               aria-current={i === index}
               onClick={() => setIndex(i)}
-              className={cn(
-                "h-1.5 rounded-full transition-all",
-                i === index ? "w-6 bg-white" : "w-1.5 bg-white/50",
-              )}
-            />
+              className="flex h-6 min-w-6 items-center justify-center"
+            >
+              <span
+                className={cn(
+                  "block h-1.5 rounded-full transition-all",
+                  i === index ? "w-6 bg-white" : "w-1.5 bg-white/50",
+                )}
+              />
+            </button>
           ))}
         </div>
 

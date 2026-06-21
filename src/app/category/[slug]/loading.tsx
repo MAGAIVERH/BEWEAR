@@ -5,7 +5,7 @@ const CategoryLoading = () => {
     <>
       <Header />
 
-      <div className="px-5 py-10 md:px-8 lg:px-12">
+      <main id="main-content" className="px-5 py-10 md:px-8 lg:px-12">
         <div className="space-y-3">
           <div className="bg-muted h-3 w-20 animate-pulse rounded" />
           <div className="bg-muted h-9 w-48 animate-pulse rounded" />
@@ -21,7 +21,7 @@ const CategoryLoading = () => {
             </div>
           ))}
         </div>
-      </div>
+      </main>
     </>
   );
 };

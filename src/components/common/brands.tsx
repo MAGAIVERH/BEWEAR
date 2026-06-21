@@ -19,7 +19,7 @@ const BRANDS = [
 const Brands = ({ title }: BrandsProps) => {
   return (
     <div className="space-y-6">
-      <h3 className="section-title container-bw">{title}</h3>
+      <h2 className="section-title container-bw">{title}</h2>
 
       <Marquee>
         {BRANDS.map((brand) => (

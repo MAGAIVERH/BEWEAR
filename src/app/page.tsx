@@ -39,9 +39,10 @@ const Home = async () => {
     <>
       <Header />
 
-      <Hero />
+      <main id="main-content">
+        <Hero />
 
-      <div className="space-y-16 py-16 md:space-y-24 md:py-20">
+        <div className="space-y-16 py-16 md:space-y-24 md:py-20">
         <Reveal>
           <Brands title="Featured brands" />
         </Reveal>
@@ -115,7 +116,8 @@ const Home = async () => {
         <Reveal>
           <TrendingSection products={products} />
         </Reveal>
-      </div>
+        </div>
+      </main>
 
       <Footer />
     </>
