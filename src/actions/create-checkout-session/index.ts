@@ -42,11 +42,26 @@ export const createCheckoutSession = async (
     },
   });
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+  // Reflect the order discount in Stripe with an ephemeral one-off coupon so
+  // the amount charged matches the discounted order total stored in our DB.
+  const discounts: Stripe.Checkout.SessionCreateParams.Discount[] = [];
+  if (order.discountInCents > 0) {
+    const stripeCoupon = await stripe.coupons.create({
+      amount_off: order.discountInCents,
+      currency: "usd",
+      duration: "once",
+      name: order.couponCode ?? "Discount",
+    });
+    discounts.push({ coupon: stripeCoupon.id });
+  }
+
   const checkoutSession = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     mode: "payment",
     success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success`,
     cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/cancel`,
+    discounts,
     metadata: {
       orderId,
     },

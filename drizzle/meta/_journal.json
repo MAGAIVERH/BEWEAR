@@ -43,6 +43,13 @@
       "when": 1781999276689,
       "tag": "0005_add_newsletter_subscriber",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1782011595067,
+      "tag": "0006_add_coupon_and_order_discount",
+      "breakpoints": true
     }
   ]
 }

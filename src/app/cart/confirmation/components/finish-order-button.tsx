@@ -8,7 +8,11 @@ import { createCheckoutSession } from "@/actions/create-checkout-session";
 import { Button } from "@/components/ui/button";
 import { useFinishOrder } from "@/hooks/mutations/use-finish-order";
 
-const FinishOrderButton = () => {
+type FinishOrderButtonProps = {
+  couponCode?: string | null;
+};
+
+const FinishOrderButton = ({ couponCode }: FinishOrderButtonProps) => {
   const finishOrderMutation = useFinishOrder();
 
   const handleFinishOrder = async () => {
@@ -16,7 +20,7 @@ const FinishOrderButton = () => {
       if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
         throw new Error("Stripe publishable key is not set");
       }
-      const { orderId } = await finishOrderMutation.mutateAsync();
+      const { orderId } = await finishOrderMutation.mutateAsync({ couponCode });
       const checkoutSession = await createCheckoutSession({ orderId });
       const stripe = await loadStripe(
         process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
