@@ -193,7 +193,7 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
             size="icon"
             asChild
             aria-label="Wishlist"
-            className="relative hidden lg:inline-flex"
+            className="relative hidden rounded-full lg:inline-flex"
           >
             <Link href="/wishlist">
               <HeartIcon />
@@ -205,26 +205,16 @@ const HeaderClient = ({ categories }: HeaderClientProps) => {
             </Link>
           </Button>
           {session?.user ? (
-            <div className="hidden items-center gap-1 lg:flex">
-              <Link href="/account" aria-label="Account">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage
-                    src={session?.user?.image as string | undefined}
-                  />
-                  <AvatarFallback className="text-xs">
-                    {initials}
-                  </AvatarFallback>
-                </Avatar>
-              </Link>
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Sign out"
-                onClick={() => authClient.signOut()}
-              >
-                <LogOutIcon />
-              </Button>
-            </div>
+            <Link
+              href="/account"
+              aria-label="Account"
+              className="hidden rounded-full transition-opacity hover:opacity-80 lg:inline-flex"
+            >
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={session?.user?.image as string | undefined} />
+                <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+              </Avatar>
+            </Link>
           ) : (
             <Button
               variant="ghost"
