@@ -1,11 +1,11 @@
-import { ilike, or } from "drizzle-orm";
+import { ilike, inArray, or } from "drizzle-orm";
 import type { Metadata } from "next";
 
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import ProductItem from "@/components/common/product-item";
 import { db } from "@/db";
-import { productTable } from "@/db/schema";
+import { categoryTable, productTable } from "@/db/schema";
 
 interface SearchPageProps {
   searchParams: Promise<{ q?: string }>;
@@ -30,11 +30,25 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const { q } = await searchParams;
   const query = (q ?? "").trim();
 
+  // Categories matching the term (e.g. "T-Shirts", "Sneakers") so a search by
+  // category name also returns that category's products.
+  const matchingCategoryIds = query
+    ? (
+        await db.query.categoryTable.findMany({
+          where: ilike(categoryTable.name, `%${query}%`),
+          columns: { id: true },
+        })
+      ).map((category) => category.id)
+    : [];
+
   const products = query
     ? await db.query.productTable.findMany({
         where: or(
           ilike(productTable.name, `%${query}%`),
           ilike(productTable.description, `%${query}%`),
+          matchingCategoryIds.length > 0
+            ? inArray(productTable.categoryId, matchingCategoryIds)
+            : undefined,
         ),
         with: {
           variants: true,
